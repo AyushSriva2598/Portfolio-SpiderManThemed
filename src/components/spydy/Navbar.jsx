@@ -49,7 +49,7 @@ export const Navbar = () => {
           {/* Logo */}
           <a
             href="#"
-            className="text-white text-2xl font-black tracking-tighter italic uppercase group flex items-center"
+            className="text-white font-comic text-2xl sm:text-3xl tracking-wide uppercase italic group flex items-center"
           >
             <span className="text-red-600 drop-shadow-[0_0_10px_rgba(220,38,38,0.8)]">
               {HERO_DATA.firstName.charAt(0)}
@@ -66,10 +66,10 @@ export const Navbar = () => {
                 <a
                   key={item.label}
                   href={item.href}
-                  className="relative text-xs md:text-sm font-bold text-gray-400 uppercase tracking-[0.15em] transition-colors duration-300 hover:text-white group"
+                  className="relative font-comic text-base text-gray-300 uppercase tracking-widest transition-colors duration-300 hover:text-white group"
                 >
                   {item.label}
-                  <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-red-600 transition-all duration-300 ease-out group-hover:w-full shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
+                  <span className="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-red-600 transition-all duration-300 ease-out group-hover:w-full shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
                 </a>
               ))}
             </div>
@@ -150,7 +150,7 @@ export const Navbar = () => {
                   key={item.label}
                   href={item.href}
                   onClick={handleNavClick}
-                  className="group flex items-center justify-between py-2 text-2xl font-black italic uppercase tracking-wider text-gray-200 hover:text-red-500 transition-colors"
+                  className="group flex items-center justify-between py-2 font-comic text-2xl sm:text-3xl italic uppercase tracking-widest text-gray-200 hover:text-red-500 transition-colors"
                 >
                   <span className="flex items-center gap-3">
                     <span className="text-xs font-mono text-red-600">

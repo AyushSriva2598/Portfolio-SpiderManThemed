@@ -97,17 +97,17 @@ export const Contact = () => {
 
       {/* Section Header */}
       <div ref={headerRef} className="flex flex-col items-center text-center mb-10 z-10">
-        <span className="text-[#a31515] font-bold uppercase text-[10px] md:text-xs tracking-[0.2em] mb-2 flex items-center gap-1.5">
+        <span className="text-[#a31515] font-comic tracking-[0.2em] text-xs sm:text-sm uppercase mb-1 flex items-center gap-1.5 font-bold">
           <img src={ASSETS.spiderIcon} alt="Spider" className="w-4 h-4 object-contain" />
-          Get In Touch
+          Dispatch A Transmission
         </span>
-        <h2
-          className="text-3xl md:text-5xl font-black tracking-tighter uppercase italic text-gray-900"
-          style={{ textShadow: "2px 2px 0px #fca5a5" }}
-        >
-          CONTACT.
+        <h2 className="text-comic-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight">
+          CONTACT AYUSH.
         </h2>
-        <div className="w-12 h-1 bg-[#a31515] mt-2 rounded-full" />
+        <p className="font-comic-narrative text-gray-700 text-sm sm:text-base mt-2 max-w-md">
+          Have an ambitious mission, distributed system project, or engineering challenge? Send a signal.
+        </p>
+        <div className="w-16 h-1.5 bg-[#a31515] mt-3 rounded-full shadow-[0_0_8px_rgba(163,21,21,0.6)]" />
       </div>
 
       {/* Contact Card */}
@@ -120,10 +120,10 @@ export const Contact = () => {
             <div className="w-14 h-14 bg-[#a31515] text-white rounded-full flex items-center justify-center text-2xl font-black mb-4 shadow-md animate-bounce">
               ✓
             </div>
-            <h3 className="text-xl font-black uppercase tracking-tight text-gray-900 mb-2">
+            <h3 className="font-comic text-2xl font-black uppercase tracking-wide text-gray-900 mb-2">
               Message Dispatched!
             </h3>
-            <p className="text-sm text-gray-600 font-medium max-w-md">
+            <p className="font-comic-narrative text-base text-gray-700 max-w-md">
               Thanks for reaching out! {HERO_DATA.firstName} will review your dispatch and swing back shortly.
             </p>
           </div>
@@ -131,7 +131,7 @@ export const Contact = () => {
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-600">
+                <label className="font-comic text-xs uppercase tracking-wider text-gray-700 font-bold">
                   Your Name
                 </label>
                 <input
@@ -143,7 +143,7 @@ export const Contact = () => {
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-600">
+                <label className="font-comic text-xs uppercase tracking-wider text-gray-700 font-bold">
                   Your Email
                 </label>
                 <input
@@ -156,7 +156,7 @@ export const Contact = () => {
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-gray-600">
+              <label className="font-comic text-xs uppercase tracking-wider text-gray-700 font-bold">
                 Message
               </label>
               <textarea
@@ -169,7 +169,7 @@ export const Contact = () => {
 
             <button
               type="submit"
-              className="w-full bg-[#a31515] hover:bg-[#7a0f0f] text-white py-3.5 rounded-xl font-bold uppercase text-xs tracking-widest transition-all duration-300 shadow-[0_4px_15px_rgba(163,21,21,0.3)] hover:shadow-[0_6px_20px_rgba(163,21,21,0.5)] cursor-pointer mt-2"
+              className="w-full bg-[#a31515] hover:bg-[#7a0f0f] text-white py-3.5 rounded-xl font-comic text-base tracking-widest uppercase transition-all duration-300 shadow-[0_4px_15px_rgba(163,21,21,0.3)] hover:shadow-[0_6px_20px_rgba(163,21,21,0.5)] cursor-pointer mt-2"
             >
               Send Message
             </button>
@@ -178,7 +178,7 @@ export const Contact = () => {
 
         {/* Social Links Ribbon */}
         <div className="pt-4 border-t border-gray-200/80 flex flex-wrap items-center justify-between gap-3 text-xs font-bold uppercase tracking-wider">
-          <span className="text-gray-400">Connect:</span>
+          <span className="font-comic text-gray-500 tracking-wider">Connect:</span>
           <div className="flex flex-wrap gap-4">
             {CONTACT_DATA.socials.map((s, idx) => (
               <a
@@ -186,7 +186,7 @@ export const Contact = () => {
                 href={s.url}
                 target="_blank"
                 rel="noreferrer"
-                className="text-[#a31515] hover:text-black transition-colors"
+                className="font-comic text-sm tracking-wider text-[#a31515] hover:text-black transition-colors"
               >
                 {s.name} ↗
               </a>
@@ -196,7 +196,7 @@ export const Contact = () => {
       </div>
 
       {/* Footer */}
-      <footer className="mt-16 text-center text-xs text-gray-400 font-medium">
+      <footer className="mt-16 text-center font-comic-narrative text-xs sm:text-sm text-gray-500 font-medium">
         {CONTACT_DATA.footerText}
       </footer>
     </section>
