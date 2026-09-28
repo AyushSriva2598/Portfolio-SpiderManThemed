@@ -101,17 +101,17 @@ export const Projects = () => {
 
       {/* Section Header */}
       <div ref={headerRef} className="flex flex-col items-center text-center mb-10 z-10">
-        <span className="text-[#a31515] font-bold uppercase text-[10px] md:text-xs tracking-[0.2em] mb-2 flex items-center gap-1.5">
-          <img src={ASSETS.spiderIcon} alt="Spider" className="w-3.5 h-3.5 object-contain" />
-          Featured Missions
+        <span className="text-[#a31515] font-comic tracking-[0.2em] text-xs sm:text-sm uppercase mb-1 flex items-center gap-1.5 font-bold">
+          <img src={ASSETS.spiderIcon} alt="Spider" className="w-4 h-4 object-contain" />
+          Featured Missions & Code In Action
         </span>
-        <h2
-          className="text-3xl md:text-5xl font-black tracking-tighter uppercase italic text-gray-900"
-          style={{ textShadow: "2px 2px 0px #fca5a5" }}
-        >
-          PROJECTS.
+        <h2 className="text-comic-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight">
+          FEATURED MISSIONS.
         </h2>
-        <div className="w-12 h-1 bg-[#a31515] mt-2 rounded-full" />
+        <p className="font-comic-narrative text-gray-700 text-sm sm:text-base mt-2 max-w-md">
+          Open-source repositories, distributed engines, and interactive web adventures.
+        </p>
+        <div className="w-16 h-1.5 bg-[#a31515] mt-3 rounded-full shadow-[0_0_8px_rgba(163,21,21,0.6)]" />
       </div>
 
       {/* Projects Grid */}
@@ -130,14 +130,14 @@ export const Projects = () => {
             <div>
               {proj.isPinned && (
                 <div className="mb-2">
-                  <span className="inline-flex items-center gap-1.5 text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 bg-red-50 text-[#a31515] border border-[#a31515]/30 rounded-md group-hover:bg-[#a31515] group-hover:text-white transition-colors duration-300">
+                  <span className="inline-flex items-center gap-1.5 font-comic text-[11px] tracking-wider uppercase px-2.5 py-0.5 bg-red-50 text-[#a31515] border border-[#a31515]/30 rounded-md group-hover:bg-[#a31515] group-hover:text-white transition-colors duration-300">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#a31515] group-hover:bg-white animate-pulse" />
                     PINNED // GITHUB
                   </span>
                 </div>
               )}
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-lg font-black uppercase tracking-tight text-gray-900 group-hover:text-[#a31515] transition-colors duration-300">
+                <h3 className="font-comic text-lg sm:text-xl uppercase tracking-wide text-gray-900 group-hover:text-[#a31515] transition-colors duration-300">
                   {proj.title}
                 </h3>
                 <svg
@@ -154,8 +154,8 @@ export const Projects = () => {
                   />
                 </svg>
               </div>
-              <p className="text-xs md:text-sm text-gray-600 leading-relaxed font-medium mb-6">
-                {proj.description}
+              <p className="font-comic-narrative text-gray-700 text-sm sm:text-base leading-relaxed mb-6">
+                “{proj.description}”
               </p>
             </div>
 

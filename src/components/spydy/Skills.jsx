@@ -89,17 +89,17 @@ export const Skills = () => {
 
       {/* Section Header */}
       <div ref={headerRef} className="flex flex-col items-center text-center mb-10 z-10">
-        <span className="text-[#a31515] font-bold uppercase text-[10px] md:text-xs tracking-[0.2em] mb-2 flex items-center gap-1.5">
-          <img src={ASSETS.spiderIcon} alt="Spider" className="w-3.5 h-3.5 object-contain" />
-          Arsenal & Expertise
+        <span className="text-[#a31515] font-comic tracking-[0.2em] text-xs sm:text-sm uppercase mb-1 flex items-center gap-1.5 font-bold">
+          <img src={ASSETS.spiderIcon} alt="Spider" className="w-4 h-4 object-contain" />
+          Technical Arsenal & Weapons of Choice
         </span>
-        <h2
-          className="text-3xl md:text-5xl font-black tracking-tighter uppercase italic text-gray-900"
-          style={{ textShadow: "2px 2px 0px #fca5a5" }}
-        >
+        <h2 className="text-comic-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight">
           TECHNICAL SKILLS.
         </h2>
-        <div className="w-12 h-1 bg-[#a31515] mt-2 rounded-full" />
+        <p className="font-comic-narrative text-gray-700 text-sm sm:text-base mt-2 max-w-md">
+          Tools, frameworks, and architectures powering battle-tested distributed systems.
+        </p>
+        <div className="w-16 h-1.5 bg-[#a31515] mt-3 rounded-full shadow-[0_0_8px_rgba(163,21,21,0.6)]" />
       </div>
 
       {/* Skills Matrix Grid */}
@@ -113,19 +113,19 @@ export const Skills = () => {
             <div className="absolute inset-0 bg-[#a31515] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-out z-0" />
 
             <div className="relative z-10 flex items-center gap-3">
-              <span className="w-2 h-2 rounded-full bg-[#a31515] group-hover:bg-white transition-colors duration-300 shadow-[0_0_8px_rgba(163,21,21,0.6)]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#a31515] group-hover:bg-white transition-colors duration-300 shadow-[0_0_8px_rgba(163,21,21,0.6)]" />
               <div className="flex flex-col">
-                <span className="text-sm md:text-base font-black uppercase tracking-tight text-gray-900 group-hover:text-white transition-colors duration-300">
+                <span className="font-comic text-base sm:text-lg tracking-wide uppercase text-gray-900 group-hover:text-white transition-colors duration-300">
                   {skill.name}
                 </span>
-                <span className="text-[10px] font-semibold text-gray-400 group-hover:text-gray-200 transition-colors duration-300 uppercase tracking-widest">
+                <span className="text-[10px] font-mono font-semibold text-gray-500 group-hover:text-gray-200 transition-colors duration-300 uppercase tracking-widest">
                   {skill.category}
                 </span>
               </div>
             </div>
 
             <div className="relative z-10">
-              <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 bg-white text-gray-700 group-hover:bg-black group-hover:text-white rounded-full transition-colors duration-300 shadow-sm">
+              <span className="font-comic text-xs uppercase tracking-wider px-3 py-1 bg-white text-gray-800 group-hover:bg-black group-hover:text-white rounded-full transition-colors duration-300 shadow-sm border border-gray-200 group-hover:border-black">
                 {skill.level}
               </span>
             </div>
