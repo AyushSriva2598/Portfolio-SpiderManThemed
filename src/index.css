@@ -7,9 +7,10 @@
 :root {
   color: #111111;
   background-color: #fafafa;
+
   --font-comic: "Bangers", Impact, cursive;
   --font-narrative: "EB Garamond", Georgia, serif;
-  --font-dialogue: "Comic Neue", "Comic Sans MS", cursive;
+  --font-dialogue: "CC Wild Words", "Anime Ace", "Comic Neue", cursive;
   --font-sans: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
@@ -20,7 +21,7 @@ html {
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-dialogue);
   background-color: #fafafa;
   color: #111111;
   margin: 0;
@@ -87,12 +88,12 @@ body {
     6px 6px 0px #a31515;
 }
 
-/* Narrative Inner-Monologue Caption Font (Screenshot subtext) */
-.font-comic-narrative {
-  font-family: var(--font-narrative);
-  font-style: italic;
+/* Comic Text & Subtext Dialogue Font */
+.font-comic-narrative,
+.font-comic-text {
+  font-family: var(--font-dialogue);
   letter-spacing: 0.015em;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 /* Dialogue Speech Bubble Style */

@@ -20,7 +20,7 @@ export const HERO_DATA = {
 };
 
 export const ASSETS = {
-  topMaskImg: "/assets/image-1-fYP2o7gg.png",
+  topMaskImg: "/assets/image-1-fYP2o7gg-Photoroom.png",
   bottomIdentityImg: "/assets/image-2-aradhya.png",
   webImg: "/assets/web1-770H2sSx.png",
   spiderIcon: "/assets/spydy-DLbFrGCQ.png",

@@ -186,7 +186,7 @@ export const About = () => {
 
           <div
             ref={textRef}
-            className="flex flex-col gap-5 text-gray-900 font-comic-narrative text-base sm:text-lg md:text-xl leading-relaxed max-w-xl mt-2 border-l-4 border-[#a31515] pl-4 sm:pl-5 bg-white/70 backdrop-blur-sm py-4 pr-4 rounded-r-2xl shadow-sm"
+            className="flex flex-col gap-5 text-gray-900 font-dialogue text-base sm:text-lg md:text-xl leading-relaxed max-w-xl mt-2 border-l-4 border-[#a31515] pl-4 sm:pl-5 bg-white/70 backdrop-blur-sm py-4 pr-4 rounded-r-2xl shadow-sm"
             style={{ perspective: "1000px" }}
           >
             {ABOUT_DATA.paragraphs.map((p, idx) => (
@@ -197,7 +197,7 @@ export const About = () => {
           </div>
 
           <div className="mt-6">
-            <h3 className="font-comic text-sm uppercase tracking-widest text-[#a31515] mb-4 font-bold border-b border-[#a31515]/30 pb-2 inline-flex items-center gap-2">
+            <h3 className="font-dialogue text-sm uppercase tracking-widest text-[#a31515] mb-4 font-bold border-b border-[#a31515]/30 pb-2 inline-flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#a31515]" />
               Primary Tech Arsenal
             </h3>
@@ -205,7 +205,7 @@ export const About = () => {
               {ABOUT_DATA.techStack.map((tech, idx) => (
                 <div
                   key={idx}
-                  className="tech-pill px-4 sm:px-5 py-2 sm:py-2.5 border border-[#a31515]/30 bg-white text-[#a31515] rounded-xl font-comic text-sm sm:text-base tracking-wider hover:bg-[#a31515] hover:text-white hover:border-[#a31515] shadow-sm hover:shadow-[0_8px_20px_rgba(163,21,21,0.3)] transition-all duration-300 cursor-default select-none"
+                  className="tech-pill px-4 sm:px-5 py-2 sm:py-2.5 border border-[#a31515]/30 bg-white text-[#a31515] rounded-xl font-dialogue font-bold text-xs sm:text-sm tracking-wider hover:bg-[#a31515] hover:text-white hover:border-[#a31515] shadow-sm hover:shadow-[0_8px_20px_rgba(163,21,21,0.3)] transition-all duration-300 cursor-default select-none"
                 >
                   {tech}
                 </div>

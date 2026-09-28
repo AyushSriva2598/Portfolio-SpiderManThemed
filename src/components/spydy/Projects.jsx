@@ -108,7 +108,7 @@ export const Projects = () => {
         <h2 className="text-comic-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight">
           FEATURED MISSIONS.
         </h2>
-        <p className="font-comic-narrative text-gray-700 text-sm sm:text-base mt-2 max-w-md">
+        <p className="font-dialogue text-gray-700 text-sm sm:text-base mt-2 max-w-md">
           Open-source repositories, distributed engines, and interactive web adventures.
         </p>
         <div className="w-16 h-1.5 bg-[#a31515] mt-3 rounded-full shadow-[0_0_8px_rgba(163,21,21,0.6)]" />
@@ -130,7 +130,7 @@ export const Projects = () => {
             <div>
               {proj.isPinned && (
                 <div className="mb-2">
-                  <span className="inline-flex items-center gap-1.5 font-comic text-[11px] tracking-wider uppercase px-2.5 py-0.5 bg-red-50 text-[#a31515] border border-[#a31515]/30 rounded-md group-hover:bg-[#a31515] group-hover:text-white transition-colors duration-300">
+                  <span className="inline-flex items-center gap-1.5 font-dialogue font-bold text-[11px] tracking-wider uppercase px-2.5 py-0.5 bg-red-50 text-[#a31515] border border-[#a31515]/30 rounded-md group-hover:bg-[#a31515] group-hover:text-white transition-colors duration-300">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#a31515] group-hover:bg-white animate-pulse" />
                     PINNED // GITHUB
                   </span>
@@ -154,7 +154,7 @@ export const Projects = () => {
                   />
                 </svg>
               </div>
-              <p className="font-comic-narrative text-gray-700 text-sm sm:text-base leading-relaxed mb-6">
+              <p className="font-dialogue text-gray-700 text-sm sm:text-base leading-relaxed mb-6">
                 “{proj.description}”
               </p>
             </div>
@@ -163,7 +163,7 @@ export const Projects = () => {
               {proj.tags.map((tag, tagIdx) => (
                 <span
                   key={tagIdx}
-                  className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-white border border-gray-200 text-gray-600 group-hover:border-[#a31515]/30 group-hover:text-[#a31515] rounded-md transition-colors duration-300"
+                  className="font-dialogue text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 bg-white border border-gray-200 text-gray-600 group-hover:border-[#a31515]/30 group-hover:text-[#a31515] rounded-md transition-colors duration-300"
                 >
                   {tag}
                 </span>

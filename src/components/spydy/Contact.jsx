@@ -104,7 +104,7 @@ export const Contact = () => {
         <h2 className="text-comic-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight">
           CONTACT AYUSH.
         </h2>
-        <p className="font-comic-narrative text-gray-700 text-sm sm:text-base mt-2 max-w-md">
+        <p className="font-dialogue text-gray-700 text-sm sm:text-base mt-2 max-w-md">
           Have an ambitious mission, distributed system project, or engineering challenge? Send a signal.
         </p>
         <div className="w-16 h-1.5 bg-[#a31515] mt-3 rounded-full shadow-[0_0_8px_rgba(163,21,21,0.6)]" />
@@ -123,7 +123,7 @@ export const Contact = () => {
             <h3 className="font-comic text-2xl font-black uppercase tracking-wide text-gray-900 mb-2">
               Message Dispatched!
             </h3>
-            <p className="font-comic-narrative text-base text-gray-700 max-w-md">
+            <p className="font-dialogue text-base text-gray-700 max-w-md">
               Thanks for reaching out! {HERO_DATA.firstName} will review your dispatch and swing back shortly.
             </p>
           </div>
@@ -131,39 +131,39 @@ export const Contact = () => {
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
-                <label className="font-comic text-xs uppercase tracking-wider text-gray-700 font-bold">
+                <label className="font-dialogue text-xs uppercase tracking-wider text-gray-700 font-bold">
                   Your Name
                 </label>
                 <input
                   required
                   type="text"
                   placeholder="Peter Parker"
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515] transition-all"
+                  className="font-dialogue w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515] transition-all"
                 />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="font-comic text-xs uppercase tracking-wider text-gray-700 font-bold">
+                <label className="font-dialogue text-xs uppercase tracking-wider text-gray-700 font-bold">
                   Your Email
                 </label>
                 <input
                   required
                   type="email"
                   placeholder="peter@dailybugle.com"
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515] transition-all"
+                  className="font-dialogue w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515] transition-all"
                 />
               </div>
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="font-comic text-xs uppercase tracking-wider text-gray-700 font-bold">
+              <label className="font-dialogue text-xs uppercase tracking-wider text-gray-700 font-bold">
                 Message
               </label>
               <textarea
                 required
                 rows={4}
                 placeholder="Let's collaborate on an extraordinary project..."
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515] transition-all resize-none"
+                className="font-dialogue w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515] transition-all resize-none"
               />
             </div>
 
@@ -178,7 +178,7 @@ export const Contact = () => {
 
         {/* Social Links Ribbon */}
         <div className="pt-4 border-t border-gray-200/80 flex flex-wrap items-center justify-between gap-3 text-xs font-bold uppercase tracking-wider">
-          <span className="font-comic text-gray-500 tracking-wider">Connect:</span>
+          <span className="font-dialogue text-gray-500 font-bold tracking-wider">Connect:</span>
           <div className="flex flex-wrap gap-4">
             {CONTACT_DATA.socials.map((s, idx) => (
               <a
@@ -186,7 +186,7 @@ export const Contact = () => {
                 href={s.url}
                 target="_blank"
                 rel="noreferrer"
-                className="font-comic text-sm tracking-wider text-[#a31515] hover:text-black transition-colors"
+                className="font-dialogue font-bold text-xs tracking-wider text-[#a31515] hover:text-black transition-colors"
               >
                 {s.name} ↗
               </a>
@@ -196,7 +196,7 @@ export const Contact = () => {
       </div>
 
       {/* Footer */}
-      <footer className="mt-16 text-center font-comic-narrative text-xs sm:text-sm text-gray-500 font-medium">
+      <footer className="mt-16 text-center font-dialogue text-xs sm:text-sm text-gray-500 font-medium">
         {CONTACT_DATA.footerText}
       </footer>
     </section>

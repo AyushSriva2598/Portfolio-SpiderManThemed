@@ -139,7 +139,7 @@ export const Navbar = () => {
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-2 pb-4 border-b border-red-900/40">
               <span className="w-2.5 h-2.5 rounded-full bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.8)] animate-pulse" />
-              <span className="text-xs uppercase font-mono tracking-widest text-gray-400">
+              <span className="text-xs uppercase font-dialogue font-bold tracking-widest text-gray-400">
                 Navigation Protocol
               </span>
             </div>
@@ -153,7 +153,7 @@ export const Navbar = () => {
                   className="group flex items-center justify-between py-2 font-comic text-2xl sm:text-3xl italic uppercase tracking-widest text-gray-200 hover:text-red-500 transition-colors"
                 >
                   <span className="flex items-center gap-3">
-                    <span className="text-xs font-mono text-red-600">
+                    <span className="text-xs font-dialogue font-bold text-red-600">
                       0{idx + 1}.
                     </span>
                     {item.label}
@@ -168,10 +168,10 @@ export const Navbar = () => {
 
           {/* Drawer Footer */}
           <div className="pt-6 border-t border-gray-800/80 flex flex-col gap-3">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-gray-500">
+            <span className="text-[11px] font-dialogue font-bold uppercase tracking-widest text-gray-500">
               {HERO_DATA.tagline}
             </span>
-            <div className="text-xs font-bold text-gray-400">
+            <div className="text-xs font-dialogue font-bold text-gray-400">
               © {new Date().getFullYear()} {HERO_DATA.firstName} {HERO_DATA.lastName}
             </div>
           </div>

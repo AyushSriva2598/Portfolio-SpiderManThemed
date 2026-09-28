@@ -143,7 +143,7 @@ export const Hero = () => {
         <img
           src={ASSETS.topMaskImg}
           alt="Spider-Man Hero"
-          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-10"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10 translate-x-[375px] mix-blend-multiply"
         />
 
         {/* Corner Web Overlays */}
@@ -151,20 +151,19 @@ export const Hero = () => {
           ref={websRef}
           className="absolute inset-0 pointer-events-none z-[25] overflow-hidden"
         >
+          {/* TOP RIGHT */}
           <img
             src={ASSETS.webImg}
-            alt="Spider Web Top"
-            className="absolute top-0 left-0 w-44 h-44 sm:w-64 sm:h-64 md:w-[400px] md:h-[400px] object-contain opacity-40 sm:opacity-50 -translate-x-1/4 -translate-y-1/4 mix-blend-multiply"
+            alt="Spider Web Top" className="absolute top-0 right-0 w-36 h-36 sm:w-52 sm:h-52 md:w-[320px] md:h-[320px object-contain opacity-40 sm:opacity-50 mix-blend-multiply"
           />
-          <img
-            src={ASSETS.webImg}
-            alt="Spider Web Bottom"
-            className="absolute bottom-0 right-0 w-52 h-52 sm:w-72 sm:h-72 md:w-[500px] md:h-[500px] object-contain opacity-40 sm:opacity-50 translate-x-1/4 translate-y-1/4 mix-blend-multiply"
+
+          {/* BOTTOM LEFT */}
+          <img src={ASSETS.webImg} alt="Spider Web Bottom" className="absolute bottom-0 left-0 w-42 h-42 sm:w-[230px] sm:h-[230px] md:w-[400px] md:h-[400px] object-contain opacity-40 sm:opacity-50 mix-blend-multiply"
           />
         </div>
 
         {/* Hero Title & Information */}
-        <div className="absolute top-1/2 -translate-y-1/2 left-6 md:left-12 lg:left-24 z-30 flex flex-col gap-4 pointer-events-none drop-shadow-md max-w-xl w-full">
+        <div className="absolute top-1/3 -translate-y-[15%] left-6 md:left-12 translate-x-48 scale-125 lg:left-24 z-30 flex flex-col gap-4 pointer-events-none drop-shadow-md max-w-xl w-full">
           <div
             ref={taglineRef}
             className="flex items-center gap-2 opacity-0"
@@ -184,11 +183,11 @@ export const Hero = () => {
             {HERO_DATA.quoteHeadingLine2}
           </h1>
 
-          <p className="font-comic-narrative text-gray-900 text-sm sm:text-base md:text-lg leading-relaxed max-w-lg select-text bg-white/40 backdrop-blur-[2px] rounded-lg p-1">
+          <p className="font-dialogue text-gray-900 text-sm sm:text-base md:text-lg leading-relaxed max-w-lg select-text bg-white/40 backdrop-blur-[2px] rounded-lg p-1">
             {HERO_DATA.narrativeContext}
           </p>
 
-          <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-gray-700 font-semibold">
+          <div className="flex items-center gap-2 text-xs font-dialogue tracking-wider text-gray-700 font-bold">
             <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
             <span>{HERO_DATA.firstName} {HERO_DATA.lastName} • {HERO_DATA.role}</span>
           </div>

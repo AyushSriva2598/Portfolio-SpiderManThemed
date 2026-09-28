@@ -96,7 +96,7 @@ export const Skills = () => {
         <h2 className="text-comic-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight">
           TECHNICAL SKILLS.
         </h2>
-        <p className="font-comic-narrative text-gray-700 text-sm sm:text-base mt-2 max-w-md">
+        <p className="font-dialogue text-gray-700 text-sm sm:text-base mt-2 max-w-md">
           Tools, frameworks, and architectures powering battle-tested distributed systems.
         </p>
         <div className="w-16 h-1.5 bg-[#a31515] mt-3 rounded-full shadow-[0_0_8px_rgba(163,21,21,0.6)]" />
@@ -118,14 +118,14 @@ export const Skills = () => {
                 <span className="font-comic text-base sm:text-lg tracking-wide uppercase text-gray-900 group-hover:text-white transition-colors duration-300">
                   {skill.name}
                 </span>
-                <span className="text-[10px] font-mono font-semibold text-gray-500 group-hover:text-gray-200 transition-colors duration-300 uppercase tracking-widest">
+                <span className="text-[10px] font-dialogue font-semibold text-gray-500 group-hover:text-gray-200 transition-colors duration-300 uppercase tracking-widest">
                   {skill.category}
                 </span>
               </div>
             </div>
 
             <div className="relative z-10">
-              <span className="font-comic text-xs uppercase tracking-wider px-3 py-1 bg-white text-gray-800 group-hover:bg-black group-hover:text-white rounded-full transition-colors duration-300 shadow-sm border border-gray-200 group-hover:border-black">
+              <span className="font-dialogue font-bold text-xs uppercase tracking-wider px-3 py-1 bg-white text-gray-800 group-hover:bg-black group-hover:text-white rounded-full transition-colors duration-300 shadow-sm border border-gray-200 group-hover:border-black">
                 {skill.level}
               </span>
             </div>
