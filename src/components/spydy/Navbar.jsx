@@ -30,6 +30,7 @@ export const Navbar = () => {
     { label: "Skills", href: "#skills" },
     { label: "Projects", href: "#projects" },
     { label: "Contact", href: "#contact" },
+    { label: "Cover Letter", href: "#CoverLetter" },
   ];
 
   const handleNavClick = () => {
@@ -39,36 +40,39 @@ export const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b ${
-          scrolled || mobileMenuOpen
-            ? "bg-black/90 backdrop-blur-md border-red-900/50 py-3 shadow-[0_4px_30px_rgba(220,38,38,0.15)]"
-            : "bg-transparent border-transparent py-5"
-        }`}
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b ${scrolled || mobileMenuOpen
+          ? "bg-black/90 backdrop-blur-md border-red-900/50 py-3 shadow-[0_4px_30px_rgba(220,38,38,0.15)]"
+          : "bg-transparent border-transparent py-5"
+          }`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+        <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 flex items-center justify-between">          
           {/* Logo */}
           <a
             href="#"
-            className="text-white font-comic text-2xl sm:text-3xl tracking-wide uppercase italic group flex items-center"
+            className="text-white font-comic text-sm sm:text-3xl tracking-[0.2em] uppercase italic group flex items-center"
           >
             <span className="text-red-600 drop-shadow-[0_0_10px_rgba(220,38,38,0.8)]">
               {HERO_DATA.firstName.charAt(0)}
             </span>
             <span className="group-hover:text-red-500 transition-colors duration-300">
-              {HERO_DATA.firstName.slice(1)}.
+              {HERO_DATA.firstName.slice(1)}
             </span>
           </a>
 
           {/* Desktop Navigation Links */}
           <div className="flex items-center gap-8">
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-10">
               {navItems.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
-                  className="relative font-comic text-base text-gray-300 uppercase tracking-widest transition-colors duration-300 hover:text-white group"
+                  className="relative font-comic text-sm sm:text-3xl text-white uppercase tracking-[0.2em] font-bold italic transition-all duration-300 hover:text-white group" style={{
+                    WebkitTextStroke: "1px #111",
+                    textShadow: "2px 2px 0 #a31515, 3px 3px 0 #111",
+                  }}
                 >
                   {item.label}
+
                   <span className="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-red-600 transition-all duration-300 ease-out group-hover:w-full shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
                 </a>
               ))}
@@ -81,35 +85,7 @@ export const Navbar = () => {
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? (
-                <svg
-                  className="w-7 h-7"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2.5"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className="w-7 h-7"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              )}
+              {/* ... */}
             </button>
           </div>
         </div>
@@ -117,11 +93,10 @@ export const Navbar = () => {
 
       {/* Mobile Drawer Slide-over Menu */}
       <div
-        className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${
-          mobileMenuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${mobileMenuOpen
+          ? "opacity-100 pointer-events-auto"
+          : "opacity-0 pointer-events-none"
+          }`}
       >
         {/* Backdrop */}
         <div
@@ -131,9 +106,8 @@ export const Navbar = () => {
 
         {/* Drawer Panel */}
         <div
-          className={`absolute top-0 right-0 w-4/5 max-w-sm h-full bg-[#0a0a0a] border-l border-red-900/50 shadow-2xl p-8 pt-24 flex flex-col justify-between transition-transform duration-300 ease-out ${
-            mobileMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          className={`absolute top-0 right-0 w-4/5 max-w-sm h-full bg-[#0a0a0a] border-l border-red-900/50 shadow-2xl p-8 pt-24 flex flex-col justify-between transition-transform duration-300 ease-out ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+            }`}
         >
           {/* Decorative Web Accent */}
           <div className="flex flex-col gap-6">

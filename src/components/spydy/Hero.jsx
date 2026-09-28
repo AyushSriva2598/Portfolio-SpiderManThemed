@@ -163,7 +163,7 @@ export const Hero = () => {
         </div>
 
         {/* Hero Title & Information */}
-        <div className="absolute top-1/3 -translate-y-[15%] left-6 md:left-12 translate-x-48 scale-125 lg:left-24 z-30 flex flex-col gap-4 pointer-events-none drop-shadow-md max-w-xl w-full">
+        <div className="absolute top-1/3 -translate-y-[20%] left-6 md:left-12 translate-x-48 scale-125 lg:left-24 z-30 flex flex-col gap-4 pointer-events-none drop-shadow-md max-w-xl w-full">
           <div
             ref={taglineRef}
             className="flex items-center gap-2 opacity-0"

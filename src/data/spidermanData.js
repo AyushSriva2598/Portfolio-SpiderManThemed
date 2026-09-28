@@ -7,7 +7,7 @@ export const HERO_DATA = {
   lastName: "SRIVASTAVA.",
   role: "Full Stack Developer & Systems Engineer",
   navTitle: "AYUSH.",
-  tagline: "FRIENDLY NEIGHBORHOOD ENGINEER",
+  tagline: "FRIENDLY NEIGHBOURHOOD ENGINEER",
   marqueeItems: [
     "Full Stack Developer",
     "Python & Microservices",

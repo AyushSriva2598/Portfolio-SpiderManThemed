@@ -4,15 +4,25 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Anime Ace BB";
+  src: url("/assets/fonts/Anime Ace Italic 400.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
 :root {
   color: #111111;
   background-color: #fafafa;
 
   --font-comic: "Bangers", Impact, cursive;
   --font-narrative: "EB Garamond", Georgia, serif;
-  --font-dialogue: "CC Wild Words", "Anime Ace", "Comic Neue", cursive;
+  --font-dialogue:"Anime Ace BB", cursive;
   --font-sans: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+}
+.font-dialogue {
+  font-family: var(--font-dialogue);
 }
 
 html {
