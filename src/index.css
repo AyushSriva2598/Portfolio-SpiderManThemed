@@ -146,3 +146,15 @@ body {
 .breathing-glow {
   animation: breathe 8s ease-in-out infinite;
 }
+
+/* Daily Bugle poster — aged paper texture effect */
+.poster-frame {
+  box-shadow:
+    8px 12px 30px rgba(0, 0, 0, 0.35),
+    inset 0 0 40px rgba(139, 119, 80, 0.15);
+}
+.poster-frame:hover {
+  box-shadow:
+    10px 16px 40px rgba(0, 0, 0, 0.4),
+    inset 0 0 40px rgba(139, 119, 80, 0.2);
+}

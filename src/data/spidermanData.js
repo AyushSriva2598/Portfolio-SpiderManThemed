@@ -27,6 +27,7 @@ export const ASSETS = {
   standingSpiderImg: "/assets/spydy_stand-BwBM-zCr.png",
   hangingSpiderImg: "/assets/spydy_hang-Cac1gK30.png",
   profileImg: "/assets/mypic-aradhya.png",
+  mugshotPoster: "/assets/mugshot-poster.jpg",
 };
 
 export const ABOUT_DATA = {

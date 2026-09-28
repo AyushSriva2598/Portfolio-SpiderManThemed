@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const About = () => {
   const sectionRef = useRef(null);
-  const profileContainerRef = useRef(null);
+  const posterRef = useRef(null);
   const webLeftRef = useRef(null);
   const webRightRef = useRef(null);
   const badgeRef = useRef(null);
@@ -57,9 +57,15 @@ export const About = () => {
           "-=1.0"
         )
         .fromTo(
-          profileContainerRef.current,
-          { y: -800, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1.8, ease: "elastic.out(0.7, 0.4)" },
+          posterRef.current,
+          { scale: 0.6, opacity: 0, rotation: -15 },
+          {
+            scale: 1,
+            opacity: 1,
+            rotation: 5,
+            duration: 1.2,
+            ease: "back.out(1.4)",
+          },
           "-=0.8"
         )
         .fromTo(
@@ -75,13 +81,13 @@ export const About = () => {
           "-=0.8"
         );
 
-      // Pendulum swinging portrait oscillation
-      gsap.to(profileContainerRef.current, {
-        rotation: 2.5,
+      // Poster flutter — subtle wind-caught paper wobble
+      gsap.to(posterRef.current, {
+        rotation: 7,
         transformOrigin: "top center",
         yoyo: true,
         repeat: -1,
-        duration: 3.2,
+        duration: 4,
         ease: "sine.inOut",
         delay: 2,
       });
@@ -100,15 +106,6 @@ export const About = () => {
         repeat: -1,
         duration: 90,
         ease: "linear",
-      });
-
-      // Frame breathing glow
-      gsap.to(".glow-frame", {
-        boxShadow: "0px 15px 35px rgba(163,21,21,0.25)",
-        yoyo: true,
-        repeat: -1,
-        duration: 2,
-        ease: "sine.inOut",
       });
 
       // Tech pills floating bob
@@ -191,7 +188,7 @@ export const About = () => {
           >
             {ABOUT_DATA.paragraphs.map((p, idx) => (
               <p key={idx} className="origin-bottom">
-                “{p}”
+                &ldquo;{p}&rdquo;
               </p>
             ))}
           </div>
@@ -214,18 +211,45 @@ export const About = () => {
           </div>
         </div>
 
-        {/* Right column: Hanging pendulum swinging portrait */}
-        <div className="flex-1 relative flex justify-center items-start min-h-[420px] md:min-h-[550px] w-full pt-0">
+        {/* Right column: Daily Bugle Mugshot Poster webbed to wall */}
+        <div className="flex-1 relative flex justify-center items-center min-h-[420px] md:min-h-[550px] w-full">
           <div
-            ref={profileContainerRef}
-            className="flex flex-col items-center z-30 group"
+            ref={posterRef}
+            className="relative z-30 group"
+            style={{ transform: "rotate(5deg)" }}
           >
-            <div className="w-[2px] h-[150px] md:h-[320px] bg-gradient-to-b from-transparent via-[#a31515]/60 to-[#a31515]" />
-            <div className="glow-frame relative w-56 h-56 md:w-[320px] md:h-[320px] rounded-full border-[6px] border-[#a31515] p-2 bg-white shadow-2xl transition-transform duration-500 group-hover:scale-105">
+            {/* Web overlays pinned to corners */}
+            <img
+              src={ASSETS.webImg}
+              alt=""
+              aria-hidden="true"
+              className="absolute -top-10 -left-10 w-24 h-24 md:w-32 md:h-32 object-contain opacity-50 pointer-events-none z-20"
+            />
+            <img
+              src={ASSETS.webImg}
+              alt=""
+              aria-hidden="true"
+              className="absolute -top-10 -right-10 w-24 h-24 md:w-32 md:h-32 object-contain opacity-50 pointer-events-none z-20 -scale-x-100"
+            />
+            <img
+              src={ASSETS.webImg}
+              alt=""
+              aria-hidden="true"
+              className="absolute -bottom-8 -left-8 w-20 h-20 md:w-28 md:h-28 object-contain opacity-40 pointer-events-none z-20 -scale-y-100"
+            />
+            <img
+              src={ASSETS.webImg}
+              alt=""
+              aria-hidden="true"
+              className="absolute -bottom-8 -right-8 w-20 h-20 md:w-28 md:h-28 object-contain opacity-40 pointer-events-none z-20 -scale-x-100 -scale-y-100"
+            />
+
+            {/* The poster itself */}
+            <div className="poster-frame relative w-[260px] sm:w-[300px] md:w-[360px] bg-[#f5f0e8] border-[3px] border-[#d4c9a8] rounded-sm overflow-hidden transition-transform duration-500 group-hover:scale-[1.03]">
               <img
-                src={ASSETS.profileImg}
-                alt={ABOUT_DATA.title}
-                className="w-full h-full object-cover rounded-full grayscale hover:grayscale-0 transition-all duration-700 select-none"
+                src={ASSETS.mugshotPoster}
+                alt="Daily Bugle — Ayush Srivastava"
+                className="w-full h-auto object-cover select-none"
               />
             </div>
           </div>
