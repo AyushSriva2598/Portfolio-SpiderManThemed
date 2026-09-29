@@ -6,6 +6,7 @@ export const Hero = () => {
   const containerRef = useRef(null);
   const taglineRef = useRef(null);
   const headlineRef = useRef(null);
+  const quoteRef = useRef(null);
   const ctaRef = useRef(null);
   const websRef = useRef(null);
 
@@ -22,7 +23,7 @@ export const Hero = () => {
         .fromTo(
           websRef.current?.children || [],
           { opacity: 0, scale: 0.5 },
-          { opacity: 0.5, scale: 1, duration: 2, stagger: 0.4, ease: "power3.out" }
+          { opacity: 0.5, scale: 1,x: (i) => i === 1 ? -150 : 0,y:(i)=>i===1?100:0 ,duration: 2, stagger: 0.4, ease: "power3.out" }
         )
         .fromTo(
           taglineRef.current,
@@ -31,7 +32,7 @@ export const Hero = () => {
           "-=1.5"
         )
         .fromTo(
-          headlineRef.current,
+          [headlineRef.current, quoteRef.current],
           { x: -150, opacity: 0, skewX: -15 },
           { x: 0, opacity: 1, skewX: 0, duration: 1.2 },
           "-=1.0"
@@ -143,7 +144,7 @@ export const Hero = () => {
         <img
           src={ASSETS.topMaskImg}
           alt="Spider-Man Hero"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10 translate-x-[375px] mix-blend-multiply"
+          className="relative inset-0 w-full h-full object-cover pointer-events-none z-10 mix-blend-multiply translate-x-10 "
         />
 
         {/* Corner Web Overlays */}
@@ -163,7 +164,7 @@ export const Hero = () => {
         </div>
 
         {/* Hero Title & Information */}
-        <div className="absolute top-1/3 -translate-y-[20%] left-6 md:left-12 translate-x-48 scale-125 lg:left-24 z-30 flex flex-col gap-4 pointer-events-none drop-shadow-md max-w-xl w-full">
+        <div className="absolute top-1/3 -translate-y-[20%] left-6 md:left-12  lg:left-24 z-30 flex flex-col gap-4 pointer-events-none drop-shadow-md max-w-xl w-full">
           <div
             ref={taglineRef}
             className="flex items-center gap-2 opacity-0"
@@ -178,9 +179,9 @@ export const Hero = () => {
             ref={headlineRef}
             className="text-comic-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight opacity-0 select-none"
           >
-            {HERO_DATA.quoteHeadingLine1}
-            <br />
-            {HERO_DATA.quoteHeadingLine2}
+            {HERO_DATA.firstName}
+            {/* <br /> */}
+            {HERO_DATA.lastName}
           </h1>
 
           <p className="font-dialogue text-gray-900 text-sm sm:text-base md:text-lg leading-relaxed max-w-lg select-text bg-white/40 backdrop-blur-[2px] rounded-lg p-1">
@@ -189,7 +190,7 @@ export const Hero = () => {
 
           <div className="flex items-center gap-2 text-xs font-dialogue tracking-wider text-gray-700 font-bold">
             <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
-            <span>{HERO_DATA.firstName} {HERO_DATA.lastName} • {HERO_DATA.role}</span>
+            <span> {HERO_DATA.role}</span>
           </div>
 
           <div
@@ -214,6 +215,18 @@ export const Hero = () => {
               Get In Touch
             </a>
           </div>
+        </div>
+
+        {/* Right Side Quote Heading */}
+        <div className="absolute top-1/3 -translate-y-[20%] translate-x-[64px] right-6 md:right-12 lg:right-24 z-30 pointer-events-none drop-shadow-md select-none hidden lg:block text-right">
+          <h2
+            ref={quoteRef}
+            className="text-comic-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight opacity-0 select-none text-right"
+          >
+            {HERO_DATA.quoteHeadingLine1}
+            <br />
+            {HERO_DATA.quoteHeadingLine2}
+          </h2>
         </div>
       </section>
 

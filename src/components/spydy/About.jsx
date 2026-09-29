@@ -157,7 +157,7 @@ export const About = () => {
 
       <div className="container mx-auto px-6 md:px-12 lg:px-24 flex flex-col-reverse lg:flex-row items-center lg:items-start gap-12 lg:gap-20 z-10 relative">
         {/* Left Column: Biography & Tech Stack */}
-        <div className="flex-1 flex flex-col gap-6 mt-10 lg:mt-0 relative z-20 translate-x-[-100px]">
+        <div className="flex-1 flex flex-col gap-6 mt-10 lg:mt-0 relative z-20 ">
           <div className="overflow-hidden">
             <span
               ref={badgeRef}

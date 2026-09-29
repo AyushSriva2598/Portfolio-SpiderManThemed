@@ -3,7 +3,7 @@ export const HERO_DATA = {
   quoteHeadingLine2: "COMES GREAT CODE",
   narrativeContext:
     "From distributed microservices to AI-powered platforms — I build systems that stay up when it matters most. Cloud-native. Resilient. Built to scale like the web itself.",
-  firstName: "AYUSH",
+  firstName: "AYUSH ",
   lastName: "SRIVASTAVA",
   role: "Full Stack Developer & Systems Engineer",
   navTitle: "AYUSH",
