@@ -143,7 +143,7 @@ export const Hero = () => {
         <img
           src={ASSETS.topMaskImg}
           alt="Spider-Man Hero"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10 translate-x-[200px] mix-blend-multiply"
+          className="absolute top-1/2 -translate-y-1/2 right-[-5%] h-[85vh] w-auto object-contain pointer-events-none z-10 mix-blend-multiply"
         />
 
         {/* Corner Web Overlays */}
