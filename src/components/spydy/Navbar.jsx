@@ -51,10 +51,10 @@ export const Navbar = () => {
             href="#"
             className="text-white font-comic text-sm sm:text-3xl tracking-[0.2em] uppercase italic group flex items-center"
           >
-            <span className="text-red-600 drop-shadow-[0_0_10px_rgba(220,38,38,0.8)]">
+            <span className="text-black drop-shadow-[0_0_10px_rgba(220,38,38,0.8)]">
               {HERO_DATA.firstName.charAt(0)}
             </span>
-            <span className="group-hover:text-red-500 transition-colors duration-300">
+            <span className="group-hover:text-black transition-colors duration-300">
               {HERO_DATA.firstName.slice(1)}
             </span>
           </a>

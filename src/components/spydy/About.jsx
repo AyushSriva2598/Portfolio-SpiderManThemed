@@ -82,15 +82,15 @@ export const About = () => {
         );
 
       // Poster flutter — subtle wind-caught paper wobble
-      gsap.to(posterRef.current, {
-        rotation: 7,
-        transformOrigin: "top center",
-        yoyo: true,
-        repeat: -1,
-        duration: 4,
-        ease: "sine.inOut",
-        delay: 2,
-      });
+      // gsap.to(posterRef.current, {
+      //   rotation: 7,
+      //   transformOrigin: "top center",
+      //   yoyo: true,
+      //   repeat: -1,
+      //   duration: 4,
+      //   ease: "sine.inOut",
+      //   delay: 2,
+      // });
 
       // Ambient rotating background web ornaments
       gsap.to(".bg-web-left", {
@@ -157,7 +157,7 @@ export const About = () => {
 
       <div className="container mx-auto px-6 md:px-12 lg:px-24 flex flex-col-reverse lg:flex-row items-center lg:items-start gap-12 lg:gap-20 z-10 relative">
         {/* Left Column: Biography & Tech Stack */}
-        <div className="flex-1 flex flex-col gap-6 mt-10 lg:mt-0 relative z-20">
+        <div className="flex-1 flex flex-col gap-6 mt-10 lg:mt-0 relative z-20 translate-x-[-100px]">
           <div className="overflow-hidden">
             <span
               ref={badgeRef}
@@ -183,7 +183,7 @@ export const About = () => {
 
           <div
             ref={textRef}
-            className="flex flex-col gap-5 text-gray-900 font-dialogue text-base sm:text-lg md:text-xl leading-relaxed max-w-xl mt-2 border-l-4 border-[#a31515] pl-4 sm:pl-5 bg-white/70 backdrop-blur-sm py-4 pr-4 rounded-r-2xl shadow-sm"
+            className="flex flex-col gap-5 text-gray-900 font-dialogue text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl mt-2 border-l-4 border-[#a31515] pl-4 sm:pl-5 bg-white/70 backdrop-blur-sm py-4 pr-4 rounded-r-2xl shadow-sm"
             style={{ perspective: "1000px" }}
           >
             {ABOUT_DATA.paragraphs.map((p, idx) => (
@@ -196,7 +196,7 @@ export const About = () => {
           <div className="mt-6">
             <h3 className="font-dialogue text-sm uppercase tracking-widest text-[#a31515] mb-4 font-bold border-b border-[#a31515]/30 pb-2 inline-flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#a31515]" />
-              Primary Tech Arsenal
+              Primary Tech Stack
             </h3>
             <div ref={pillsRef} className="flex flex-wrap gap-3">
               {ABOUT_DATA.techStack.map((tech, idx) => (
@@ -212,7 +212,7 @@ export const About = () => {
         </div>
 
         {/* Right column: Daily Bugle Mugshot Poster webbed to wall */}
-        <div className="flex-1 relative flex justify-center items-center min-h-[420px] md:min-h-[550px] w-full">
+        <div className="flex-1 relative flex justify-center items-center min-h-[420px] md:min-h-[550px] w-full translate-x-32 translate-y-32 scale-150">
           <div
             ref={posterRef}
             className="relative z-30 group"
@@ -225,18 +225,7 @@ export const About = () => {
               aria-hidden="true"
               className="absolute -top-10 -left-10 w-24 h-24 md:w-32 md:h-32 object-contain opacity-50 pointer-events-none z-20"
             />
-            <img
-              src={ASSETS.webImg}
-              alt=""
-              aria-hidden="true"
-              className="absolute -top-10 -right-10 w-24 h-24 md:w-32 md:h-32 object-contain opacity-50 pointer-events-none z-20 -scale-x-100"
-            />
-            <img
-              src={ASSETS.webImg}
-              alt=""
-              aria-hidden="true"
-              className="absolute -bottom-8 -left-8 w-20 h-20 md:w-28 md:h-28 object-contain opacity-40 pointer-events-none z-20 -scale-y-100"
-            />
+            
             <img
               src={ASSETS.webImg}
               alt=""
@@ -245,7 +234,7 @@ export const About = () => {
             />
 
             {/* The poster itself */}
-            <div className="poster-frame relative w-[260px] sm:w-[300px] md:w-[360px] bg-[#f5f0e8] border-[3px] border-[#d4c9a8] rounded-sm overflow-hidden transition-transform duration-500 group-hover:scale-[1.03]">
+            <div className="poster-frame relative w-[260px] sm:w-[300px] md:w-[360px] bg-[#f5f0e8] border-[3px] border-[#d4c9a8] rounded-sm overflow-hidden ">
               <img
                 src={ASSETS.mugshotPoster}
                 alt="Daily Bugle — Ayush Srivastava"

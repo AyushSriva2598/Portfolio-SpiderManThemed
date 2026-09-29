@@ -169,7 +169,7 @@ export const Hero = () => {
             className="flex items-center gap-2 opacity-0"
           >
             <span className="w-6 sm:w-8 h-[2px] bg-red-600" />
-            <span className="text-[#a31515] font-comic tracking-[0.2em] text-xs sm:text-sm uppercase font-bold">
+            <span className="text-[#a31515] font-comic tracking-[0.2em] text-3xl sm:text-sm uppercase font-bold">
               {HERO_DATA.tagline}
             </span>
           </div>

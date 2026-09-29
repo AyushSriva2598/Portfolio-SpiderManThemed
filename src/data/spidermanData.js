@@ -4,10 +4,10 @@ export const HERO_DATA = {
   narrativeContext:
     "From distributed microservices to AI-powered platforms — I build systems that stay up when it matters most. Cloud-native. Resilient. Built to scale like the web itself.",
   firstName: "AYUSH",
-  lastName: "SRIVASTAVA.",
+  lastName: "SRIVASTAVA",
   role: "Full Stack Developer & Systems Engineer",
-  navTitle: "AYUSH.",
-  tagline: "FRIENDLY NEIGHBOURHOOD ENGINEER",
+  navTitle: "AYUSH",
+  tagline: "FRIENDLY NEIGHBOURHOOD ENGINEER - B.Tech IT 24'-28'",
   marqueeItems: [
     "Full Stack Developer",
     "Python & Microservices",
@@ -32,7 +32,7 @@ export const ASSETS = {
 
 export const ABOUT_DATA = {
   badge: "Behind the Mask",
-  title: "Ayush Srivastava.",
+  title: "Ayush Srivastava",
   paragraphs: [
     "I am a Full Stack Developer & Software Engineer dedicated to engineering high-performance distributed backends, robust API gateways, and fluid interactive web applications.",
     "Operating at the intersection of powerful systems architecture and creative frontend design, I build scalable Python & Node.js services alongside cinematic, responsive interfaces powered by React, GSAP, and Tailwind CSS.",
@@ -42,13 +42,14 @@ export const ABOUT_DATA = {
     "React 18",
     "JavaScript",
     "TypeScript",
-    "Node.js",
-    "FastAPI",
+    "Django REST Framework",
     "Tailwind CSS",
-    "GSAP",
     "Docker",
     "PostgreSQL",
     "Git & GitHub",
+    "Terraform",
+    "AWS Services",
+    "Java "
   ],
 };
 
