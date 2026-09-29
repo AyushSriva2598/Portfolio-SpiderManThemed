@@ -143,7 +143,7 @@ export const Hero = () => {
         <img
           src={ASSETS.topMaskImg}
           alt="Spider-Man Hero"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10 translate-x-[375px] mix-blend-multiply"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10 translate-x-[200px] mix-blend-multiply"
         />
 
         {/* Corner Web Overlays */}
@@ -163,13 +163,13 @@ export const Hero = () => {
         </div>
 
         {/* Hero Title & Information */}
-        <div className="absolute top-1/3 -translate-y-[20%] left-6 md:left-12 translate-x-48 scale-125 lg:left-24 z-30 flex flex-col gap-4 pointer-events-none drop-shadow-md max-w-xl w-full">
+        <div className="absolute top-1/3 -translate-y-[15%] left-6 md:left-12 lg:left-24 z-30 flex flex-col gap-4 pointer-events-none drop-shadow-md max-w-xl w-full">
           <div
             ref={taglineRef}
             className="flex items-center gap-2 opacity-0"
           >
             <span className="w-6 sm:w-8 h-[2px] bg-red-600" />
-            <span className="text-[#a31515] font-comic tracking-[0.2em] text-3xl sm:text-sm uppercase font-bold">
+            <span className="text-[#a31515] font-comic tracking-[0.2em] text-xs sm:text-sm uppercase font-bold">
               {HERO_DATA.tagline}
             </span>
           </div>

@@ -157,7 +157,7 @@ export const About = () => {
 
       <div className="container mx-auto px-6 md:px-12 lg:px-24 flex flex-col-reverse lg:flex-row items-center lg:items-start gap-12 lg:gap-20 z-10 relative">
         {/* Left Column: Biography & Tech Stack */}
-        <div className="flex-1 flex flex-col gap-6 mt-10 lg:mt-0 relative z-20 translate-x-[-100px]">
+        <div className="flex-1 flex flex-col gap-6 mt-10 lg:mt-0 relative z-20">
           <div className="overflow-hidden">
             <span
               ref={badgeRef}
@@ -183,7 +183,7 @@ export const About = () => {
 
           <div
             ref={textRef}
-            className="flex flex-col gap-5 text-gray-900 font-dialogue text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl mt-2 border-l-4 border-[#a31515] pl-4 sm:pl-5 bg-white/70 backdrop-blur-sm py-4 pr-4 rounded-r-2xl shadow-sm"
+            className="flex flex-col gap-5 text-gray-900 font-dialogue text-base sm:text-lg md:text-xl leading-relaxed max-w-xl mt-2 border-l-4 border-[#a31515] pl-4 sm:pl-5 bg-white/70 backdrop-blur-sm py-4 pr-4 rounded-r-2xl shadow-sm"
             style={{ perspective: "1000px" }}
           >
             {ABOUT_DATA.paragraphs.map((p, idx) => (
@@ -212,7 +212,7 @@ export const About = () => {
         </div>
 
         {/* Right column: Daily Bugle Mugshot Poster webbed to wall */}
-        <div className="flex-1 relative flex justify-center items-center min-h-[420px] md:min-h-[550px] w-full translate-x-32 translate-y-32 scale-150">
+        <div className="flex-1 relative flex justify-center items-center min-h-[420px] md:min-h-[550px] w-full">
           <div
             ref={posterRef}
             className="relative z-30 group"
@@ -234,7 +234,7 @@ export const About = () => {
             />
 
             {/* The poster itself */}
-            <div className="poster-frame relative w-[260px] sm:w-[300px] md:w-[360px] bg-[#f5f0e8] border-[3px] border-[#d4c9a8] rounded-sm overflow-hidden ">
+            <div className="poster-frame relative w-[260px] sm:w-[300px] md:w-[360px] bg-[#f5f0e8] border-[3px] border-[#d4c9a8] rounded-sm overflow-hidden transition-transform duration-500 group-hover:scale-[1.03]">
               <img
                 src={ASSETS.mugshotPoster}
                 alt="Daily Bugle — Ayush Srivastava"
