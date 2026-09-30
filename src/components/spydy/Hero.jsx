@@ -138,13 +138,16 @@ export const Hero = () => {
       {/* Hero Section — Clean Spider-Man Background */}
       <section
         ref={containerRef}
-        className="relative w-full h-screen overflow-hidden flex items-center justify-center select-none"
+        className="relative w-full min-h-[100dvh] h-[100dvh] overflow-hidden flex items-center justify-center select-none"
       >
         {/* Single Background Image — Spider-Man Mask (no face reveal) */}
         <img
           src={ASSETS.topMaskImg}
           alt="Spider-Man Hero"
-          className="relative inset-0 w-full h-full object-cover pointer-events-none z-10 mix-blend-multiply translate-x-10 "
+          fetchPriority="high"
+          width="1600"
+          height="893"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10 mix-blend-multiply translate-x-4 md:translate-x-10"
         />
 
         {/* Corner Web Overlays */}
@@ -155,36 +158,44 @@ export const Hero = () => {
           {/* TOP RIGHT */}
           <img
             src={ASSETS.webImg}
-            alt="Spider Web Top" className="absolute top-0 right-0 w-36 h-36 sm:w-52 sm:h-52 md:w-[320px] md:h-[320px object-contain opacity-40 sm:opacity-50 mix-blend-multiply"
+            alt="Spider Web Top"
+            width="320"
+            height="320"
+            className="absolute top-0 right-0 w-36 h-36 sm:w-52 sm:h-52 md:w-[320px] md:h-[320px] object-contain opacity-40 sm:opacity-50 mix-blend-multiply"
           />
 
           {/* BOTTOM LEFT */}
-          <img src={ASSETS.webImg} alt="Spider Web Bottom" className="absolute bottom-0 left-0 w-42 h-42 sm:w-[230px] sm:h-[230px] md:w-[400px] md:h-[400px] object-contain opacity-40 sm:opacity-50 mix-blend-multiply"
+          <img
+            src={ASSETS.webImg}
+            alt="Spider Web Bottom"
+            width="400"
+            height="400"
+            className="absolute bottom-0 left-0 w-42 h-42 sm:w-[230px] sm:h-[230px] md:w-[400px] md:h-[400px] object-contain opacity-40 sm:opacity-50 mix-blend-multiply"
           />
         </div>
 
         {/* Hero Title & Information */}
-        <div className="absolute top-1/3 -translate-y-[20%] left-6 md:left-12  lg:left-24 z-30 flex flex-col gap-4 pointer-events-none drop-shadow-md max-w-xl w-full">
+        <div className="absolute top-1/3 -translate-y-[20%] left-4 sm:left-6 md:left-12 lg:left-20 z-30 flex flex-col gap-3 sm:gap-4 pointer-events-none drop-shadow-md max-w-xl w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)] md:w-auto">
           <div
             ref={taglineRef}
             className="flex items-center gap-2 opacity-0"
           >
             <span className="w-6 sm:w-8 h-[2px] bg-red-600" />
-            <span className="text-[#a31515] font-comic tracking-[0.2em] text-3xl sm:text-sm uppercase font-bold">
+            <span className="text-[#a31515] font-comic tracking-[0.2em] text-xs sm:text-sm md:text-base uppercase font-bold">
               {HERO_DATA.tagline}
             </span>
           </div>
 
           <h1
             ref={headlineRef}
-            className="text-comic-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight opacity-0 select-none"
+            className="text-comic-title text-[clamp(2.25rem,1.8rem+3vw,4.5rem)] leading-[0.95] tracking-tight opacity-0 select-none"
           >
             {HERO_DATA.firstName}
             {/* <br /> */}
             {HERO_DATA.lastName}
           </h1>
 
-          <p className="font-dialogue text-gray-900 text-sm sm:text-base md:text-lg leading-relaxed max-w-lg select-text bg-white/40 backdrop-blur-[2px] rounded-lg p-1">
+          <p className="font-dialogue text-gray-900 text-sm sm:text-base md:text-lg leading-relaxed max-w-lg select-text bg-white/20 backdrop-blur-sm rounded-lg p-2 border-l-2 border-[#a31515]/30">
             {HERO_DATA.narrativeContext}
           </p>
 
@@ -195,21 +206,23 @@ export const Hero = () => {
 
           <div
             ref={ctaRef}
-            className="flex flex-wrap items-center gap-4 mt-2 pointer-events-auto"
+            className="flex flex-wrap items-center gap-3 sm:gap-4 mt-2 pointer-events-auto"
           >
             <a
               href="#projects"
-              className="relative overflow-hidden bg-[#a31515] hover:bg-[#7a0f0f] text-white px-8 py-3.5 rounded-lg font-comic tracking-wider text-base transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(163,21,21,0.4)] cursor-pointer uppercase border border-[#a31515]"
+              className="relative overflow-hidden bg-[#a31515] hover:bg-[#7a0f0f] text-white px-6 sm:px-8 py-3.5 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg font-comic tracking-wider text-sm sm:text-base transition-[transform,box-shadow,background-color] duration-300 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(163,21,21,0.4)] cursor-pointer uppercase border border-[#a31515]"
             >
               Explore Missions
             </a>
             <a
               href="#contact"
-              className="flex items-center gap-2 text-white bg-gray-900 hover:bg-black px-6 py-3.5 rounded-lg font-comic tracking-wider text-base transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] uppercase group"
+              className="inline-flex items-center justify-center gap-2 text-white bg-gray-900 hover:bg-black px-5 sm:px-6 py-3.5 min-h-[44px] min-w-[44px] rounded-lg font-comic tracking-wider text-sm sm:text-base transition-[transform,box-shadow,background-color] duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] uppercase group"
             >
               <img
                 src={ASSETS.spiderIcon}
                 alt="Spider"
+                width="16"
+                height="16"
                 className="w-4 h-4 object-contain filter invert transition-transform group-hover:scale-110"
               />
               Get In Touch
@@ -218,10 +231,10 @@ export const Hero = () => {
         </div>
 
         {/* Right Side Quote Heading */}
-        <div className="absolute top-1/3 -translate-y-[20%] translate-x-[64px] right-6 md:right-12 lg:right-24 z-30 pointer-events-none drop-shadow-md select-none hidden lg:block text-right">
+        <div className="absolute top-1/3 -translate-y-[20%] right-4 sm:right-6 md:right-12 lg:right-20 z-30 pointer-events-none drop-shadow-md select-none hidden lg:block text-right max-w-md scale-125">
           <h2
             ref={quoteRef}
-            className="text-comic-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight opacity-0 select-none text-right"
+            className="text-comic-title text-[clamp(1.75rem,1.2rem+2.5vw,3.5rem)] leading-[0.95] tracking-tight opacity-0 select-none text-right"
           >
             {HERO_DATA.quoteHeadingLine1}
             <br />
@@ -237,14 +250,14 @@ export const Hero = () => {
         onMouseLeave={handleMarqueeLeave}
       >
         {/* Top Marquee (Red bar, skewed +4deg) */}
-        <div className="absolute w-[115vw] h-12 md:h-16 lg:h-20 bg-[#a31515] text-white border-y-[3px] border-black rotate-[4deg] -translate-y-4 md:-translate-y-6 shadow-[0_10px_20px_rgba(0,0,0,0.4)] z-20 flex items-center overflow-hidden scale-105">
+        <div className="absolute w-[120%] -left-[10%] h-12 md:h-16 lg:h-20 bg-[#a31515] text-white border-y-[3px] border-black rotate-[4deg] -translate-y-4 md:-translate-y-6 shadow-[0_10px_20px_rgba(0,0,0,0.4)] z-20 flex items-center overflow-hidden scale-105">
           <div ref={marquee1Ref} className="flex items-center h-full w-max">
             {renderMarqueeContent(HERO_DATA.marqueeItems)}
           </div>
         </div>
 
         {/* Bottom Marquee (Dark bar, skewed -4deg) */}
-        <div className="absolute w-[115vw] h-12 md:h-16 lg:h-20 bg-[#111111] text-[#ef4444] border-y-[3px] border-[#a31515] rotate-[-4deg] translate-y-4 md:translate-y-6 shadow-[0_5px_15px_rgba(0,0,0,0.5)] z-10 flex items-center overflow-hidden scale-105">
+        <div className="absolute w-[120%] -left-[10%] h-12 md:h-16 lg:h-20 bg-[#111111] text-[#ef4444] border-y-[3px] border-[#a31515] rotate-[-4deg] translate-y-4 md:translate-y-6 shadow-[0_5px_15px_rgba(0,0,0,0.5)] z-10 flex items-center overflow-hidden scale-105">
           <div ref={marquee2Ref} className="flex items-center h-full w-max">
             {renderMarqueeContent(HERO_DATA.marqueeItems)}
           </div>

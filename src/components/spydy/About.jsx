@@ -127,7 +127,7 @@ export const About = () => {
     <section
       id="about"
       ref={sectionRef}
-      className="relative w-full min-h-screen bg-gray-50 text-gray-900 py-24 flex items-center justify-center overflow-hidden"
+      className="relative w-full min-h-[100dvh] bg-gray-50 text-gray-900 py-16 sm:py-24 flex items-center justify-center overflow-hidden"
     >
       {/* Hanging Web Left */}
       <div
@@ -138,6 +138,10 @@ export const About = () => {
         <img
           src={ASSETS.webImg}
           alt="Hanging Web Left"
+          width="384"
+          height="384"
+          loading="lazy"
+          decoding="async"
           className="bg-web-left w-64 h-64 md:w-96 md:h-96 object-contain -mt-12 opacity-[0.12] mix-blend-multiply"
         />
       </div>
@@ -151,21 +155,27 @@ export const About = () => {
         <img
           src={ASSETS.webImg}
           alt="Hanging Web Right"
+          width="320"
+          height="320"
+          loading="lazy"
+          decoding="async"
           className="bg-web-right w-56 h-56 md:w-80 md:h-80 object-contain -mt-10 opacity-[0.12] mix-blend-multiply"
         />
       </div>
 
-      <div className="container mx-auto px-6 md:px-12 lg:px-24 flex flex-col-reverse lg:flex-row items-center lg:items-start gap-12 lg:gap-20 z-10 relative">
+      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 flex flex-col-reverse lg:flex-row items-center lg:items-start gap-10 lg:gap-16 z-10 relative">
         {/* Left Column: Biography & Tech Stack */}
-        <div className="flex-1 flex flex-col gap-6 mt-10 lg:mt-0 relative z-20 ">
+        <div className="flex-1 flex flex-col gap-5 sm:gap-6 mt-6 lg:mt-0 relative z-20 w-full">
           <div className="overflow-hidden">
             <span
               ref={badgeRef}
-              className="inline-flex items-center gap-2 text-[#a31515] font-comic tracking-[0.2em] text-sm uppercase"
+              className="inline-flex items-center gap-2 text-[#a31515] font-comic tracking-[0.2em] text-xs sm:text-sm uppercase"
             >
               <img
                 src={ASSETS.spiderIcon}
                 alt="Spider"
+                width="20"
+                height="20"
                 className="w-5 h-5 object-contain drop-shadow-sm"
               />
               {ABOUT_DATA.badge}
@@ -175,7 +185,7 @@ export const About = () => {
           <div className="overflow-hidden py-2">
             <h2
               ref={titleRef}
-              className="text-comic-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-none"
+              className="text-comic-title text-[clamp(2.25rem,1.8rem+3vw,4.5rem)] leading-none"
             >
               {ABOUT_DATA.title}
             </h2>
@@ -183,7 +193,7 @@ export const About = () => {
 
           <div
             ref={textRef}
-            className="flex flex-col gap-5 text-gray-900 font-dialogue text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl mt-2 border-l-4 border-[#a31515] pl-4 sm:pl-5 bg-white/70 backdrop-blur-sm py-4 pr-4 rounded-r-2xl shadow-sm"
+            className="flex flex-col gap-4 sm:gap-5 text-gray-900 font-dialogue text-sm sm:text-base md:text-lg leading-relaxed max-w-xl mt-2 border-l-4 border-[#a31515] pl-4 sm:pl-5 bg-white/70 backdrop-blur-sm py-4 pr-4 rounded-r-2xl shadow-sm"
             style={{ perspective: "1000px" }}
           >
             {ABOUT_DATA.paragraphs.map((p, idx) => (
@@ -193,16 +203,16 @@ export const About = () => {
             ))}
           </div>
 
-          <div className="mt-6">
-            <h3 className="font-dialogue text-sm uppercase tracking-widest text-[#a31515] mb-4 font-bold border-b border-[#a31515]/30 pb-2 inline-flex items-center gap-2">
+          <div className="mt-4 sm:mt-6">
+            <h3 className="font-dialogue text-xs sm:text-sm uppercase tracking-widest text-[#a31515] mb-4 font-bold border-b border-[#a31515]/30 pb-2 inline-flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#a31515]" />
               Primary Tech Stack
             </h3>
-            <div ref={pillsRef} className="flex flex-wrap gap-3">
+            <div ref={pillsRef} className="flex flex-wrap gap-2.5 sm:gap-3">
               {ABOUT_DATA.techStack.map((tech, idx) => (
                 <div
                   key={idx}
-                  className="tech-pill px-4 sm:px-5 py-2 sm:py-2.5 border border-[#a31515]/30 bg-white text-[#a31515] rounded-xl font-dialogue font-bold text-xs sm:text-sm tracking-wider hover:bg-[#a31515] hover:text-white hover:border-[#a31515] shadow-sm hover:shadow-[0_8px_20px_rgba(163,21,21,0.3)] transition-all duration-300 cursor-default select-none"
+                  className="tech-pill px-4 sm:px-5 py-2 sm:py-2.5 min-h-[44px] inline-flex items-center justify-center border border-[#a31515]/30 bg-white text-[#a31515] rounded-xl font-dialogue font-bold text-xs sm:text-sm tracking-wider hover:bg-[#a31515] hover:text-white hover:border-[#a31515] shadow-sm hover:shadow-[0_8px_20px_rgba(163,21,21,0.3)] transition-[transform,box-shadow,background-color,color] duration-300 cursor-default select-none"
                 >
                   {tech}
                 </div>
@@ -212,7 +222,7 @@ export const About = () => {
         </div>
 
         {/* Right column: Daily Bugle Mugshot Poster webbed to wall */}
-        <div className="flex-1 relative flex justify-center items-center min-h-[420px] md:min-h-[550px] w-full translate-x-32 translate-y-32 scale-150">
+        <div className="flex-1 relative flex justify-center items-center min-h-[380px] sm:min-h-[440px] md:min-h-[500px] w-full" scale-110>
           <div
             ref={posterRef}
             className="relative z-30 group"
@@ -223,6 +233,10 @@ export const About = () => {
               src={ASSETS.webImg}
               alt=""
               aria-hidden="true"
+              width="128"
+              height="128"
+              loading="lazy"
+              decoding="async"
               className="absolute -top-10 -left-10 w-24 h-24 md:w-32 md:h-32 object-contain opacity-50 pointer-events-none z-20"
             />
             
@@ -230,15 +244,23 @@ export const About = () => {
               src={ASSETS.webImg}
               alt=""
               aria-hidden="true"
+              width="112"
+              height="112"
+              loading="lazy"
+              decoding="async"
               className="absolute -bottom-8 -right-8 w-20 h-20 md:w-28 md:h-28 object-contain opacity-40 pointer-events-none z-20 -scale-x-100 -scale-y-100"
             />
 
             {/* The poster itself */}
-            <div className="poster-frame relative w-[260px] sm:w-[300px] md:w-[360px] bg-[#f5f0e8] border-[3px] border-[#d4c9a8] rounded-sm overflow-hidden ">
+            <div className="poster-frame relative w-[min(100%,300px)] sm:w-[320px] md:w-[360px] aspect-[3/4] bg-[#f5f0e8] border-[3px] border-[#d4c9a8] rounded-sm overflow-hidden shadow-lg transition-transform duration-300 hover:scale-[1.02]">
               <img
                 src={ASSETS.mugshotPoster}
                 alt="Daily Bugle — Ayush Srivastava"
-                className="w-full h-auto object-cover select-none"
+                width="360"
+                height="480"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover select-none"
               />
             </div>
           </div>
