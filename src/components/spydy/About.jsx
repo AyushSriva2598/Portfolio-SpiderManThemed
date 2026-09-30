@@ -127,7 +127,7 @@ export const About = () => {
     <section
       id="about"
       ref={sectionRef}
-      className="relative w-full min-h-[100dvh] bg-gray-50 text-gray-900 py-16 sm:py-24 flex items-center justify-center overflow-hidden"
+      className="relative w-full min-h-[100dvh] bg-gray-50 text-gray-900 pt-36 sm:pt-44 md:pt-48 pb-16 sm:pb-24 flex items-center justify-center overflow-hidden z-[1]"
     >
       {/* Hanging Web Left */}
       <div
@@ -163,10 +163,8 @@ export const About = () => {
         />
       </div>
 
-      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 flex flex-col-reverse lg:flex-row items-center lg:items-start gap-10 lg:gap-16 z-10 relative">
-        {/* Left Column: Biography & Tech Stack */}
-        <div className="flex-1 flex flex-col gap-5 sm:gap-6 mt-6 lg:mt-0 relative z-20 w-full">
-          <div className="overflow-hidden">
+      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 flex flex-col-reverse lg:flex-row items-center lg:items-start gap-10 lg:gap-16 z-10 relative min-w-0">        {/* Left Column: Biography & Tech Stack */}
+        <div className="w-full lg:w-1/2 min-w-0 flex flex-col gap-5 sm:gap-6 mt-6 lg:mt-0 relative z-20">          <div className="overflow-hidden">
             <span
               ref={badgeRef}
               className="inline-flex items-center gap-2 text-[#a31515] font-comic tracking-[0.2em] text-xs sm:text-sm uppercase"
@@ -193,7 +191,7 @@ export const About = () => {
 
           <div
             ref={textRef}
-            className="flex flex-col gap-4 sm:gap-5 text-gray-900 font-dialogue text-sm sm:text-base md:text-lg leading-relaxed max-w-xl mt-2 border-l-4 border-[#a31515] pl-4 sm:pl-5 bg-white/70 backdrop-blur-sm py-4 pr-4 rounded-r-2xl shadow-sm"
+            className="flex flex-col gap-4 sm:gap-5 text-gray-900 font-dialogue text-sm sm:text-base md:text-lg leading-relaxed max-w-xl mt-2 border-l-4 border-[#a31515] pl-4 sm:pl-5 bg-white/0 backdrop-blur-sm py-4 pr-4 rounded-r-2xl shadow-sm"
             style={{ perspective: "1000px" }}
           >
             {ABOUT_DATA.paragraphs.map((p, idx) => (
@@ -203,27 +201,30 @@ export const About = () => {
             ))}
           </div>
 
-          <div className="mt-4 sm:mt-6">
-            <h3 className="font-dialogue text-xs sm:text-sm uppercase tracking-widest text-[#a31515] mb-4 font-bold border-b border-[#a31515]/30 pb-2 inline-flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#a31515]" />
-              Primary Tech Stack
-            </h3>
-            <div ref={pillsRef} className="flex flex-wrap gap-2.5 sm:gap-3">
-              {ABOUT_DATA.techStack.map((tech, idx) => (
-                <div
-                  key={idx}
-                  className="tech-pill px-4 sm:px-5 py-2 sm:py-2.5 min-h-[44px] inline-flex items-center justify-center border border-[#a31515]/30 bg-white text-[#a31515] rounded-xl font-dialogue font-bold text-xs sm:text-sm tracking-wider hover:bg-[#a31515] hover:text-white hover:border-[#a31515] shadow-sm hover:shadow-[0_8px_20px_rgba(163,21,21,0.3)] transition-[transform,box-shadow,background-color,color] duration-300 cursor-default select-none"
-                >
-                  {tech}
-                </div>
-              ))}
-            </div>
+          <div className="mt-4 sm:mt-6 w-full">
+            <div className="mt-4 sm:mt-6 w-screen relative left-1/2 -translate-x-1/2 px-4 sm:px-6 md:px-12 lg:px-20">
+
+              <h3 className="font-dialogue text-xs sm:text-sm uppercase tracking-widest text-[#a31515] mb-4 font-bold border-b border-[#a31515]/30 pb-2 inline-flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#a31515]" />
+                Primary Tech Stack
+              </h3>
+              <div ref={pillsRef} className="flex flex-wrap gap-2.5 sm:gap-3">
+                {ABOUT_DATA.techStack.map((tech, idx) => (
+                  <div
+                    key={idx}
+                    className="tech-pill px-4 sm:px-5 py-2 sm:py-2.5 min-h-[44px] inline-flex items-center justify-center border border-[#a31515]/30 bg-white text-[#a31515] rounded-xl font-dialogue font-bold text-xs sm:text-sm tracking-wider hover:bg-[#a31515] hover:text-white hover:border-[#a31515] shadow-sm hover:shadow-[0_8px_20px_rgba(163,21,21,0.3)] transition-[transform,box-shadow,background-color,color] duration-300 cursor-default select-none"
+                  >
+                    {tech}
+                  </div>
+                ))}
+              </div>
           </div>
         </div>
+      </div>
+        
 
         {/* Right column: Daily Bugle Mugshot Poster webbed to wall */}
-        <div className="flex-1 relative flex justify-center items-center min-h-[380px] sm:min-h-[440px] md:min-h-[500px] w-full" scale-110>
-          <div
+        <div className="w-full lg:w-1/2 min-w-0 relative flex justify-center items-center min-h-[380px] sm:min-h-[440px] md:min-h-[500px] translate-y-10">          <div
             ref={posterRef}
             className="relative z-30 group"
             style={{ transform: "rotate(5deg)" }}
