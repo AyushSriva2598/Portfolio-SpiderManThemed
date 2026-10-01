@@ -1,21 +1,26 @@
 /**
  * TechWeb.tsx
  *
- * Interactive Spider-Man Web — Mathematical & Complex Structural Web
- * with Dynamic Spider Crawling along Active Spoke Threads.
+ * Interactive Spider-Man Web — Realistic Distorted Web Architecture
+ * with 3D Articulated Lined-Leg Crimson Spider crawling slowly along spoke threads.
  *
- * Key Capabilities:
- * 1. 100% Visible & Traceable Structure: Every single tech chip sits directly
- *    on a real radial spoke thread emanating from the central hub (800, 450).
- * 2. Complex Arachnid Architecture: Main spokes, catenary sagging concentric rings,
- *    branching splitters, diagonal cross-cell struts, central vortex, and glistening dewdrops.
- * 3. Small Crimson Spider (inspired by reference image):
- *    - Rests in the center hub at idle.
- *    - On chip hover, scuttles smoothly along the exact spoke thread directly to that chip.
- *    - Rotates to face the chip as it crawls.
- *    - On hover leave, scurries back along the thread to the center hub.
- * 4. Active Thread Glow: Spoke beneath the spider pulses with electric crimson laser light.
- * 5. 60fps GPU performance with IntersectionObserver offscreen pause and mobile responsiveness.
+ * Features:
+ * 1. Linearity with Organic Distortion:
+ *    - Continuous, traceable spoke threads from center hub (800, 450) to each chip.
+ *    - Real tension wavers along spokes and asymmetric catenary sag across rings.
+ *    - Every single chip is anchored at an exact knot intersection of spoke and ring.
+ * 2. 3D Articulated Lined-Leg Spider:
+ *    - Built as a tactile 3D SVG element with volumetric shading, specular highlights,
+ *      chelicerae, glowing eyes, and 8 jointed lined legs with distinct knee bends.
+ *    - Walks with a realistic alternating tetrapod gait (Group A vs Group B legs)
+ *      and body sway while traversing the thread.
+ * 3. Slow & Steady Arachnid Locomotion:
+ *    - Does NOT reach immediately: crawls steadily over 1.4s–2.4s.
+ *    - Stops walking and perches on the spoke thread when arriving at the hovered chip.
+ *    - Slowly crawls back to center hub when cursor leaves.
+ * 4. Active Thread Glow:
+ *    - Spoke thread beneath the crawling spider pulses with electric crimson laser light.
+ * 5. 60fps GPU performance, IntersectionObserver offscreen pause, and reduced motion support.
  */
 
 import React, {
@@ -38,19 +43,20 @@ import {
   generateDewdropsList,
   generateThreadHighlightPath,
   calculateSpiderTarget,
+  calculateCrawlDuration,
 } from "./techData";
 import { TechChip } from "./TechChip";
-import { ASSETS } from "../../data/spidermanData";
+import { Spider3D } from "./Spider3D";
 
 export const TechWeb: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [hoveredNode, setHoveredNode] = useState<TechNode | null>(null);
-  const [isSpiderMoving, setIsSpiderMoving] = useState(false);
+  const [isCrawling, setIsCrawling] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [hasDrawnIn, setHasDrawnIn] = useState(false);
   const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
-  const moveTimerRef = useRef<number | null>(null);
+  const crawlTimerRef = useRef<number | null>(null);
 
   // Precomputed Web Geometry Paths (calculated once with zero layout shift)
   const mainSpokesPath = useMemo(() => generateMainSpokesPath(WEB_CONFIG), []);
@@ -72,23 +78,33 @@ export const TechWeb: React.FC = () => {
     return calculateSpiderTarget(hoveredNode, WEB_CONFIG);
   }, [hoveredNode]);
 
-  // Handle chip hover with spider scuttle animation trigger
+  // Calculate dynamic slow crawl duration (1.4s to 2.4s based on distance)
+  const crawlDuration = useMemo(() => {
+    return calculateCrawlDuration(hoveredNode, WEB_CONFIG);
+  }, [hoveredNode]);
+
+  // Handle chip hover with slow arachnid crawling gait
   const handleChipHover = useCallback((node: TechNode) => {
     setHoveredNode(node);
-    setIsSpiderMoving(true);
-    if (moveTimerRef.current) clearTimeout(moveTimerRef.current);
-    moveTimerRef.current = window.setTimeout(() => {
-      setIsSpiderMoving(false);
-    }, 550);
+    setIsCrawling(true);
+    if (crawlTimerRef.current) clearTimeout(crawlTimerRef.current);
+    
+    // Stop walking gait when spider arrives at the target chip
+    const durMs = Math.round(calculateCrawlDuration(node, WEB_CONFIG) * 1000);
+    crawlTimerRef.current = window.setTimeout(() => {
+      setIsCrawling(false);
+    }, durMs);
   }, []);
 
   const handleChipLeave = useCallback(() => {
     setHoveredNode(null);
-    setIsSpiderMoving(true);
-    if (moveTimerRef.current) clearTimeout(moveTimerRef.current);
-    moveTimerRef.current = window.setTimeout(() => {
-      setIsSpiderMoving(false);
-    }, 550);
+    setIsCrawling(true);
+    if (crawlTimerRef.current) clearTimeout(crawlTimerRef.current);
+
+    // Stop walking gait when spider returns to center hub
+    crawlTimerRef.current = window.setTimeout(() => {
+      setIsCrawling(false);
+    }, 1600);
   }, []);
 
   // IntersectionObserver: Pause animations when off-screen (preserves 60fps)
@@ -212,22 +228,49 @@ export const TechWeb: React.FC = () => {
           animation: threadLaserPulse 0.9s ease-in-out infinite;
         }
 
-        /* Spider leg scuttle twitch during crawl */
-        @keyframes spiderLegJitter {
-          0%   { transform: scale(0.96, 1.04) rotate(-3deg); }
-          100% { transform: scale(1.04, 0.96) rotate(3deg); }
-        }
-        .spider-scuttling-img {
-          animation: spiderLegJitter 0.12s ease-in-out infinite alternate;
+        /* ── Spider 3D Walking Gait Keyframes ── */
+        /* Leg Group A Step (L1, L3, R2, R4) */
+        @keyframes spiderStepA {
+          0%   { transform: rotate(-7deg) scale(1.04); }
+          50%  { transform: rotate(7deg) scale(0.96); }
+          100% { transform: rotate(-7deg) scale(1.04); }
         }
 
-        /* Spider gentle resting breath at center */
+        /* Leg Group B Step (L2, L4, R1, R3 - opposing phase) */
+        @keyframes spiderStepB {
+          0%   { transform: rotate(7deg) scale(0.96); }
+          50%  { transform: rotate(-7deg) scale(1.04); }
+          100% { transform: rotate(7deg) scale(0.96); }
+        }
+
+        /* Spider Body Walking Sway */
+        @keyframes spiderBodyWalkingSway {
+          0%, 100% { transform: rotate(-2.5deg); }
+          50%      { transform: rotate(2.5deg); }
+        }
+
+        /* Spider Resting Abdomen Breathing */
         @keyframes spiderRestBreathe {
           0%, 100% { transform: scale(1); }
-          50%      { transform: scale(1.06); }
+          50%      { transform: scale(1.05); }
         }
-        .spider-resting-img {
-          animation: spiderRestBreathe 3.5s ease-in-out infinite;
+
+        .spider-walking .spider-leg-group-a {
+          animation: spiderStepA 0.32s ease-in-out infinite;
+          transform-origin: 60px 55px;
+        }
+        .spider-walking .spider-leg-group-b {
+          animation: spiderStepB 0.32s ease-in-out infinite;
+          transform-origin: 60px 55px;
+        }
+        .spider-walking .spider-body-group {
+          animation: spiderBodyWalkingSway 0.32s ease-in-out infinite;
+          transform-origin: 60px 60px;
+        }
+
+        .spider-idle .spider-abdomen-pulse {
+          animation: spiderRestBreathe 3.2s ease-in-out infinite;
+          transform-origin: 60px 70px;
         }
 
         /* Dewdrop sparkle twinkle */
@@ -254,8 +297,10 @@ export const TechWeb: React.FC = () => {
         .web-paused .tech-node-wrapper,
         .web-paused .web-ambient-breathe,
         .web-paused .thread-laser-active,
-        .web-paused .spider-scuttling-img,
-        .web-paused .spider-resting-img,
+        .web-paused .spider-leg-group-a,
+        .web-paused .spider-leg-group-b,
+        .web-paused .spider-body-group,
+        .web-paused .spider-abdomen-pulse,
         .web-paused .dewdrop-glint,
         .web-paused .hub-halo {
           animation-play-state: paused !important;
@@ -266,8 +311,10 @@ export const TechWeb: React.FC = () => {
           .tech-node-wrapper,
           .web-ambient-breathe,
           .thread-laser-active,
-          .spider-scuttling-img,
-          .spider-resting-img,
+          .spider-leg-group-a,
+          .spider-leg-group-b,
+          .spider-body-group,
+          .spider-abdomen-pulse,
           .dewdrop-glint,
           .hub-halo {
             animation: none !important;
@@ -295,7 +342,7 @@ export const TechWeb: React.FC = () => {
           aria-hidden="true"
         />
 
-        {/* ── 1. STRUCTURED & COMPLEX SVG SPIDER WEB ── */}
+        {/* ── 1. STRUCTURED & REALISTICALLY DISTORTED SVG SPIDER WEB ── */}
         <svg
           viewBox="0 0 1600 900"
           className="absolute inset-0 w-full h-full pointer-events-none overflow-visible web-ambient-breathe"
@@ -326,7 +373,7 @@ export const TechWeb: React.FC = () => {
             fill="none"
             stroke="#a31515"
             strokeWidth="1.2"
-            opacity="0.28"
+            opacity="0.26"
             className={hasDrawnIn ? "" : "opacity-0"}
           />
 
@@ -336,7 +383,7 @@ export const TechWeb: React.FC = () => {
             fill="none"
             stroke="#c51d1d"
             strokeWidth="1.1"
-            opacity="0.32"
+            opacity="0.30"
             className={hasDrawnIn ? "" : "opacity-0"}
           />
 
@@ -346,11 +393,11 @@ export const TechWeb: React.FC = () => {
             fill="none"
             stroke="#c51d1d"
             strokeWidth="1.5"
-            opacity="0.55"
+            opacity="0.52"
             className={hasDrawnIn ? "" : "opacity-0"}
           />
 
-          {/* Layer 4: Concentric Sagging Rings (Rings 1 to 6 with gravity droop) */}
+          {/* Layer 4: Concentric Sagging Rings with Asymmetric Gravitational Droop */}
           <path
             d={saggingRingsPath}
             fill="none"
@@ -370,7 +417,7 @@ export const TechWeb: React.FC = () => {
             className={hasDrawnIn ? "" : "opacity-0"}
           />
 
-          {/* Layer 5: 12 Main Spokes directly connecting Hub through all Chips */}
+          {/* Layer 5: 12 Main Distorted Spokes directly connecting Hub through all Chips */}
           <path
             d={mainSpokesPath}
             fill="none"
@@ -421,7 +468,7 @@ export const TechWeb: React.FC = () => {
             ))}
           </g>
 
-          {/* Layer 8: Active Spoke Electric Laser Route when Chip is Hovered */}
+          {/* Layer 8: Active Spoke Electric Laser Route following the exact distorted knot path */}
           {highlightPathData && (
             <path
               d={highlightPathData}
@@ -435,31 +482,19 @@ export const TechWeb: React.FC = () => {
           )}
         </svg>
 
-        {/* ── 2. SMALL CRIMSON SPIDER CRAWLING ALONG SPOKE THREADS ── */}
+        {/* ── 2. 3D RED SPIDER WITH ARTICULATED WALKING LEGS ── */}
         <div
           className="absolute pointer-events-none z-20"
           style={{
             left: `${spiderTarget.pctX}%`,
             top: `${spiderTarget.pctY}%`,
-            width: "50px",
-            height: "50px",
             transform: `translate3d(-50%, -50%, 0) rotate(${spiderTarget.rotationDeg}deg) scale(${spiderTarget.scale})`,
-            transition:
-              "left 0.52s cubic-bezier(0.25, 1, 0.5, 1), top 0.52s cubic-bezier(0.25, 1, 0.5, 1), transform 0.52s cubic-bezier(0.25, 1, 0.5, 1)",
+            transition: `left ${crawlDuration}s cubic-bezier(0.25, 0.1, 0.25, 1), top ${crawlDuration}s cubic-bezier(0.25, 0.1, 0.25, 1), transform ${crawlDuration}s cubic-bezier(0.25, 0.1, 0.25, 1)`,
             willChange: "transform, left, top",
           }}
           aria-hidden="true"
         >
-          <img
-            src={ASSETS.crimsonSpider}
-            alt="Crimson Spider"
-            width="50"
-            height="50"
-            loading="eager"
-            className={`w-full h-full object-contain drop-shadow-[0_2px_8px_rgba(239,68,68,0.5)] ${
-              isSpiderMoving ? "spider-scuttling-img" : "spider-resting-img"
-            }`}
-          />
+          <Spider3D isCrawling={isCrawling} size={54} />
         </div>
 
         {/* ── 3. HTML CHIP LAYER: 30 Tech Pills Mapped to Spoke & Ring Intersections ── */}
