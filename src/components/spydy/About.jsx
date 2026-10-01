@@ -126,12 +126,8 @@ export const About = () => {
     <section
       id="about"
       ref={sectionRef}
-      className="relative w-full min-h-[100dvh] bg-gray-50 text-gray-900 pt-36 sm:pt-44 md:pt-48 pb-16 sm:pb-24 flex flex-col items-center overflow-hidden z-[1]"
+      className="relative w-full min-h-[100dvh] bg-gray-50 text-gray-900 pt-44 sm:pt-48 md:pt-52 pb-20 sm:pb-24 flex flex-col items-center justify-center overflow-hidden z-[1]"
     >
-      {/* =====================================================
-          FULL-WIDTH LOWER BACKGROUND
-      ===================================================== */}
-      <div className="absolute bottom-0 left-0 w-full h-[35%] bg-white/60 backdrop-blur-sm z-0 pointer-events-none" />
 
       {/* =====================================================
           HANGING WEB — LEFT
@@ -233,7 +229,7 @@ export const About = () => {
           {/* =================================================
               RIGHT COLUMN — MUGSHOT
           ================================================= */}
-          <div className="w-full lg:w-1/2 min-w-0 relative flex justify-center items-center min-h-[380px] sm:min-h-[440px] md:min-h-[500px] translate-y-20">
+          <div className="w-full lg:w-1/2 min-w-0 relative flex justify-center items-center min-h-[380px] sm:min-h-[440px] md:min-h-[500px] translate-y-2 sm:translate-y-4 lg:translate-y-0">
 
             <div
               ref={posterRef}
