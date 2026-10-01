@@ -29,6 +29,7 @@ export const ASSETS = {
   profileImg: "/assets/mypic-aradhya.png",
   mugshotPoster: "/assets/mugshot-poster.jpg",
   exactWebImg: "/assets/web-inspiration-bright.webp",
+  crimsonSpider: "/assets/crimson-spider.webp",
 };
 
 export const ABOUT_DATA = {

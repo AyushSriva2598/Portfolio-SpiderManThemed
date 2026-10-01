@@ -163,12 +163,232 @@ export const TECH_NODES: TechNode[] = RAW_TECH_NODES.map((node, index) => {
   };
 });
 
-// ─── Active Thread Route to Node (Center Hub → Hovered Chip) ─────────
+// ─── Mathematical Web Generators & Spider Routing ──────────────────────
 
+function mulberry32(a: number) {
+  return function () {
+    let t = (a += 0x6d2b79f5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+export function getWebPoint(
+  threadFloat: number,
+  ringIdx: number,
+  sagFactor: number = 0.0,
+  config: WebConfig = WEB_CONFIG
+): [number, number] {
+  const angleStep = 360 / config.threadCount;
+  const angleDeg = config.startAngleDeg + threadFloat * angleStep;
+  const angleRad = (angleDeg * Math.PI) / 180;
+  const rx = (config.ringRadiiX[ringIdx] ?? 200) * (1.0 - sagFactor);
+  const ry = (config.ringRadiiY[ringIdx] ?? 140) * (1.0 - sagFactor);
+  const x = Math.round((config.cx + rx * Math.cos(angleRad)) * 10) / 10;
+  const y = Math.round((config.cy + ry * Math.sin(angleRad)) * 10) / 10;
+  return [x, y];
+}
+
+// 1. 12 Main Spokes directly connecting Hub through all Tech Chips
+export function generateMainSpokesPath(config: WebConfig = WEB_CONFIG): string {
+  const { cx, cy, threadCount, startAngleDeg, ringRadiiX, ringRadiiY } = config;
+  const angleStep = 360 / threadCount;
+  let path = "";
+
+  for (let i = 0; i < threadCount; i++) {
+    const angleDeg = startAngleDeg + i * angleStep;
+    const rad = (angleDeg * Math.PI) / 180;
+    const hubX = Math.round((cx + 18 * Math.cos(rad)) * 10) / 10;
+    const hubY = Math.round((cy + 18 * Math.sin(rad)) * 10) / 10;
+
+    const maxRx = ringRadiiX[ringRadiiX.length - 1] + 35;
+    const maxRy = ringRadiiY[ringRadiiY.length - 1] + 25;
+    const rimX = Math.round((cx + maxRx * Math.cos(rad)) * 10) / 10;
+    const rimY = Math.round((cy + maxRy * Math.sin(rad)) * 10) / 10;
+
+    path += `M ${hubX} ${hubY} L ${rimX} ${rimY} `;
+  }
+  return path.trim();
+}
+
+// 2. Concentric Sagging Rings (Rings 1 to 6) with natural gravitational catenary droop
+export function generateSaggingRingsPath(config: WebConfig = WEB_CONFIG): string {
+  const { threadCount, ringCount } = config;
+  let path = "";
+
+  for (let r = 1; r <= ringCount; r++) {
+    const sagFactor = 0.07 + (r / ringCount) * 0.04;
+    for (let i = 0; i < threadCount; i++) {
+      const pStart = getWebPoint(i, r, 0, config);
+      const pEnd = getWebPoint((i + 1) % threadCount, r, 0, config);
+      const pCtrl = getWebPoint(i + 0.5, r, sagFactor, config);
+
+      path += `M ${pStart[0]} ${pStart[1]} Q ${pCtrl[0]} ${pCtrl[1]}, ${pEnd[0]} ${pEnd[1]} `;
+    }
+  }
+  return path.trim();
+}
+
+// 3. Branching Splitters: Outer intermediate filaments between spokes
+export function generateBranchSplittersPath(config: WebConfig = WEB_CONFIG): string {
+  const { threadCount } = config;
+  let path = "";
+
+  for (let i = 0; i < threadCount; i++) {
+    const midIdx = i + 0.5;
+    const pStart = getWebPoint(midIdx, 3, 0.02, config);
+    const pMid = getWebPoint(midIdx, 5, 0.01, config);
+    const pEnd = getWebPoint(midIdx, 6, -0.02, config);
+
+    path += `M ${pStart[0]} ${pStart[1]} Q ${pMid[0]} ${pMid[1]}, ${pEnd[0]} ${pEnd[1]} `;
+  }
+  return path.trim();
+}
+
+// 4. Intricate Cross-Struts: Diagonal filaments bridging across cells
+export function generateCrossStrutsPath(config: WebConfig = WEB_CONFIG): string {
+  const { threadCount } = config;
+  const rng = mulberry32(77777);
+  let path = "";
+
+  for (let r = 1; r < 6; r++) {
+    for (let i = 0; i < threadCount; i++) {
+      if (rng() < 0.6) {
+        const p1 = getWebPoint(i, r, 0, config);
+        const p2 = getWebPoint((i + 1) % threadCount, r + 1, 0.03, config);
+        path += `M ${p1[0]} ${p1[1]} L ${p2[0]} ${p2[1]} `;
+      }
+      if (rng() < 0.35) {
+        const p1 = getWebPoint(i, r + 1, 0, config);
+        const p2 = getWebPoint((i + 1) % threadCount, r, -0.03, config);
+        path += `M ${p1[0]} ${p1[1]} L ${p2[0]} ${p2[1]} `;
+      }
+    }
+  }
+  return path.trim();
+}
+
+// 5. Central Hub Vortex: Concentric spiral and radiating silk knot
+export function generateCenterHubSpiralPath(config: WebConfig = WEB_CONFIG): string {
+  const { cx, cy } = config;
+  let path = "";
+  const steps = 100;
+
+  for (let s = 0; s <= steps; s++) {
+    const t = s / steps;
+    const r = 6 + t * 74;
+    const ang = t * (Math.PI * 8);
+    const x = Math.round((cx + r * 1.35 * Math.cos(ang)) * 10) / 10;
+    const y = Math.round((cy + r * 0.95 * Math.sin(ang)) * 10) / 10;
+
+    if (s === 0) path += `M ${x} ${y} `;
+    else path += `L ${x} ${y} `;
+  }
+  return path.trim();
+}
+
+// 6. Outer Anchor Wisps: Extending to viewport edges
+export function generateOuterWispsPath(config: WebConfig = WEB_CONFIG): string {
+  const { threadCount } = config;
+  const rng = mulberry32(99999);
+  let path = "";
+
+  for (let i = 0; i < threadCount; i++) {
+    if (rng() < 0.3) continue;
+    const pStart = getWebPoint(i, 6, 0, config);
+    const driftAngle = (rng() - 0.5) * 20;
+    const angleStep = 360 / threadCount;
+    const rad = ((config.startAngleDeg + i * angleStep + driftAngle) * Math.PI) / 180;
+    const dist = 50 + rng() * 70;
+    const endX = Math.round((pStart[0] + dist * Math.cos(rad)) * 10) / 10;
+    const endY = Math.round((pStart[1] + dist * Math.sin(rad)) * 10) / 10;
+
+    path += `M ${pStart[0]} ${pStart[1]} Q ${(pStart[0] + endX) / 2} ${(pStart[1] + endY) / 2 + 5}, ${endX} ${endY} `;
+  }
+  return path.trim();
+}
+
+// 7. Dewdrop Beads Array
+export interface Dewdrop {
+  cx: number;
+  cy: number;
+  r: number;
+  delay: string;
+}
+
+export function generateDewdropsList(config: WebConfig = WEB_CONFIG): Dewdrop[] {
+  const { threadCount, ringCount } = config;
+  const rng = mulberry32(33333);
+  const drops: Dewdrop[] = [];
+
+  for (let r = 1; r <= ringCount; r++) {
+    for (let i = 0; i < threadCount; i++) {
+      const p = getWebPoint(i, r, 0, config);
+      drops.push({
+        cx: p[0],
+        cy: p[1],
+        r: 2.2,
+        delay: `${(rng() * 3).toFixed(2)}s`,
+      });
+
+      if (rng() < 0.6) {
+        const pMid = getWebPoint(i + 0.5, r, 0.08, config);
+        drops.push({
+          cx: pMid[0],
+          cy: pMid[1],
+          r: 1.8,
+          delay: `${(rng() * 3).toFixed(2)}s`,
+        });
+      }
+    }
+  }
+  return drops;
+}
+
+// 8. Active Spoke Highlight Route (Center Hub → Hovered Chip)
 export function generateThreadHighlightPath(
   node: TechNode,
   config: WebConfig = WEB_CONFIG
 ): string {
   const { cx, cy } = config;
   return `M ${cx} ${cy} L ${node.x} ${node.y}`;
+}
+
+// 9. Spider Target Coordinates along the Spoke Thread
+export function calculateSpiderTarget(
+  hoveredNode: TechNode | null,
+  config: WebConfig = WEB_CONFIG
+): {
+  pctX: number;
+  pctY: number;
+  rotationDeg: number;
+  scale: number;
+} {
+  if (!hoveredNode) {
+    return {
+      pctX: (config.cx / config.viewBoxWidth) * 100,
+      pctY: (config.cy / config.viewBoxHeight) * 100,
+      rotationDeg: 0,
+      scale: 0.72,
+    };
+  }
+
+  const rad = (hoveredNode.angleDeg * Math.PI) / 180;
+  // Offset by 44px towards the center so the spider perches on the spoke thread right in front of the chip
+  const spiderX = hoveredNode.x - Math.cos(rad) * 44;
+  const spiderY = hoveredNode.y - Math.sin(rad) * 44;
+
+  const pctX = (spiderX / config.viewBoxWidth) * 100;
+  const pctY = (spiderY / config.viewBoxHeight) * 100;
+
+  // North is -90deg, spider points North by default, so rotation is angleDeg + 90
+  const rotationDeg = hoveredNode.angleDeg + 90;
+
+  return {
+    pctX,
+    pctY,
+    rotationDeg,
+    scale: 1.05,
+  };
 }
