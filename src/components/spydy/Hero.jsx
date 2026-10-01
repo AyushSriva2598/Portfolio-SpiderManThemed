@@ -118,13 +118,15 @@ export const Hero = () => {
         <div key={i} className="flex items-center h-full shrink-0">
           {items.map((item, idx) => (
             <React.Fragment key={`${i}-${idx}`}>
-              <span className="marquee-text mx-3 sm:mx-4 md:mx-6 font-comic text-base sm:text-lg md:text-xl lg:text-2xl uppercase italic tracking-widest whitespace-nowrap shrink-0 drop-shadow-sm">
+              <span className="marquee-text mx-2 sm:mx-3 md:mx-5 font-comic text-xs sm:text-sm md:text-base lg:text-lg uppercase italic tracking-widest whitespace-nowrap shrink-0 drop-shadow-sm">
                 {item}
               </span>
               <img
                 src={idx % 2 === 0 ? ASSETS.spiderIcon : ASSETS.webImg}
                 alt="Separator"
-                className="mx-3 sm:mx-4 md:mx-6 h-5 sm:h-6 md:h-8 lg:h-10 w-auto object-contain shrink-0 drop-shadow-md"
+                width="24"
+                height="24"
+                className="mx-2 sm:mx-3 md:mx-5 h-4 sm:h-5 md:h-6 lg:h-7 w-auto object-contain shrink-0 drop-shadow-md"
               />
             </React.Fragment>
           ))}
@@ -134,11 +136,11 @@ export const Hero = () => {
   );
 
   return (
-    <main className="w-full flex flex-col bg-white overflow-hidden">
+    <div className="relative w-full flex flex-col bg-white">
       {/* Hero Section — Clean Spider-Man Background */}
       <section
         ref={containerRef}
-        className="relative w-full min-h-[100dvh] h-[100dvh] overflow-hidden flex items-center justify-center select-none"
+        className="relative w-full min-h-[100dvh] h-[100dvh] overflow-hidden flex items-center justify-center select-none z-[1]"
       >
         {/* Single Background Image — Spider-Man Mask (no face reveal) */}
         <img
@@ -242,27 +244,27 @@ export const Hero = () => {
           </h2>
         </div>
       </section>
-
-      {/* Kinetic Crossed Marquees */}
-      <section
-        className="relative w-full h-[20vh] md:h-[28vh] bg-white overflow-hidden flex items-center justify-center z-30 py-8"
+ 
+      {/* Tape Banners Wrapper: Zero-height anchor at Hero/About boundary */}
+      <div
+        className="relative w-full h-0 z-20 overflow-visible pointer-events-none"
         onMouseEnter={handleMarqueeEnter}
         onMouseLeave={handleMarqueeLeave}
       >
-        {/* Top Marquee (Red bar, skewed +4deg) */}
-        <div className="absolute w-[120%] -left-[10%] h-12 md:h-16 lg:h-20 bg-[#a31515] text-white border-y-[3px] border-black rotate-[4deg] -translate-y-4 md:-translate-y-6 shadow-[0_10px_20px_rgba(0,0,0,0.4)] z-20 flex items-center overflow-hidden scale-105">
+        {/* Tape 1 (Red bar): rotate(+3.5deg, mobile +2deg), slopes downward left-to-right */}
+        <div className="absolute w-[120vw] -left-[10vw] top-6 sm:top-8 md:top-10 h-10 sm:h-12 md:h-14 lg:h-16 bg-[#a31515] text-white border-y-[2px] sm:border-y-[3px] border-black rotate-[2deg] md:rotate-[3.5deg] shadow-[0_10px_25px_rgba(0,0,0,0.4)] z-20 flex items-center overflow-hidden pointer-events-none">
           <div ref={marquee1Ref} className="flex items-center h-full w-max">
             {renderMarqueeContent(HERO_DATA.marqueeItems)}
           </div>
         </div>
 
-        {/* Bottom Marquee (Dark bar, skewed -4deg) */}
-        <div className="absolute w-[120%] -left-[10%] h-12 md:h-16 lg:h-20 bg-[#111111] text-[#ef4444] border-y-[3px] border-[#a31515] rotate-[-4deg] translate-y-4 md:translate-y-6 shadow-[0_5px_15px_rgba(0,0,0,0.5)] z-10 flex items-center overflow-hidden scale-105">
+        {/* Tape 2 (Black bar): rotate(-3.5deg, mobile -2deg), slopes upward left-to-right */}
+        <div className="absolute w-[120vw] -left-[10vw] top-6 sm:top-8 md:top-10 h-10 sm:h-12 md:h-14 lg:h-16 bg-[#111111] text-[#ef4444] border-y-[2px] sm:border-y-[3px] border-[#a31515] rotate-[-2deg] md:rotate-[-3.5deg] shadow-[0_8px_20px_rgba(0,0,0,0.5)] z-10 flex items-center overflow-hidden pointer-events-none">
           <div ref={marquee2Ref} className="flex items-center h-full w-max">
             {renderMarqueeContent(HERO_DATA.marqueeItems)}
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 };
