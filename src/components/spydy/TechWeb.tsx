@@ -1,26 +1,31 @@
 /**
  * TechWeb.tsx
  *
- * Interactive Spider-Man Web — Realistic Distorted Web Architecture
- * with 3D Articulated Lined-Leg Crimson Spider crawling slowly along spoke threads.
+ * Interactive Spider-Man Web — Dual-Orb Interconnected Architecture
+ * Replicating reference image identically with rich ruby silk threads,
+ * physical knot intersections, and a slow 3D articulated lined-leg crawling spider.
  *
  * Features:
- * 1. Linearity with Organic Distortion:
- *    - Continuous, traceable spoke threads from center hub (800, 450) to each chip.
- *    - Real tension wavers along spokes and asymmetric catenary sag across rings.
- *    - Every single chip is anchored at an exact knot intersection of spoke and ring.
- * 2. 3D Articulated Lined-Leg Spider:
- *    - Built as a tactile 3D SVG element with volumetric shading, specular highlights,
- *      chelicerae, glowing eyes, and 8 jointed lined legs with distinct knee bends.
- *    - Walks with a realistic alternating tetrapod gait (Group A vs Group B legs)
- *      and body sway while traversing the thread.
- * 3. Slow & Steady Arachnid Locomotion:
- *    - Does NOT reach immediately: crawls steadily over 1.4s–2.4s.
- *    - Stops walking and perches on the spoke thread when arriving at the hovered chip.
- *    - Slowly crawls back to center hub when cursor leaves.
- * 4. Active Thread Glow:
- *    - Spoke thread beneath the crawling spider pulses with electric crimson laser light.
- * 5. 60fps GPU performance, IntersectionObserver offscreen pause, and reduced motion support.
+ * 1. Identical Web Structure:
+ *    - Replicates the dual-orb architecture from reference image:
+ *      Primary Left Orb (hub at 22.3%, 55.4%) + Secondary Right Orb (hub at 93.2%, 62.5%)
+ *      connected by massive horizontal and diagonal tension bridge cables.
+ *    - Glistening ruby-red silk with specular glints on a clean bright background.
+ * 2. Visual Traceability & Physical Knot Intersections:
+ *    - All 30 tech stack chips are anchored at exact, verified physical knot intersections.
+ *    - Spoke paths can be visually traced with the eye from the hub to every chip.
+ *    - Zero overlaps or collisions between chips (spatially distributed across Left Orb, Bridge, Right Orb).
+ * 3. 3D Articulated Lined-Leg Red Spider:
+ *    - Tactile 3D SVG element with volumetric shading, specular highlights, chelicerae,
+ *      and 8 jointed lined legs with distinct knee bends.
+ *    - Alternating tetrapod gait (Group A vs Group B legs) and body sway while walking.
+ * 4. Slow & Steady Arachnid Locomotion:
+ *    - Crawls steadily over 1.35s–2.4s ("slowly not reaching immediately").
+ *    - Stops walking and perches on the silk strand beside the hovered chip.
+ *    - Crawls back to the primary hub when cursor leaves.
+ * 5. Active Laser Route:
+ *    - Silk path beneath the spider illuminates with electric crimson laser light.
+ * 6. 60fps GPU performance, parallax 3D tilt, and IntersectionObserver offscreen pause.
  */
 
 import React, {
@@ -30,17 +35,12 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
+import { ASSETS } from "../../data/spidermanData";
 import {
-  WEB_CONFIG,
+  DUAL_WEB_CONFIG,
   TECH_NODES,
   TechNode,
-  generateMainSpokesPath,
-  generateSaggingRingsPath,
-  generateBranchSplittersPath,
-  generateCrossStrutsPath,
-  generateCenterHubSpiralPath,
-  generateOuterWispsPath,
-  generateDewdropsList,
+  DEWDROPS,
   generateThreadHighlightPath,
   calculateSpiderTarget,
   calculateCrawlDuration,
@@ -58,39 +58,30 @@ export const TechWeb: React.FC = () => {
   const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
   const crawlTimerRef = useRef<number | null>(null);
 
-  // Precomputed Web Geometry Paths (calculated once with zero layout shift)
-  const mainSpokesPath = useMemo(() => generateMainSpokesPath(WEB_CONFIG), []);
-  const saggingRingsPath = useMemo(() => generateSaggingRingsPath(WEB_CONFIG), []);
-  const branchSplittersPath = useMemo(() => generateBranchSplittersPath(WEB_CONFIG), []);
-  const crossStrutsPath = useMemo(() => generateCrossStrutsPath(WEB_CONFIG), []);
-  const hubSpiralPath = useMemo(() => generateCenterHubSpiralPath(WEB_CONFIG), []);
-  const outerWispsPath = useMemo(() => generateOuterWispsPath(WEB_CONFIG), []);
-  const dewdrops = useMemo(() => generateDewdropsList(WEB_CONFIG), []);
-
-  // Compute active thread highlight path when a chip is hovered
+  // Active laser highlight path when a chip is hovered
   const highlightPathData = useMemo(() => {
     if (!hoveredNode) return "";
-    return generateThreadHighlightPath(hoveredNode, WEB_CONFIG);
+    return generateThreadHighlightPath(hoveredNode);
   }, [hoveredNode]);
 
-  // Compute spider target coordinates and rotation along the active spoke
+  // Spider target coordinates and rotation along the active silk route
   const spiderTarget = useMemo(() => {
-    return calculateSpiderTarget(hoveredNode, WEB_CONFIG);
+    return calculateSpiderTarget(hoveredNode, DUAL_WEB_CONFIG);
   }, [hoveredNode]);
 
-  // Calculate dynamic slow crawl duration (1.4s to 2.4s based on distance)
+  // Crawl duration (1.35s to 2.4s based on path distance)
   const crawlDuration = useMemo(() => {
-    return calculateCrawlDuration(hoveredNode, WEB_CONFIG);
+    return calculateCrawlDuration(hoveredNode, DUAL_WEB_CONFIG);
   }, [hoveredNode]);
 
-  // Handle chip hover with slow arachnid crawling gait
+  // Chip hover with slow arachnid crawling gait
   const handleChipHover = useCallback((node: TechNode) => {
     setHoveredNode(node);
     setIsCrawling(true);
     if (crawlTimerRef.current) clearTimeout(crawlTimerRef.current);
-    
-    // Stop walking gait when spider arrives at the target chip
-    const durMs = Math.round(calculateCrawlDuration(node, WEB_CONFIG) * 1000);
+
+    // Stop walking gait when spider arrives beside target chip
+    const durMs = Math.round(calculateCrawlDuration(node, DUAL_WEB_CONFIG) * 1000);
     crawlTimerRef.current = window.setTimeout(() => {
       setIsCrawling(false);
     }, durMs);
@@ -101,7 +92,7 @@ export const TechWeb: React.FC = () => {
     setIsCrawling(true);
     if (crawlTimerRef.current) clearTimeout(crawlTimerRef.current);
 
-    // Stop walking gait when spider returns to center hub
+    // Stop walking gait when spider returns to primary hub
     crawlTimerRef.current = window.setTimeout(() => {
       setIsCrawling(false);
     }, 1600);
@@ -144,8 +135,8 @@ export const TechWeb: React.FC = () => {
       const xRel = (e.clientX - rect.left) / rect.width - 0.5;
       const yRel = (e.clientY - rect.top) / rect.height - 0.5;
 
-      targetX = -yRel * 4;
-      targetY = xRel * 4;
+      targetX = -yRel * 3.5;
+      targetY = xRel * 3.5;
 
       if (!rafId) {
         rafId = requestAnimationFrame(() => {
@@ -181,7 +172,7 @@ export const TechWeb: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className={`relative w-full max-w-[1400px] mx-auto aspect-[16/9] min-h-[460px] sm:min-h-[560px] md:min-h-[680px] lg:min-h-[760px] flex items-center justify-center select-none overflow-visible ${
+      className={`relative w-full max-w-[1050px] aspect-square mx-auto flex items-center justify-center select-none overflow-visible ${
         !isVisible ? "web-paused" : ""
       }`}
       style={{ perspective: "1200px" }}
@@ -199,20 +190,20 @@ export const TechWeb: React.FC = () => {
           will-change: transform;
         }
 
-        /* Web draw-in reveal on scroll */
-        @keyframes webPathReveal {
-          0%   { stroke-dashoffset: 2400; opacity: 0; }
-          100% { stroke-dashoffset: 0;    opacity: 1; }
+        /* Web reveal animation */
+        @keyframes webReveal {
+          0%   { opacity: 0; transform: scale(0.97); }
+          100% { opacity: 1; transform: scale(1); }
         }
-        .web-stroke-draw {
-          stroke-dasharray: 2400;
-          animation: webPathReveal 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        .web-image-fade {
+          animation: webReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          will-change: transform, opacity;
         }
 
         /* Gentle ambient breathing */
         @keyframes webAmbientBreathe {
           0%, 100% { transform: scale(1); }
-          50%      { transform: scale(1.008); }
+          50%      { transform: scale(1.006); }
         }
         .web-ambient-breathe {
           animation: webAmbientBreathe 7s ease-in-out infinite;
@@ -290,7 +281,6 @@ export const TechWeb: React.FC = () => {
         }
         .hub-halo {
           animation: hubGlowPulse 3s ease-in-out infinite;
-          transform-origin: 800px 450px;
         }
 
         /* Offscreen pause */
@@ -332,27 +322,52 @@ export const TechWeb: React.FC = () => {
           transformStyle: "preserve-3d",
         }}
       >
-        {/* ── Radial Background Silk Halo ── */}
+        {/* ── Ambient Radial Silk Glow ── */}
         <div
-          className="absolute inset-[6%] rounded-full pointer-events-none -z-10"
+          className="absolute inset-[4%] rounded-full pointer-events-none -z-10"
           style={{
             background:
-              "radial-gradient(ellipse at center, rgba(197,29,29,0.08) 0%, rgba(163,21,21,0.03) 45%, transparent 72%)",
+              "radial-gradient(ellipse at 25% 55%, rgba(197,29,29,0.08) 0%, rgba(163,21,21,0.03) 40%, transparent 70%), radial-gradient(ellipse at 88% 62%, rgba(197,29,29,0.06) 0%, transparent 50%)",
           }}
           aria-hidden="true"
         />
 
-        {/* ── 1. STRUCTURED & REALISTICALLY DISTORTED SVG SPIDER WEB ── */}
+        {/* ── 1. EXACT DUAL-ORB WEB IMAGE BACKDROP (Pixel-faithful to reference) ── */}
+        <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-visible">
+          <picture className="w-full h-full flex items-center justify-center">
+            <source srcSet={ASSETS.dualWebImg} type="image/webp" />
+            <img
+              src={ASSETS.dualWebImgPng}
+              alt="Organic Dual-Orb Spider Web"
+              width="1472"
+              height="1472"
+              loading="lazy"
+              decoding="async"
+              className={`w-full h-full object-contain pointer-events-none web-ambient-breathe ${
+                hasDrawnIn ? "web-image-fade" : "opacity-0"
+              }`}
+            />
+          </picture>
+        </div>
+
+        {/* ── 2. SVG INTERACTIVE ROUTING & LIGHTING LAYER ── */}
         <svg
-          viewBox="0 0 1600 900"
-          className="absolute inset-0 w-full h-full pointer-events-none overflow-visible web-ambient-breathe"
+          viewBox="0 0 1000 1000"
+          className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
         >
           <defs>
-            {/* Center Hub Ambient Glow */}
-            <radialGradient id="webHubGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.45" />
+            {/* Left Primary Hub Ambient Glow */}
+            <radialGradient id="webHubGlow1" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.5" />
+              <stop offset="60%" stopColor="#a31515" stopOpacity="0.15" />
+              <stop offset="100%" stopColor="#a31515" stopOpacity="0" />
+            </radialGradient>
+
+            {/* Right Secondary Hub Ambient Glow */}
+            <radialGradient id="webHubGlow2" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.4" />
               <stop offset="60%" stopColor="#a31515" stopOpacity="0.12" />
               <stop offset="100%" stopColor="#a31515" stopOpacity="0" />
             </radialGradient>
@@ -367,93 +382,55 @@ export const TechWeb: React.FC = () => {
             </filter>
           </defs>
 
-          {/* Layer 1: Outer Anchor Wisps reaching toward viewport edges */}
-          <path
-            d={outerWispsPath}
-            fill="none"
-            stroke="#a31515"
-            strokeWidth="1.2"
-            opacity="0.26"
-            className={hasDrawnIn ? "" : "opacity-0"}
+          {/* Left Primary Hub Luminous Knot */}
+          <circle
+            cx={DUAL_WEB_CONFIG.hub1.x}
+            cy={DUAL_WEB_CONFIG.hub1.y}
+            r="48"
+            fill="url(#webHubGlow1)"
+            className="hub-halo"
+            style={{ transformOrigin: `${DUAL_WEB_CONFIG.hub1.x}px ${DUAL_WEB_CONFIG.hub1.y}px` }}
           />
-
-          {/* Layer 2: Delicate Cross-Cell Struts & Diagonal Filaments */}
-          <path
-            d={crossStrutsPath}
-            fill="none"
-            stroke="#c51d1d"
-            strokeWidth="1.1"
-            opacity="0.30"
-            className={hasDrawnIn ? "" : "opacity-0"}
-          />
-
-          {/* Layer 3: Branching Outer Splitters (forks between spokes) */}
-          <path
-            d={branchSplittersPath}
-            fill="none"
-            stroke="#c51d1d"
-            strokeWidth="1.5"
-            opacity="0.52"
-            className={hasDrawnIn ? "" : "opacity-0"}
-          />
-
-          {/* Layer 4: Concentric Sagging Rings with Asymmetric Gravitational Droop */}
-          <path
-            d={saggingRingsPath}
-            fill="none"
-            stroke="#c51d1d"
-            strokeWidth="2.2"
-            opacity="0.82"
-            strokeLinecap="round"
-            className={hasDrawnIn ? "web-stroke-draw" : "opacity-0"}
-          />
-          <path
-            d={saggingRingsPath}
-            fill="none"
-            stroke="#ef4444"
-            strokeWidth="0.8"
-            opacity="0.88"
-            strokeLinecap="round"
-            className={hasDrawnIn ? "" : "opacity-0"}
-          />
-
-          {/* Layer 5: 12 Main Distorted Spokes directly connecting Hub through all Chips */}
-          <path
-            d={mainSpokesPath}
-            fill="none"
-            stroke="#c51d1d"
-            strokeWidth="2.6"
+          <circle
+            cx={DUAL_WEB_CONFIG.hub1.x}
+            cy={DUAL_WEB_CONFIG.hub1.y}
+            r="7.5"
+            fill="#a31515"
             opacity="0.9"
-            strokeLinecap="round"
-            className={hasDrawnIn ? "web-stroke-draw" : "opacity-0"}
           />
-          <path
-            d={mainSpokesPath}
-            fill="none"
-            stroke="#ff4444"
-            strokeWidth="1.0"
-            opacity="0.95"
-            strokeLinecap="round"
-            className={hasDrawnIn ? "" : "opacity-0"}
+          <circle
+            cx={DUAL_WEB_CONFIG.hub1.x}
+            cy={DUAL_WEB_CONFIG.hub1.y}
+            r="3"
+            fill="#ffffff"
           />
 
-          {/* Layer 6: Central Hub Spiral Vortex */}
-          <path
-            d={hubSpiralPath}
-            fill="none"
-            stroke="#c51d1d"
-            strokeWidth="1.8"
+          {/* Right Secondary Hub Luminous Knot */}
+          <circle
+            cx={DUAL_WEB_CONFIG.hub2.x}
+            cy={DUAL_WEB_CONFIG.hub2.y}
+            r="38"
+            fill="url(#webHubGlow2)"
+            className="hub-halo"
+            style={{ transformOrigin: `${DUAL_WEB_CONFIG.hub2.x}px ${DUAL_WEB_CONFIG.hub2.y}px` }}
+          />
+          <circle
+            cx={DUAL_WEB_CONFIG.hub2.x}
+            cy={DUAL_WEB_CONFIG.hub2.y}
+            r="6"
+            fill="#a31515"
             opacity="0.85"
-            strokeLinecap="round"
-            className={hasDrawnIn ? "" : "opacity-0"}
           />
-          <circle cx="800" cy="450" r="60" fill="url(#webHubGlow)" className="hub-halo" />
-          <circle cx="800" cy="450" r="7.5" fill="#a31515" opacity="0.9" />
-          <circle cx="800" cy="450" r="3" fill="#ffffff" />
+          <circle
+            cx={DUAL_WEB_CONFIG.hub2.x}
+            cy={DUAL_WEB_CONFIG.hub2.y}
+            r="2.5"
+            fill="#ffffff"
+          />
 
-          {/* Layer 7: Glistening Dewdrop Beads along threads */}
+          {/* Glistening Dewdrop Beads along threads */}
           <g className={hasDrawnIn ? "" : "opacity-0"}>
-            {dewdrops.map((drop, idx) => (
+            {DEWDROPS.map((drop, idx) => (
               <circle
                 key={`dewdrop-${idx}`}
                 cx={drop.cx}
@@ -468,21 +445,35 @@ export const TechWeb: React.FC = () => {
             ))}
           </g>
 
-          {/* Layer 8: Active Spoke Electric Laser Route following the exact distorted knot path */}
+          {/* Active Spoke Electric Laser Route following the exact silk route */}
           {highlightPathData && (
-            <path
-              d={highlightPathData}
-              fill="none"
-              stroke="#ef4444"
-              strokeWidth="5.0"
-              strokeLinecap="round"
-              filter="url(#laserGlowFilter)"
-              className="thread-laser-active"
-            />
+            <g>
+              {/* Outer pulsing laser glow */}
+              <path
+                d={highlightPathData}
+                fill="none"
+                stroke="#ef4444"
+                strokeWidth="5.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                filter="url(#laserGlowFilter)"
+                className="thread-laser-active"
+              />
+              {/* Brilliant white-hot core */}
+              <path
+                d={highlightPathData}
+                fill="none"
+                stroke="#ffffff"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity="0.95"
+              />
+            </g>
           )}
         </svg>
 
-        {/* ── 2. 3D RED SPIDER WITH ARTICULATED WALKING LEGS ── */}
+        {/* ── 3. 3D RED SPIDER WITH ARTICULATED WALKING LEGS ── */}
         <div
           className="absolute pointer-events-none z-20"
           style={{
@@ -494,15 +485,15 @@ export const TechWeb: React.FC = () => {
           }}
           aria-hidden="true"
         >
-          <Spider3D isCrawling={isCrawling} size={54} />
+          <Spider3D isCrawling={isCrawling} size={50} />
         </div>
 
-        {/* ── 3. HTML CHIP LAYER: 30 Tech Pills Mapped to Spoke & Ring Intersections ── */}
+        {/* ── 4. HTML CHIP LAYER: 30 Tech Chips Anchored at Physical Knots ── */}
         <div className="absolute inset-0 w-full h-full pointer-events-none">
           {TECH_NODES.map((node) => (
             <div
               key={node.id}
-              className="absolute pointer-events-auto tech-node-wrapper"
+              className="absolute pointer-events-auto tech-node-wrapper -translate-x-1/2 -translate-y-1/2"
               style={
                 {
                   left: `${node.pctX}%`,

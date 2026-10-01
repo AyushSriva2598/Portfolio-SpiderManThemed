@@ -29,6 +29,8 @@ export const ASSETS = {
   profileImg: "/assets/mypic-aradhya.png",
   mugshotPoster: "/assets/mugshot-poster.jpg",
   exactWebImg: "/assets/web-inspiration-bright.webp",
+  dualWebImg: "/assets/dual-web-inspiration.webp",
+  dualWebImgPng: "/assets/dual-web-inspiration.png",
   crimsonSpider: "/assets/crimson-spider.webp",
 };
 
