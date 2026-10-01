@@ -1,18 +1,55 @@
 /**
  * techData.ts
- * 
- * Spider-Man Themed Tech Web Dataset & Mathematical Projection
- * Computes polar coordinates for 30 technology nodes distributed across
- * 10 radial web threads and 6 concentric sagging rings.
+ *
+ * Spider-Man Themed Tech Web — Hand-Drawn Pen-Sketch Aesthetic
+ *
+ * The web is NOT a clean geometric structure. Real spider webs (and comic book webs)
+ * have slightly wobbly radial threads, irregularly sagging spiral capture threads,
+ * and organic imperfections. This module recreates that pen-drawn feel using:
+ *
+ * 1. Radial spokes: Cubic bezier curves with tiny random wobble control points
+ *    instead of straight lines — like an artist's quick ink stroke.
+ * 2. Spiral rings: Each arc between two spokes has randomised sag depth and
+ *    slightly offset control points, plus tiny per-ring radius jitter.
+ * 3. Auxiliary "wisps": Short decorative mini-threads that trail off the outer
+ *    ring like broken strands, adding realism.
+ * 4. Deterministic seeded randomness so the web looks the same every render
+ *    (no layout shift / flicker).
  */
+
+// ─── Deterministic PRNG (mulberry32) ─────────────────────────────────
+// Ensures the "hand-drawn" wobble is identical every render, no layout shifts.
+function mulberry32(seed: number) {
+  return function () {
+    let t = (seed += 0x6d2b79f5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const rng = mulberry32(42424242);
+
+// Shorthand: random float in [min, max)
+function rand(min: number, max: number): number {
+  return rng() * (max - min) + min;
+}
+
+// ─── Types ───────────────────────────────────────────────────────────
 
 export interface TechNode {
   id: string;
   name: string;
   icon: string;
   thread: number; // 0 to 9
-  ring: number;   // 2 to 6 (ring 1 reserved for hub)
-  category: "languages" | "frontend" | "backend" | "databases" | "cloud-devops" | "tools";
+  ring: number; // 2 to 6 (ring 1 reserved for hub)
+  category:
+    | "languages"
+    | "frontend"
+    | "backend"
+    | "databases"
+    | "cloud-devops"
+    | "tools";
   description?: string;
   // Computed polar coordinates
   x: number;
@@ -47,9 +84,8 @@ export const WEB_CONFIG: WebConfig = {
   startAngleDeg: -90, // Thread 0 points directly North
 };
 
-/**
- * Raw Node Specifications (30 Tech Items grouped by thread & ring)
- */
+// ─── Raw Chip Data (30 tech items) ───────────────────────────────────
+
 const RAW_TECH_NODES = [
   // ── Thread 0: Core Languages (North) ──
   { name: "TypeScript", icon: "typescript", thread: 0, ring: 2, category: "languages" },
@@ -102,9 +138,8 @@ const RAW_TECH_NODES = [
   { name: "Git & GitHub", icon: "git & github", thread: 9, ring: 5, category: "tools" },
 ] as const;
 
-/**
- * Calculates polar coordinates (x, y) for a given thread and ring
- */
+// ─── Polar Position Calculator ───────────────────────────────────────
+
 export function calculatePolarPosition(
   thread: number,
   ring: number,
@@ -121,16 +156,18 @@ export function calculatePolarPosition(
   return { x, y, angleDeg, radius };
 }
 
-/**
- * Pre-computed Array of All 30 Tech Nodes with Polar Positions & CSS Bobbing Delays
- */
+// ─── Pre-computed Nodes with Positions & Bobbing ─────────────────────
+
 export const TECH_NODES: TechNode[] = RAW_TECH_NODES.map((node, index) => {
-  const { x, y, angleDeg, radius } = calculatePolarPosition(node.thread, node.ring);
-  
+  const { x, y, angleDeg, radius } = calculatePolarPosition(
+    node.thread,
+    node.ring
+  );
+
   // Staggered organic bobbing variables per chip
   const bobDelay = `${((index * 0.23) % 2.5).toFixed(2)}s`;
   const bobDuration = `${(3.2 + ((index * 0.17) % 1.6)).toFixed(2)}s`;
-  const bobAmplitude = `${(node.ring % 2 === 0 ? -4 : -3)}px`;
+  const bobAmplitude = `${node.ring % 2 === 0 ? -4 : -3}px`;
 
   return {
     ...node,
@@ -145,56 +182,110 @@ export const TECH_NODES: TechNode[] = RAW_TECH_NODES.map((node, index) => {
   };
 });
 
-/**
- * Generates the merged SVG path data for all radial spoke threads
- */
-export function generateRadialThreadsPath(config: WebConfig = WEB_CONFIG): string {
+// ─── Hand-Drawn Radial Spokes ────────────────────────────────────────
+// Instead of M cx cy L xEnd yEnd (boring straight line), each spoke is
+// a cubic bezier (C) with two control points that wobble ±8px off the
+// straight line. This looks like a quick pen stroke.
+
+export function generateRadialThreadsPath(
+  config: WebConfig = WEB_CONFIG
+): string {
   const { cx, cy, threadCount, ringRadii, startAngleDeg } = config;
-  const maxRadius = ringRadii[ringRadii.length - 1] + 25;
+  const maxRadius = ringRadii[ringRadii.length - 1] + 30;
   const angleStep = 360 / threadCount;
+
+  // Reset RNG for deterministic output
+  const spokeRng = mulberry32(77777);
 
   let path = "";
   for (let i = 0; i < threadCount; i++) {
     const angleRad = ((startAngleDeg + i * angleStep) * Math.PI) / 180;
-    const xEnd = Math.round((cx + maxRadius * Math.cos(angleRad)) * 10) / 10;
-    const yEnd = Math.round((cy + maxRadius * Math.sin(angleRad)) * 10) / 10;
-    path += `M ${cx} ${cy} L ${xEnd} ${yEnd} `;
+    const xEnd =
+      Math.round((cx + maxRadius * Math.cos(angleRad)) * 10) / 10;
+    const yEnd =
+      Math.round((cy + maxRadius * Math.sin(angleRad)) * 10) / 10;
+
+    // Perpendicular direction for wobble offset
+    const perpX = -Math.sin(angleRad);
+    const perpY = Math.cos(angleRad);
+
+    // Two control points at ~33% and ~66% along the spoke
+    const wobble1 = (spokeRng() - 0.5) * 16; // ±8px
+    const wobble2 = (spokeRng() - 0.5) * 16;
+
+    const cp1x = Math.round(
+      (cx + maxRadius * 0.33 * Math.cos(angleRad) + perpX * wobble1) * 10
+    ) / 10;
+    const cp1y = Math.round(
+      (cy + maxRadius * 0.33 * Math.sin(angleRad) + perpY * wobble1) * 10
+    ) / 10;
+    const cp2x = Math.round(
+      (cx + maxRadius * 0.66 * Math.cos(angleRad) + perpX * wobble2) * 10
+    ) / 10;
+    const cp2y = Math.round(
+      (cy + maxRadius * 0.66 * Math.sin(angleRad) + perpY * wobble2) * 10
+    ) / 10;
+
+    path += `M ${cx} ${cy} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${xEnd} ${yEnd} `;
   }
   return path.trim();
 }
 
-/**
- * Generates the merged SVG path data for all concentric sagging spiral rings
- * Uses quadratic beziers (Q) with slight inward sag between thread intersections.
- */
-export function generateSaggingRingsPath(config: WebConfig = WEB_CONFIG): string {
-  const { cx, cy, threadCount, ringRadii, sagFactor, startAngleDeg } = config;
+// ─── Hand-Drawn Sagging Concentric Rings ─────────────────────────────
+// Each ring arc between two spokes uses a quadratic bezier with randomized
+// sag depth (8-12% inward pull), plus per-ring radius jitter (±3px) to
+// break perfect symmetry.
+
+export function generateSaggingRingsPath(
+  config: WebConfig = WEB_CONFIG
+): string {
+  const { cx, cy, threadCount, ringRadii, startAngleDeg } = config;
   const angleStep = 360 / threadCount;
+  const ringRng = mulberry32(131313);
+
   let path = "";
 
-  // Iterate over rings (skipping ring 0 which is center point)
   for (let r = 1; r < ringRadii.length; r++) {
-    const radius = ringRadii[r];
-    const sagRadius = radius * (1 - sagFactor);
+    const baseRadius = ringRadii[r];
+    // Per-ring jitter: slightly different radius per spoke intersection
+    const jitters: number[] = [];
+    for (let j = 0; j <= threadCount; j++) {
+      jitters.push((ringRng() - 0.5) * 6); // ±3px
+    }
 
-    // Compute first vertex to begin ring path
+    // First vertex
     const firstAngleRad = (startAngleDeg * Math.PI) / 180;
-    const firstX = Math.round((cx + radius * Math.cos(firstAngleRad)) * 10) / 10;
-    const firstY = Math.round((cy + radius * Math.sin(firstAngleRad)) * 10) / 10;
+    const firstR = baseRadius + jitters[0];
+    const firstX =
+      Math.round((cx + firstR * Math.cos(firstAngleRad)) * 10) / 10;
+    const firstY =
+      Math.round((cy + firstR * Math.sin(firstAngleRad)) * 10) / 10;
 
     path += `M ${firstX} ${firstY} `;
 
-    // Connect each thread spoke to the next with a sagging quadratic bezier curve
     for (let i = 0; i < threadCount; i++) {
       const nextIdx = (i + 1) % threadCount;
-      const endAngleRad = ((startAngleDeg + nextIdx * angleStep) * Math.PI) / 180;
-      const endX = Math.round((cx + radius * Math.cos(endAngleRad)) * 10) / 10;
-      const endY = Math.round((cy + radius * Math.sin(endAngleRad)) * 10) / 10;
+      const endR = baseRadius + jitters[nextIdx];
+      const endAngleRad =
+        ((startAngleDeg + nextIdx * angleStep) * Math.PI) / 180;
+      const endX =
+        Math.round((cx + endR * Math.cos(endAngleRad)) * 10) / 10;
+      const endY =
+        Math.round((cy + endR * Math.sin(endAngleRad)) * 10) / 10;
 
-      // Sag control point at the mid-angle between thread i and thread i+1
-      const midAngleRad = ((startAngleDeg + (i + 0.5) * angleStep) * Math.PI) / 180;
-      const ctrlX = Math.round((cx + sagRadius * Math.cos(midAngleRad)) * 10) / 10;
-      const ctrlY = Math.round((cy + sagRadius * Math.sin(midAngleRad)) * 10) / 10;
+      // Sag control point — randomized depth between 7-13%
+      const sagDepth = 0.07 + ringRng() * 0.06;
+      const sagRadius = baseRadius * (1 - sagDepth);
+      // Slight angular wobble on control point too (±1.5°)
+      const midAngleWobble = (ringRng() - 0.5) * 3;
+      const midAngleRad =
+        ((startAngleDeg + (i + 0.5) * angleStep + midAngleWobble) *
+          Math.PI) /
+        180;
+      const ctrlX =
+        Math.round((cx + sagRadius * Math.cos(midAngleRad)) * 10) / 10;
+      const ctrlY =
+        Math.round((cy + sagRadius * Math.sin(midAngleRad)) * 10) / 10;
 
       path += `Q ${ctrlX} ${ctrlY}, ${endX} ${endY} `;
     }
@@ -203,13 +294,73 @@ export function generateSaggingRingsPath(config: WebConfig = WEB_CONFIG): string
   return path.trim();
 }
 
-/**
- * Computes a highlight route path from center to a specific node along its thread
- */
+// ─── Decorative Outer Wisps ──────────────────────────────────────────
+// Short broken strands trailing off the outermost ring — like torn silk
+// threads blowing in the wind. Adds realism and character.
+
+export function generateWispsPath(
+  config: WebConfig = WEB_CONFIG
+): string {
+  const { cx, cy, threadCount, ringRadii, startAngleDeg } = config;
+  const outerR = ringRadii[ringRadii.length - 1];
+  const angleStep = 360 / threadCount;
+  const wispRng = mulberry32(999999);
+
+  let path = "";
+
+  // Place a wisp between every other pair of spokes
+  for (let i = 0; i < threadCount; i++) {
+    if (wispRng() > 0.6) continue; // ~60% chance of a wisp at each spoke
+
+    const angleRad = ((startAngleDeg + i * angleStep) * Math.PI) / 180;
+    const startR = outerR + 5;
+    const endR = outerR + 25 + wispRng() * 30; // 25-55px beyond outer ring
+
+    const sx = Math.round((cx + startR * Math.cos(angleRad)) * 10) / 10;
+    const sy = Math.round((cy + startR * Math.sin(angleRad)) * 10) / 10;
+
+    // Wisp curves slightly off-angle
+    const drift = ((wispRng() - 0.5) * 15 * Math.PI) / 180;
+    const ex = Math.round((cx + endR * Math.cos(angleRad + drift)) * 10) / 10;
+    const ey = Math.round((cy + endR * Math.sin(angleRad + drift)) * 10) / 10;
+
+    // A small control point for a gentle curve
+    const cpR = (startR + endR) / 2;
+    const cpDrift = drift * 1.5;
+    const cpx = Math.round((cx + cpR * Math.cos(angleRad + cpDrift)) * 10) / 10;
+    const cpy = Math.round((cy + cpR * Math.sin(angleRad + cpDrift)) * 10) / 10;
+
+    path += `M ${sx} ${sy} Q ${cpx} ${cpy}, ${ex} ${ey} `;
+  }
+
+  // Also add tiny wisps between spokes at mid-angles
+  for (let i = 0; i < threadCount; i++) {
+    if (wispRng() > 0.4) continue;
+
+    const midAngleRad =
+      ((startAngleDeg + (i + 0.5) * angleStep) * Math.PI) / 180;
+    const startR = outerR - 5;
+    const endR = outerR + 15 + wispRng() * 20;
+
+    const sx = Math.round((cx + startR * Math.cos(midAngleRad)) * 10) / 10;
+    const sy = Math.round((cy + startR * Math.sin(midAngleRad)) * 10) / 10;
+    const ex = Math.round((cx + endR * Math.cos(midAngleRad)) * 10) / 10;
+    const ey = Math.round((cy + endR * Math.sin(midAngleRad)) * 10) / 10;
+
+    path += `M ${sx} ${sy} L ${ex} ${ey} `;
+  }
+
+  return path.trim();
+}
+
+// ─── Thread Highlight Path (center → node) ───────────────────────────
+// Uses the same wobble as the spoke for visual consistency
+
 export function generateThreadHighlightPath(
   node: TechNode,
   config: WebConfig = WEB_CONFIG
 ): string {
   const { cx, cy } = config;
+  // Simple line is fine for the glow overlay — it sits on top of the wobbly spoke
   return `M ${cx} ${cy} L ${node.x} ${node.y}`;
 }
