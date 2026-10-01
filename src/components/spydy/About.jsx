@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ABOUT_DATA, ASSETS } from "../../data/spidermanData";
-import { TechIcon } from "./TechIcon";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,7 +13,6 @@ export const About = () => {
   const badgeRef = useRef(null);
   const titleRef = useRef(null);
   const textRef = useRef(null);
-  const pillsRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -99,19 +97,6 @@ export const About = () => {
             ease: "back.out(1.2)",
           },
           "-=1.2"
-        )
-        .fromTo(
-          pillsRef.current?.children || [],
-          { scale: 0.5, opacity: 0, y: 20 },
-          {
-            scale: 1,
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: "back.out(1.5)",
-          },
-          "-=0.8"
         );
 
       // =========================
@@ -131,22 +116,6 @@ export const About = () => {
         repeat: -1,
         duration: 90,
         ease: "linear",
-      });
-
-      // =========================
-      // TECH PILLS FLOATING
-      // =========================
-      gsap.to(".tech-pill", {
-        y: -4,
-        yoyo: true,
-        repeat: -1,
-        duration: 1.5,
-        ease: "sine.inOut",
-        stagger: {
-          each: 0.2,
-          from: "random",
-        },
-        delay: 1.5,
       });
     }, sectionRef);
 
@@ -309,32 +278,6 @@ export const About = () => {
                 />
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* ===================================================
-            PRIMARY TECH STACK — FULL WIDTH
-        =================================================== */}
-        <div className="relative w-full mt-8 sm:mt-10 lg:mt-12">
-
-          <h3 className="font-dialogue text-xs sm:text-sm uppercase tracking-widest text-[#a31515] mb-4 font-bold border-b border-[#a31515]/30 pb-2 inline-flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#a31515]" />
-            Primary Tech Stack
-          </h3>
-
-          <div
-            ref={pillsRef}
-            className="flex flex-wrap gap-2.5 sm:gap-3"
-          >
-            {ABOUT_DATA.techStack.map((tech, idx) => (
-              <div
-                key={idx}
-                className="tech-pill group px-3.5 sm:px-4 py-2 sm:py-2.5 min-h-[44px] inline-flex items-center gap-2 border border-[#a31515]/30 bg-white text-[#a31515] rounded-xl font-dialogue font-bold text-xs sm:text-sm tracking-wider hover:bg-[#a31515] hover:text-white hover:border-[#a31515] shadow-sm hover:shadow-[0_8px_20px_rgba(163,21,21,0.3)] transition-[transform,box-shadow,background-color,color] duration-300 cursor-default select-none"
-              >
-                <TechIcon name={tech} className="w-4 h-4 shrink-0 transition-colors duration-300" />
-                <span>{tech}</span>
-              </div>
-            ))}
           </div>
         </div>
       </div>
