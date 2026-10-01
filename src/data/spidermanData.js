@@ -28,6 +28,7 @@ export const ASSETS = {
   hangingSpiderImg: "/assets/spydy_hang-Cac1gK30.png",
   profileImg: "/assets/mypic-aradhya.png",
   mugshotPoster: "/assets/mugshot-poster.jpg",
+  exactWebImg: "/assets/web-inspiration-bright.webp",
 };
 
 export const ABOUT_DATA = {
