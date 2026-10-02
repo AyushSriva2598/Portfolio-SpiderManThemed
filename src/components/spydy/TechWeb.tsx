@@ -193,8 +193,8 @@ export const TechWeb: React.FC<TechWebProps> = ({ selectedCategory = "all" }) =>
             <img
               src={ASSETS.wideSpiderWebPng}
               alt="Clean & Spacious Widescreen Spider-Man Web Design in Red"
-              width="1376"
-              height="768"
+              width="2752"
+              height="1536"
               loading="lazy"
               decoding="async"
               className={`w-full h-full object-cover pointer-events-none web-ambient-breathe ${
