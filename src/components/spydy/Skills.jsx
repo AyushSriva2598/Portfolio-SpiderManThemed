@@ -70,7 +70,9 @@ export const Skills = () => {
           width="160"
           height="200"
           loading="lazy"
-          className="w-16 sm:w-24 md:w-32 lg:w-36 h-auto object-contain drop-shadow-lg -mt-2"
+          className={`w-16 sm:w-24 md:w-32 lg:w-36 h-auto object-contain drop-shadow-lg -mt-1 ${
+            isDark ? "translate-x-[3.6%]" : ""
+          }`}
         />
       </div>
 

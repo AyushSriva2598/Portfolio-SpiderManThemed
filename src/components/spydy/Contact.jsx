@@ -101,9 +101,9 @@ export const Contact = () => {
         <img
           src={isDark ? MILES_ASSETS.hangingSpiderImg : ASSETS.hangingSpiderImg}
           alt={isDark ? "Hanging Miles Morales" : "Hanging Spider-Man"}
-          className={`w-32 sm:w-40 md:w-60 h-auto object-contain -mt-2 ${
+          className={`w-32 sm:w-40 md:w-60 h-auto object-contain -mt-1 ${
             isDark
-              ? "drop-shadow-[0_12px_30px_rgba(0,0,0,0.8)] drop-shadow-[0_0_20px_rgba(225,29,72,0.35)]"
+              ? "translate-x-[3.6%] drop-shadow-[0_12px_30px_rgba(0,0,0,0.8)] drop-shadow-[0_0_20px_rgba(225,29,72,0.35)]"
               : "drop-shadow-2xl"
           }`}
         />
