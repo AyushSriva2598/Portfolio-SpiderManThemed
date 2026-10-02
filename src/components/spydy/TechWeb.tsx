@@ -197,7 +197,6 @@ export const TechWeb: React.FC<TechWebProps> = ({ selectedCategory = "all" }) =>
               height="768"
               loading="lazy"
               decoding="async"
-              style={{ filter: "url(#webColorFilter)" }}
               className={`w-full h-full object-cover pointer-events-none web-ambient-breathe ${
                 hasDrawnIn ? "web-image-fade" : "opacity-0"
               }`}
