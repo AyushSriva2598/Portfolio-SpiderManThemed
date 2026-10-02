@@ -2,16 +2,15 @@
  * TechWeb.tsx
  *
  * Interactive Spider-Man Skills Web Architecture
- * - Background: web1-770H2sSx.png rendered simply in red with razor-sharp comic ink lines.
- * - Shortest Path Algorithm: Graph Dijkstra algorithm strictly routed through the center.
- * - Spider: 2D Crimson Spider inspired by crimson-spider.webp with organic legs walking movement.
+ * - Background: Widescreen Spider-Man Web in Red (matching reference Gemini_Generated_Image_cit8ricit8ricit8.png).
+ * - Interactive Tech Chips pinned across 16 spokes and concentric ring intersections.
+ * - Hardware-accelerated 3D parallax tilt and subtle idle ambient breathing.
  */
 
 import React, {
   useState,
   useRef,
   useEffect,
-  useMemo,
   useCallback,
 } from "react";
 import { ASSETS } from "../../data/spidermanData";
@@ -19,81 +18,27 @@ import {
   WEB_CONFIG,
   TECH_NODES,
   TechNode,
-  Point,
-  findShortestPathThroughCenter,
-  generateThreadHighlightPath,
-  calculateSpiderTarget,
-  calculateCrawlDuration,
 } from "./techData";
 import { TechChip } from "./TechChip";
-import { Spider2D } from "./Spider2D";
 
-export const TechWeb: React.FC = () => {
+interface TechWebProps {
+  selectedCategory?: string;
+}
+
+export const TechWeb: React.FC<TechWebProps> = ({ selectedCategory = "all" }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [hoveredNode, setHoveredNode] = useState<TechNode | null>(null);
-  const [activePath, setActivePath] = useState<Point[]>([]);
-  const [isCrawling, setIsCrawling] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [hasDrawnIn, setHasDrawnIn] = useState(false);
   const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
-  const crawlTimerRef = useRef<number | null>(null);
-  const previousNodeRef = useRef<TechNode | null>(null);
 
-  // Calculate algorithm shortest path to hovered chip strictly through the center
-  useEffect(() => {
-    if (!hoveredNode) {
-      setActivePath([]);
-      return;
-    }
-
-    // Determine start point (previous chip or center hub)
-    const startId = previousNodeRef.current ? previousNodeRef.current.id : "center";
-    const path = findShortestPathThroughCenter(hoveredNode, startId);
-    setActivePath(path);
-    previousNodeRef.current = hoveredNode;
-  }, [hoveredNode]);
-
-  // Active laser highlight path string
-  const highlightPathData = useMemo(() => {
-    return generateThreadHighlightPath(activePath);
-  }, [activePath]);
-
-  // Spider target coordinates and rotation along the active silk path
-  const spiderTarget = useMemo(() => {
-    return calculateSpiderTarget(hoveredNode, activePath);
-  }, [hoveredNode, activePath]);
-
-  // Crawl duration (1.35s to 2.4s based on path length)
-  const crawlDuration = useMemo(() => {
-    return calculateCrawlDuration(activePath);
-  }, [activePath]);
-
-  // Chip hover handler with slow arachnid crawling gait
   const handleChipHover = useCallback((node: TechNode) => {
     setHoveredNode(node);
-    setIsCrawling(true);
-    if (crawlTimerRef.current) clearTimeout(crawlTimerRef.current);
-
-    const durMs = Math.round(calculateCrawlDuration(
-      findShortestPathThroughCenter(node, previousNodeRef.current?.id || "center")
-    ) * 1000);
-
-    crawlTimerRef.current = window.setTimeout(() => {
-      setIsCrawling(false);
-    }, durMs);
   }, []);
 
   const handleChipLeave = useCallback(() => {
     setHoveredNode(null);
-    setIsCrawling(true);
-    previousNodeRef.current = null;
-    if (crawlTimerRef.current) clearTimeout(crawlTimerRef.current);
-
-    // Stop walking gait when spider returns to center hub
-    crawlTimerRef.current = window.setTimeout(() => {
-      setIsCrawling(false);
-    }, 1500);
   }, []);
 
   // IntersectionObserver: Pause animations when off-screen (preserves 60fps)
@@ -115,41 +60,37 @@ export const TechWeb: React.FC = () => {
     return () => observer.disconnect();
   }, [hasDrawnIn]);
 
-  // Desktop Pointer Parallax Tilt (rAF throttled, disabled on touch/mobile)
+  // Gentle 3D Mouse Parallax Tilt
   useEffect(() => {
-    const isTouch = window.matchMedia("(pointer: coarse)").matches;
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (isTouch || prefersReducedMotion) return;
+    if (!isVisible) return;
+    const container = containerRef.current;
+    if (!container) return;
 
-    let rafId: number | null = null;
-    let targetX = 0;
-    let targetY = 0;
+    let rafId: number;
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current || !isVisible) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const xRel = (e.clientX - rect.left) / rect.width - 0.5;
-      const yRel = (e.clientY - rect.top) / rect.height - 0.5;
+      const rect = container.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-      targetX = -yRel * 3.5;
-      targetY = xRel * 3.5;
-
-      if (!rafId) {
-        rafId = requestAnimationFrame(() => {
-          setTilt({ rx: targetX, ry: targetY });
-          rafId = null;
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        setTilt({
+          rx: Math.round(-y * 8 * 10) / 10,
+          ry: Math.round(x * 8 * 10) / 10,
         });
-      }
+      });
     };
 
     const handleMouseLeave = () => {
-      setTilt({ rx: 0, ry: 0 });
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        setTilt({ rx: 0, ry: 0 });
+      });
     };
 
-    const container = containerRef.current;
-    if (container) {
+    const isPointerFine = window.matchMedia("(pointer: fine)").matches;
+    if (isPointerFine) {
       container.addEventListener("mousemove", handleMouseMove, {
         passive: true,
       });
@@ -170,7 +111,7 @@ export const TechWeb: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className={`relative w-full max-w-[1000px] aspect-square mx-auto flex items-center justify-center select-none overflow-visible ${
+      className={`relative w-full max-w-none aspect-[16/9] min-h-[600px] sm:min-h-[700px] md:min-h-[800px] lg:min-h-[900px] mx-auto flex items-center justify-center select-none overflow-hidden ${
         !isVisible ? "web-paused" : ""
       }`}
       style={{ perspective: "1200px" }}
@@ -190,7 +131,7 @@ export const TechWeb: React.FC = () => {
 
         /* Web reveal animation */
         @keyframes webReveal {
-          0%   { opacity: 0; transform: scale(0.97); }
+          0%   { opacity: 0; transform: scale(0.98); }
           100% { opacity: 1; transform: scale(1); }
         }
         .web-image-fade {
@@ -208,60 +149,6 @@ export const TechWeb: React.FC = () => {
           transform-origin: center;
         }
 
-        /* Active thread laser glow pulse */
-        @keyframes threadLaserPulse {
-          0%, 100% { opacity: 0.9; stroke-width: 4.5px; }
-          50%      { opacity: 1;   stroke-width: 6.0px; }
-        }
-        .thread-laser-active {
-          animation: threadLaserPulse 0.9s ease-in-out infinite;
-        }
-
-        /* ── 2D Spider Legs Movement Keyframes ── */
-        /* Leg Group A Step (L1, L3, R2, R4) */
-        @keyframes spiderLegWalkA {
-          0%   { transform: rotate(-8deg) scale(1.03); }
-          50%  { transform: rotate(8deg) scale(0.97); }
-          100% { transform: rotate(-8deg) scale(1.03); }
-        }
-
-        /* Leg Group B Step (L2, L4, R1, R3 - opposing phase) */
-        @keyframes spiderLegWalkB {
-          0%   { transform: rotate(8deg) scale(0.97); }
-          50%  { transform: rotate(-8deg) scale(1.03); }
-          100% { transform: rotate(8deg) scale(0.97); }
-        }
-
-        /* Spider Body Walking Sway */
-        @keyframes spiderBodyWalkSway {
-          0%, 100% { transform: rotate(-3deg); }
-          50%      { transform: rotate(3deg); }
-        }
-
-        /* Spider Resting Abdomen Breathing */
-        @keyframes spiderRestBreathe {
-          0%, 100% { transform: scale(1); }
-          50%      { transform: scale(1.05); }
-        }
-
-        .spider-walking .spider-leg-group-a {
-          animation: spiderLegWalkA 0.32s ease-in-out infinite;
-          transform-origin: 80px 75px;
-        }
-        .spider-walking .spider-leg-group-b {
-          animation: spiderLegWalkB 0.32s ease-in-out infinite;
-          transform-origin: 80px 75px;
-        }
-        .spider-walking .spider-body-group {
-          animation: spiderBodyWalkSway 0.32s ease-in-out infinite;
-          transform-origin: 80px 75px;
-        }
-
-        .spider-idle .spider-abdomen-pulse {
-          animation: spiderRestBreathe 3.2s ease-in-out infinite;
-          transform-origin: 80px 95px;
-        }
-
         /* Center hub pulse */
         @keyframes hubGlowPulse {
           0%, 100% { transform: scale(1); opacity: 0.55; }
@@ -269,17 +156,12 @@ export const TechWeb: React.FC = () => {
         }
         .hub-halo {
           animation: hubGlowPulse 3s ease-in-out infinite;
-          transform-origin: 500px 500px;
+          transform-origin: 800px 450px;
         }
 
         /* Offscreen pause */
         .web-paused .tech-node-wrapper,
         .web-paused .web-ambient-breathe,
-        .web-paused .thread-laser-active,
-        .web-paused .spider-leg-group-a,
-        .web-paused .spider-leg-group-b,
-        .web-paused .spider-body-group,
-        .web-paused .spider-abdomen-pulse,
         .web-paused .hub-halo {
           animation-play-state: paused !important;
         }
@@ -288,11 +170,6 @@ export const TechWeb: React.FC = () => {
         @media (prefers-reduced-motion: reduce) {
           .tech-node-wrapper,
           .web-ambient-breathe,
-          .thread-laser-active,
-          .spider-leg-group-a,
-          .spider-leg-group-b,
-          .spider-body-group,
-          .spider-abdomen-pulse,
           .hub-halo {
             animation: none !important;
             opacity: 1 !important;
@@ -309,47 +186,52 @@ export const TechWeb: React.FC = () => {
           transformStyle: "preserve-3d",
         }}
       >
-        {/* ── 1. CLEAN & SPACIOUS WEB DESIGN (Gemini_Generated_Image_ao7f2eao7f2eao7f.png in red) ── */}
-        <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-visible">
+        {/* ── 1. WIDESCREEN SPIDER-MAN WEB BACKDROP (matching reference Gemini_Generated_Image_cit8ricit8ricit8.png) ── */}
+        <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden">
           <picture className="w-full h-full flex items-center justify-center">
-            <source srcSet={ASSETS.geminiWebCrimson} type="image/webp" />
+            <source srcSet={ASSETS.wideSpiderWeb} type="image/webp" />
             <img
-              src={ASSETS.geminiWebCrimsonPng}
-              alt="Clean & Spacious Spider-Man Web Design in Red"
-              width="2048"
-              height="2048"
+              src={ASSETS.wideSpiderWebPng}
+              alt="Clean & Spacious Widescreen Spider-Man Web Design in Red"
+              width="1376"
+              height="768"
               loading="lazy"
               decoding="async"
-              className={`w-full h-full object-contain pointer-events-none web-ambient-breathe ${
+              style={{ filter: "url(#webColorFilter)" }}
+              className={`w-full h-full object-cover pointer-events-none web-ambient-breathe ${
                 hasDrawnIn ? "web-image-fade" : "opacity-0"
               }`}
             />
           </picture>
         </div>
 
-        {/* ── 2. SVG INTERACTIVE ROUTING LAYER ── */}
+        {/* ── 2. SVG AMBIENT HUB & COLOR FILTER LAYER ── */}
         <svg
-          viewBox="0 0 1000 1000"
+          viewBox="0 0 1600 900"
           className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
         >
           <defs>
-            {/* Center Hub Ambient Glow */}
+            {/* Dynamic CSS/SVG Color Matrix Tinting Filter for #a31515 */}
+            <filter id="webColorFilter" colorInterpolationFilters="sRGB">
+              <feColorMatrix
+                type="matrix"
+                values="
+                  0 0 0 0.639 0
+                  0 0 0 0.082 0
+                  0 0 0 0.082 0
+                  0 0 0 1     0
+                "
+              />
+            </filter>
+
+            {/* Center Hub Ambient Glow in #a31515 */}
             <radialGradient id="hubCenterGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.5" />
-              <stop offset="60%" stopColor="#a31515" stopOpacity="0.15" />
+              <stop offset="0%" stopColor="#a31515" stopOpacity="0.75" />
+              <stop offset="55%" stopColor="#a31515" stopOpacity="0.25" />
               <stop offset="100%" stopColor="#a31515" stopOpacity="0" />
             </radialGradient>
-
-            {/* Electric Laser Glow Filter */}
-            <filter id="laserGlowFilter" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="4.5" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
           </defs>
 
           {/* Center Hub Luminous Node */}
@@ -365,7 +247,7 @@ export const TechWeb: React.FC = () => {
             cy={WEB_CONFIG.cy}
             r="7"
             fill="#a31515"
-            opacity="0.9"
+            opacity="0.95"
           />
           <circle
             cx={WEB_CONFIG.cx}
@@ -373,72 +255,64 @@ export const TechWeb: React.FC = () => {
             r="2.5"
             fill="#ffffff"
           />
-
-          {/* Active Shortest Path Electric Laser Highlight (Algorithm Route through Center) */}
-          {highlightPathData && (
-            <g>
-              <path
-                d={highlightPathData}
-                fill="none"
-                stroke="#ef4444"
-                strokeWidth="5.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                filter="url(#laserGlowFilter)"
-                className="thread-laser-active"
-              />
-              <path
-                d={highlightPathData}
-                fill="none"
-                stroke="#ffffff"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                opacity="0.95"
-              />
-            </g>
-          )}
         </svg>
 
-        {/* ── 3. 2D CRIMSON SPIDER WITH LEG MOVEMENT (inspired by crimson-spider.webp) ── */}
+        {/* ── 3. CENTER SPIDER-MAN (Crawling / Perched on the Center Hub) ── */}
         <div
-          className="absolute pointer-events-none z-20"
-          style={{
-            left: `${spiderTarget.pctX}%`,
-            top: `${spiderTarget.pctY}%`,
-            transform: `translate3d(-50%, -50%, 0) rotate(${spiderTarget.rotationDeg}deg) scale(${spiderTarget.scale})`,
-            transition: `left ${crawlDuration}s cubic-bezier(0.25, 0.1, 0.25, 1), top ${crawlDuration}s cubic-bezier(0.25, 0.1, 0.25, 1), transform ${crawlDuration}s cubic-bezier(0.25, 0.1, 0.25, 1)`,
-            willChange: "transform, left, top",
-          }}
-          aria-hidden="true"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none flex items-center justify-center"
+          style={{ willChange: "transform" }}
         >
-          <Spider2D isCrawling={isCrawling} size={48} />
+          {/* Soft ambient red radial glow blending Spidey with the web center */}
+          <div
+            className="absolute w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full bg-red-600/15 pointer-events-none -z-10 blur-xl"
+            aria-hidden="true"
+          />
+
+          <picture className="flex items-center justify-center">
+            <source srcSet={ASSETS.spidermanCrawling} type="image/webp" />
+            <img
+              src={ASSETS.spidermanCrawlingPng}
+              alt="Spider-Man perched at center of web"
+              width="447"
+              height="447"
+              loading="lazy"
+              decoding="async"
+              className="w-20 sm:w-28 md:w-36 lg:w-44 h-auto object-contain select-none pointer-events-none drop-shadow-[0_8px_22px_rgba(0,0,0,0.38)] drop-shadow-[0_0_14px_rgba(163,21,21,0.3)] transition-transform duration-300 ease-out"
+            />
+          </picture>
         </div>
 
         {/* ── 4. HTML NODES LAYER: 30 Tech Chips Anchored to Spokes with Zero Overlaps ── */}
         <div className="absolute inset-0 w-full h-full pointer-events-none">
-          {TECH_NODES.map((node) => (
-            <div
-              key={node.id}
-              className="absolute pointer-events-auto tech-node-wrapper -translate-x-1/2 -translate-y-1/2"
-              style={
-                {
-                  left: `${node.pctX}%`,
-                  top: `${node.pctY}%`,
-                  "--bob-dur": node.bobDuration,
-                  "--bob-delay": node.bobDelay,
-                  "--bob-amp": node.bobAmplitude,
-                } as React.CSSProperties
-              }
-            >
-              <TechChip
-                node={node}
-                isHovered={hoveredNode?.id === node.id}
-                onHover={handleChipHover}
-                onLeave={handleChipLeave}
-              />
-            </div>
-          ))}
+          {TECH_NODES.map((node) => {
+            const isMatch = selectedCategory === "all" || (node.categories && node.categories.includes(selectedCategory));
+            return (
+              <div
+                key={node.id}
+                className={`absolute pointer-events-auto tech-node-wrapper -translate-x-1/2 -translate-y-1/2 transition-[opacity,transform,filter] duration-300 ease-out ${
+                  isMatch
+                    ? "opacity-100 scale-100 z-20 pointer-events-auto"
+                    : "opacity-20 scale-90 grayscale contrast-75 z-0 pointer-events-none sm:pointer-events-auto"
+                }`}
+                style={
+                  {
+                    left: `${node.pctX}%`,
+                    top: `${node.pctY}%`,
+                    "--bob-dur": node.bobDuration,
+                    "--bob-delay": node.bobDelay,
+                    "--bob-amp": node.bobAmplitude,
+                  } as React.CSSProperties
+                }
+              >
+                <TechChip
+                  node={node}
+                  isHovered={hoveredNode?.id === node.id}
+                  onHover={handleChipHover}
+                  onLeave={handleChipLeave}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
