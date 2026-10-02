@@ -35,7 +35,12 @@ export const ASSETS = {
   webCrimsonImgPng: "/assets/web1-crimson.png",
   geminiWebCrimson: "/assets/gemini-web-crimson.webp",
   geminiWebCrimsonPng: "/assets/gemini-web-crimson.png",
+  wideSpiderWeb: "/assets/wide-spider-web-transparent.webp",
+  wideSpiderWebPng: "/assets/wide-spider-web-transparent.png",
+  wideSpiderWebFull: "/assets/wide-spider-web.webp",
   crimsonSpider: "/assets/crimson-spider.webp",
+  spidermanCrawling: "/assets/spiderman-crawling.webp",
+  spidermanCrawlingPng: "/assets/spiderman-crawling.png",
 };
 
 export const ABOUT_DATA = {

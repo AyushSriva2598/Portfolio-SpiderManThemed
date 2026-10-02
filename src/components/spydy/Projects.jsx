@@ -75,7 +75,7 @@ export const Projects = () => {
     <section
       id="projects"
       ref={sectionRef}
-      className="relative w-full bg-white text-gray-900 py-16 px-6 md:px-16 lg:px-24 flex flex-col items-center justify-center overflow-hidden border-t border-gray-100"
+      className="relative w-full bg-white text-gray-900 pt-6 sm:pt-8 pb-16 px-6 md:px-16 lg:px-24 flex flex-col items-center justify-center overflow-hidden"
     >
       {/* Background Web Corner Accent */}
       <div className="absolute top-0 right-0 pointer-events-none overflow-hidden z-0">

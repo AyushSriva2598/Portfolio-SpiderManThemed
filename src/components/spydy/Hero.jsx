@@ -252,14 +252,14 @@ export const Hero = () => {
         onMouseLeave={handleMarqueeLeave}
       >
         {/* Tape 1 (Red bar): rotate(+3.5deg, mobile +2deg), slopes downward left-to-right */}
-        <div className="absolute w-[120vw] -left-[10vw] top-14 sm:top-18 md:top-24 h-10 sm:h-12 md:h-14 lg:h-16 bg-[#a31515] text-white border-y-[2px] sm:border-y-[3px] border-black rotate-[2deg] md:rotate-[3.5deg] shadow-[0_10px_25px_rgba(0,0,0,0.4)] z-20 flex items-center overflow-hidden pointer-events-none">
+        <div className="absolute w-[120vw] -left-[10vw] -top-5 sm:-top-6 md:-top-7 h-10 sm:h-12 md:h-14 lg:h-16 bg-[#a31515] text-white border-y-[2px] sm:border-y-[3px] border-black rotate-[2deg] md:rotate-[3.5deg] shadow-[0_10px_25px_rgba(0,0,0,0.4)] z-20 flex items-center overflow-hidden pointer-events-none">
           <div ref={marquee1Ref} className="flex items-center h-full w-max">
             {renderMarqueeContent(HERO_DATA.marqueeItems)}
           </div>
         </div>
 
         {/* Tape 2 (Black bar): rotate(-3.5deg, mobile -2deg), slopes upward left-to-right */}
-        <div className="absolute w-[120vw] -left-[10vw] top-14 sm:top-18 md:top-24 h-10 sm:h-12 md:h-14 lg:h-16 bg-[#111111] text-[#ef4444] border-y-[2px] sm:border-y-[3px] border-[#a31515] rotate-[-2deg] md:rotate-[-3.5deg] shadow-[0_8px_20px_rgba(0,0,0,0.5)] z-10 flex items-center overflow-hidden pointer-events-none">
+        <div className="absolute w-[120vw] -left-[10vw] -top-5 sm:-top-6 md:-top-7 h-10 sm:h-12 md:h-14 lg:h-16 bg-[#111111] text-[#ef4444] border-y-[2px] sm:border-y-[3px] border-[#a31515] rotate-[-2deg] md:rotate-[-3.5deg] shadow-[0_8px_20px_rgba(0,0,0,0.5)] z-10 flex items-center overflow-hidden pointer-events-none">
           <div ref={marquee2Ref} className="flex items-center h-full w-max">
             {renderMarqueeContent(HERO_DATA.marqueeItems)}
           </div>

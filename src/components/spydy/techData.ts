@@ -15,13 +15,8 @@ export interface TechNode {
   id: string;
   name: string;
   icon: string;
-  category:
-    | "languages"
-    | "frontend"
-    | "backend"
-    | "databases"
-    | "cloud-devops"
-    | "tools";
+  category: string;
+  categories: string[];
   spokeIndex: number;
   ringIndex: number;
   x: number;
@@ -34,6 +29,14 @@ export interface TechNode {
   bobAmplitude: string;
 }
 
+export const SKILL_CATEGORIES = [
+  { id: "all", label: "All" },
+  { id: "frontend", label: "Frontend" },
+  { id: "backend", label: "Backend" },
+  { id: "cloud", label: "Cloud" },
+  { id: "ai", label: "Artificial Intelligence" },
+];
+
 export interface WebConfig {
   viewBoxWidth: number;
   viewBoxHeight: number;
@@ -44,11 +47,11 @@ export interface WebConfig {
 }
 
 export const WEB_CONFIG: WebConfig = {
-  viewBoxWidth: 1000,
-  viewBoxHeight: 1000,
-  cx: 500,
-  cy: 500,
-  ringRadii: [0, 140, 215, 290, 365, 440],
+  viewBoxWidth: 1600,
+  viewBoxHeight: 900,
+  cx: 800,
+  cy: 450,
+  ringRadii: [0, 150, 240, 330, 420, 500],
   numSpokes: 16,
 };
 
@@ -62,83 +65,86 @@ export const SPOKE_ANGLES: number[] = Array.from(
   (_, i) => (i * 360) / WEB_CONFIG.numSpokes - 90
 );
 
-// ── 30 Tech Nodes Mapped across 16 Spokes & 5 Rings (0 Collisions, 123px min distance) ──
+// ── 30 Tech Nodes Mapped across 16 Spokes & 5 Rings (0 Collisions, 118px min distance) ──
 const RAW_CHIPS: Array<{
   name: string;
   icon: string;
   spoke: number;
   ring: number;
-  category: TechNode["category"];
+  category: string;
+  categories: string[];
 }> = [
-  // Spoke 0 (North, 12:00, -90°)
-  { name: "TypeScript", icon: "typescript", spoke: 0, ring: 2, category: "languages" },
-  { name: "JavaScript", icon: "javascript", spoke: 0, ring: 4, category: "languages" },
+  // Spoke 0 (North, 12:00, -90°) - Even
+  { name: "TypeScript", icon: "typescript", spoke: 0, ring: 2, category: "languages", categories: ["frontend", "backend", "all"] },
+  { name: "JavaScript", icon: "javascript", spoke: 0, ring: 4, category: "languages", categories: ["frontend", "backend", "all"] },
 
-  // Spoke 1 (NNE, 12:45, -67.5°)
-  { name: "Python", icon: "python", spoke: 1, ring: 3, category: "languages" },
-  { name: "C++", icon: "cplusplus", spoke: 1, ring: 5, category: "languages" },
+  // Spoke 1 (NNE, 12:45, -67.5°) - Odd
+  { name: "Python", icon: "python", spoke: 1, ring: 3, category: "languages", categories: ["backend", "ai", "all"] },
+  { name: "C++", icon: "cplusplus", spoke: 1, ring: 5, category: "languages", categories: ["ai", "all"] },
 
-  // Spoke 2 (NE, 1:30, -45°)
-  { name: "React", icon: "react", spoke: 2, ring: 2, category: "frontend" },
-  { name: "Next.js", icon: "nextdotjs", spoke: 2, ring: 4, category: "frontend" },
+  // Spoke 2 (NE, 1:30, -45°) - Even
+  { name: "React", icon: "react", spoke: 2, ring: 2, category: "frontend", categories: ["frontend", "all"] },
+  { name: "Next.js", icon: "nextdotjs", spoke: 2, ring: 4, category: "frontend", categories: ["frontend", "backend", "all"] },
 
-  // Spoke 3 (ENE, 2:15, -22.5°)
-  { name: "Tailwind CSS", icon: "tailwindcss", spoke: 3, ring: 3, category: "frontend" },
-  { name: "shadcn/ui", icon: "shadcnui", spoke: 3, ring: 5, category: "frontend" },
+  // Spoke 3 (ENE, 2:15, -22.5°) - Odd
+  { name: "Tailwind CSS", icon: "tailwindcss", spoke: 3, ring: 3, category: "frontend", categories: ["frontend", "all"] },
+  { name: "shadcn/ui", icon: "shadcnui", spoke: 3, ring: 5, category: "frontend", categories: ["frontend", "all"] },
 
   // Spoke 4 (East, 3:00, 0°) - Horizontal axis: single chip for generous mobile clearance
-  { name: "Figma", icon: "figma", spoke: 4, ring: 2, category: "tools" },
+  { name: "Figma", icon: "figma", spoke: 4, ring: 2, category: "tools", categories: ["frontend", "all"] },
 
-  // Spoke 5 (ESE, 3:45, 22.5°)
-  { name: "Java", icon: "openjdk", spoke: 5, ring: 3, category: "languages" },
-  { name: "Node.js", icon: "nodedotjs", spoke: 5, ring: 5, category: "backend" },
+  // Spoke 5 (ESE, 3:45, 22.5°) - Odd
+  { name: "Java", icon: "openjdk", spoke: 5, ring: 3, category: "languages", categories: ["backend", "all"] },
+  { name: "Node.js", icon: "nodedotjs", spoke: 5, ring: 5, category: "backend", categories: ["backend", "all"] },
 
-  // Spoke 6 (SE, 4:30, 45°)
-  { name: "Express.js", icon: "express", spoke: 6, ring: 2, category: "backend" },
-  { name: "FastAPI", icon: "fastapi", spoke: 6, ring: 4, category: "backend" },
+  // Spoke 6 (SE, 4:30, 45°) - Even
+  { name: "Express.js", icon: "express", spoke: 6, ring: 2, category: "backend", categories: ["backend", "all"] },
+  { name: "FastAPI", icon: "fastapi", spoke: 6, ring: 4, category: "backend", categories: ["backend", "ai", "all"] },
 
-  // Spoke 7 (SSE, 5:15, 67.5°)
-  { name: "Django REST", icon: "django", spoke: 7, ring: 3, category: "backend" },
-  { name: "Flask", icon: "flask", spoke: 7, ring: 5, category: "backend" },
+  // Spoke 7 (SSE, 5:15, 67.5°) - Odd
+  { name: "Django REST", icon: "django", spoke: 7, ring: 3, category: "backend", categories: ["backend", "all"] },
+  { name: "Flask", icon: "flask", spoke: 7, ring: 5, category: "backend", categories: ["backend", "ai", "all"] },
 
-  // Spoke 8 (South, 6:00, 90°)
-  { name: "PostgreSQL", icon: "postgresql", spoke: 8, ring: 2, category: "databases" },
-  { name: "MySQL", icon: "mysql", spoke: 8, ring: 4, category: "databases" },
+  // Spoke 8 (South, 6:00, 90°) - Even
+  { name: "PostgreSQL", icon: "postgresql", spoke: 8, ring: 2, category: "databases", categories: ["backend", "ai", "all"] },
+  { name: "MySQL", icon: "mysql", spoke: 8, ring: 4, category: "databases", categories: ["backend", "all"] },
 
-  // Spoke 9 (SSW, 6:45, 112.5°)
-  { name: "MongoDB", icon: "mongodb", spoke: 9, ring: 3, category: "databases" },
-  { name: "Prisma", icon: "prisma", spoke: 9, ring: 5, category: "databases" },
+  // Spoke 9 (SSW, 6:45, 112.5°) - Odd
+  { name: "MongoDB", icon: "mongodb", spoke: 9, ring: 3, category: "databases", categories: ["backend", "all"] },
+  { name: "Prisma", icon: "prisma", spoke: 9, ring: 5, category: "databases", categories: ["backend", "all"] },
 
-  // Spoke 10 (SW, 7:30, 135°)
-  { name: "Drizzle ORM", icon: "drizzle", spoke: 10, ring: 2, category: "databases" },
-  { name: "Supabase", icon: "supabase", spoke: 10, ring: 4, category: "databases" },
+  // Spoke 10 (SW, 7:30, 135°) - Even
+  { name: "Drizzle ORM", icon: "drizzle", spoke: 10, ring: 2, category: "databases", categories: ["backend", "all"] },
+  { name: "Supabase", icon: "supabase", spoke: 10, ring: 4, category: "databases", categories: ["backend", "cloud", "ai", "all"] },
 
-  // Spoke 11 (WSW, 8:15, 157.5°)
-  { name: "Firebase", icon: "firebase", spoke: 11, ring: 3, category: "databases" },
-  { name: "JWT", icon: "jsonwebtokens", spoke: 11, ring: 5, category: "backend" },
+  // Spoke 11 (WSW, 8:15, 157.5°) - Odd
+  { name: "Firebase", icon: "firebase", spoke: 11, ring: 3, category: "databases", categories: ["backend", "cloud", "all"] },
+  { name: "JWT", icon: "jsonwebtokens", spoke: 11, ring: 5, category: "backend", categories: ["backend", "all"] },
 
   // Spoke 12 (West, 9:00, 180°) - Horizontal axis: single chip for generous mobile clearance
-  { name: "Docker", icon: "docker", spoke: 12, ring: 2, category: "cloud-devops" },
+  { name: "Docker", icon: "docker", spoke: 12, ring: 2, category: "cloud-devops", categories: ["cloud", "all"] },
 
-  // Spoke 13 (WNW, 9:45, 202.5°)
-  { name: "Kubernetes", icon: "kubernetes", spoke: 13, ring: 3, category: "cloud-devops" },
-  { name: "REST APIs", icon: "fastapi", spoke: 13, ring: 5, category: "backend" },
+  // Spoke 13 (WNW, 9:45, 202.5°) - Odd
+  { name: "Kubernetes", icon: "kubernetes", spoke: 13, ring: 3, category: "cloud-devops", categories: ["cloud", "all"] },
+  { name: "REST APIs", icon: "fastapi", spoke: 13, ring: 5, category: "backend", categories: ["backend", "all"] },
 
-  // Spoke 14 (NW, 10:30, 225°)
-  { name: "AWS", icon: "aws", spoke: 14, ring: 2, category: "cloud-devops" },
-  { name: "Terraform", icon: "terraform", spoke: 14, ring: 4, category: "cloud-devops" },
+  // Spoke 14 (NW, 10:30, 225°) - Even
+  { name: "AWS", icon: "aws", spoke: 14, ring: 2, category: "cloud-devops", categories: ["cloud", "ai", "all"] },
+  { name: "Terraform", icon: "terraform", spoke: 14, ring: 4, category: "cloud-devops", categories: ["cloud", "all"] },
 
-  // Spoke 15 (NNW, 11:15, 247.5°)
-  { name: "Vercel", icon: "vercel", spoke: 15, ring: 3, category: "cloud-devops" },
-  { name: "Git & GitHub", icon: "git & github", spoke: 15, ring: 5, category: "tools" },
+  // Spoke 15 (NNW, 11:15, 247.5°) - Odd
+  { name: "Vercel", icon: "vercel", spoke: 15, ring: 3, category: "cloud-devops", categories: ["frontend", "cloud", "all"] },
+  { name: "Git & GitHub", icon: "git & github", spoke: 15, ring: 5, category: "tools", categories: ["cloud", "all"] },
 ];
 
 export const TECH_NODES: TechNode[] = RAW_CHIPS.map((chip, idx) => {
   const angleDeg = SPOKE_ANGLES[chip.spoke];
   const rad = (angleDeg * Math.PI) / 180;
   const r = RADII[chip.ring];
-  const x = Math.round((CX + r * Math.cos(rad)) * 10) / 10;
-  const y = Math.round((CY + r * Math.sin(rad)) * 10) / 10;
+  const rx = r * 1.25;
+  const ry = r * 0.78;
+  const x = Math.round((CX + rx * Math.cos(rad)) * 10) / 10;
+  const y = Math.round((CY + ry * Math.sin(rad)) * 10) / 10;
 
   const pctX = Math.round((x / WEB_CONFIG.viewBoxWidth) * 10000) / 100;
   const pctY = Math.round((y / WEB_CONFIG.viewBoxHeight) * 10000) / 100;
@@ -152,6 +158,7 @@ export const TECH_NODES: TechNode[] = RAW_CHIPS.map((chip, idx) => {
     name: chip.name,
     icon: chip.icon,
     category: chip.category,
+    categories: chip.categories,
     spokeIndex: chip.spoke,
     ringIndex: chip.ring,
     x,
@@ -203,8 +210,10 @@ function buildWebGraph(): Map<string, GraphNode> {
 
     for (let r = 1; r <= 5; r++) {
       const kId = `knot-${s}-${r}`;
-      const kx = Math.round((CX + RADII[r] * Math.cos(rad)) * 10) / 10;
-      const ky = Math.round((CY + RADII[r] * Math.sin(rad)) * 10) / 10;
+      const rx = RADII[r] * 1.25;
+      const ry = RADII[r] * 0.78;
+      const kx = Math.round((CX + rx * Math.cos(rad)) * 10) / 10;
+      const ky = Math.round((CY + ry * Math.sin(rad)) * 10) / 10;
       addNode(kId, kx, ky);
 
       // Connect radially along spoke

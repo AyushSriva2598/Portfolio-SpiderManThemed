@@ -126,7 +126,7 @@ export const About = () => {
     <section
       id="about"
       ref={sectionRef}
-      className="relative w-full min-h-[100dvh] bg-gray-50 text-gray-900 pt-44 sm:pt-48 md:pt-52 pb-20 sm:pb-24 flex flex-col items-center justify-center overflow-hidden z-[1]"
+      className="relative w-full min-h-[100dvh] bg-white text-gray-900 pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-20 sm:pb-24 flex flex-col items-center justify-center overflow-hidden z-[1]"
     >
 
       {/* =====================================================
