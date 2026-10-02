@@ -28,6 +28,14 @@ export const ASSETS = {
   hangingSpiderImg: "/assets/spydy_hang-Cac1gK30.png",
   profileImg: "/assets/mypic-aradhya.png",
   mugshotPoster: "/assets/mugshot-poster.jpg",
+  exactWebImg: "/assets/web-inspiration-bright.webp",
+  dualWebImg: "/assets/dual-web-inspiration.webp",
+  dualWebImgPng: "/assets/dual-web-inspiration.png",
+  webCrimsonImg: "/assets/web1-crimson.webp",
+  webCrimsonImgPng: "/assets/web1-crimson.png",
+  geminiWebCrimson: "/assets/gemini-web-crimson.webp",
+  geminiWebCrimsonPng: "/assets/gemini-web-crimson.png",
+  crimsonSpider: "/assets/crimson-spider.webp",
 };
 
 export const ABOUT_DATA = {
