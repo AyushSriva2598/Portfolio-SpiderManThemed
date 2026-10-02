@@ -48,7 +48,7 @@ export const WEB_CONFIG: WebConfig = {
   viewBoxHeight: 1000,
   cx: 500,
   cy: 500,
-  ringRadii: [0, 115, 195, 275, 355, 430],
+  ringRadii: [0, 140, 215, 290, 365, 440],
   numSpokes: 16,
 };
 
@@ -62,7 +62,7 @@ export const SPOKE_ANGLES: number[] = Array.from(
   (_, i) => (i * 360) / WEB_CONFIG.numSpokes - 90
 );
 
-// ── 30 Tech Nodes Mapped across 16 Spokes & 5 Rings (0 Collisions) ──
+// ── 30 Tech Nodes Mapped across 16 Spokes & 5 Rings (0 Collisions, 123px min distance) ──
 const RAW_CHIPS: Array<{
   name: string;
   icon: string;
@@ -70,65 +70,67 @@ const RAW_CHIPS: Array<{
   ring: number;
   category: TechNode["category"];
 }> = [
-  // Spoke 0 (North, 12:00)
+  // Spoke 0 (North, 12:00, -90°)
   { name: "TypeScript", icon: "typescript", spoke: 0, ring: 2, category: "languages" },
   { name: "JavaScript", icon: "javascript", spoke: 0, ring: 4, category: "languages" },
 
-  // Spoke 1 (NNE, 12:45)
+  // Spoke 1 (NNE, 12:45, -67.5°)
   { name: "Python", icon: "python", spoke: 1, ring: 3, category: "languages" },
   { name: "C++", icon: "cplusplus", spoke: 1, ring: 5, category: "languages" },
 
-  // Spoke 2 (NE, 1:30)
+  // Spoke 2 (NE, 1:30, -45°)
   { name: "React", icon: "react", spoke: 2, ring: 2, category: "frontend" },
   { name: "Next.js", icon: "nextdotjs", spoke: 2, ring: 4, category: "frontend" },
 
-  // Spoke 3 (ENE, 2:15)
+  // Spoke 3 (ENE, 2:15, -22.5°)
   { name: "Tailwind CSS", icon: "tailwindcss", spoke: 3, ring: 3, category: "frontend" },
   { name: "shadcn/ui", icon: "shadcnui", spoke: 3, ring: 5, category: "frontend" },
 
-  // Spoke 4 (East, 3:00)
-  { name: "Java", icon: "openjdk", spoke: 4, ring: 2, category: "languages" },
-  { name: "Figma", icon: "figma", spoke: 4, ring: 4, category: "tools" },
+  // Spoke 4 (East, 3:00, 0°) - Horizontal axis: single chip for generous mobile clearance
+  { name: "Figma", icon: "figma", spoke: 4, ring: 2, category: "tools" },
 
-  // Spoke 5 (ESE, 3:45)
-  { name: "Node.js", icon: "nodedotjs", spoke: 5, ring: 3, category: "backend" },
-  { name: "Express.js", icon: "express", spoke: 5, ring: 5, category: "backend" },
+  // Spoke 5 (ESE, 3:45, 22.5°)
+  { name: "Java", icon: "openjdk", spoke: 5, ring: 3, category: "languages" },
+  { name: "Node.js", icon: "nodedotjs", spoke: 5, ring: 5, category: "backend" },
 
-  // Spoke 6 (SE, 4:30)
-  { name: "FastAPI", icon: "fastapi", spoke: 6, ring: 2, category: "backend" },
-  { name: "Django REST", icon: "django", spoke: 6, ring: 4, category: "backend" },
+  // Spoke 6 (SE, 4:30, 45°)
+  { name: "Express.js", icon: "express", spoke: 6, ring: 2, category: "backend" },
+  { name: "FastAPI", icon: "fastapi", spoke: 6, ring: 4, category: "backend" },
 
-  // Spoke 7 (SSE, 5:15)
-  { name: "Flask", icon: "flask", spoke: 7, ring: 3, category: "backend" },
-  { name: "REST APIs", icon: "fastapi", spoke: 7, ring: 5, category: "backend" },
+  // Spoke 7 (SSE, 5:15, 67.5°)
+  { name: "Django REST", icon: "django", spoke: 7, ring: 3, category: "backend" },
+  { name: "Flask", icon: "flask", spoke: 7, ring: 5, category: "backend" },
 
-  // Spoke 8 (South, 6:00)
+  // Spoke 8 (South, 6:00, 90°)
   { name: "PostgreSQL", icon: "postgresql", spoke: 8, ring: 2, category: "databases" },
   { name: "MySQL", icon: "mysql", spoke: 8, ring: 4, category: "databases" },
 
-  // Spoke 9 (SSW, 6:45)
+  // Spoke 9 (SSW, 6:45, 112.5°)
   { name: "MongoDB", icon: "mongodb", spoke: 9, ring: 3, category: "databases" },
   { name: "Prisma", icon: "prisma", spoke: 9, ring: 5, category: "databases" },
 
-  // Spoke 10 (SW, 7:30)
+  // Spoke 10 (SW, 7:30, 135°)
   { name: "Drizzle ORM", icon: "drizzle", spoke: 10, ring: 2, category: "databases" },
   { name: "Supabase", icon: "supabase", spoke: 10, ring: 4, category: "databases" },
 
-  // Spoke 11 (WSW, 8:15)
+  // Spoke 11 (WSW, 8:15, 157.5°)
   { name: "Firebase", icon: "firebase", spoke: 11, ring: 3, category: "databases" },
   { name: "JWT", icon: "jsonwebtokens", spoke: 11, ring: 5, category: "backend" },
 
-  // Spoke 12 (West, 9:00)
+  // Spoke 12 (West, 9:00, 180°) - Horizontal axis: single chip for generous mobile clearance
   { name: "Docker", icon: "docker", spoke: 12, ring: 2, category: "cloud-devops" },
-  { name: "Kubernetes", icon: "kubernetes", spoke: 12, ring: 4, category: "cloud-devops" },
 
-  // Spoke 13 (WNW, 9:45)
-  { name: "AWS", icon: "aws", spoke: 13, ring: 3, category: "cloud-devops" },
-  { name: "Terraform", icon: "terraform", spoke: 13, ring: 5, category: "cloud-devops" },
+  // Spoke 13 (WNW, 9:45, 202.5°)
+  { name: "Kubernetes", icon: "kubernetes", spoke: 13, ring: 3, category: "cloud-devops" },
+  { name: "REST APIs", icon: "fastapi", spoke: 13, ring: 5, category: "backend" },
 
-  // Spoke 14 (NW, 10:30)
-  { name: "Vercel", icon: "vercel", spoke: 14, ring: 2, category: "cloud-devops" },
-  { name: "Git & GitHub", icon: "git & github", spoke: 14, ring: 4, category: "tools" },
+  // Spoke 14 (NW, 10:30, 225°)
+  { name: "AWS", icon: "aws", spoke: 14, ring: 2, category: "cloud-devops" },
+  { name: "Terraform", icon: "terraform", spoke: 14, ring: 4, category: "cloud-devops" },
+
+  // Spoke 15 (NNW, 11:15, 247.5°)
+  { name: "Vercel", icon: "vercel", spoke: 15, ring: 3, category: "cloud-devops" },
+  { name: "Git & GitHub", icon: "git & github", spoke: 15, ring: 5, category: "tools" },
 ];
 
 export const TECH_NODES: TechNode[] = RAW_CHIPS.map((chip, idx) => {

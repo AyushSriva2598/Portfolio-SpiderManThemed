@@ -33,6 +33,8 @@ export const ASSETS = {
   dualWebImgPng: "/assets/dual-web-inspiration.png",
   webCrimsonImg: "/assets/web1-crimson.webp",
   webCrimsonImgPng: "/assets/web1-crimson.png",
+  geminiWebCrimson: "/assets/gemini-web-crimson.webp",
+  geminiWebCrimsonPng: "/assets/gemini-web-crimson.png",
   crimsonSpider: "/assets/crimson-spider.webp",
 };
 

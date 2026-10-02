@@ -309,15 +309,15 @@ export const TechWeb: React.FC = () => {
           transformStyle: "preserve-3d",
         }}
       >
-        {/* ── 1. EXACT WEB DESIGN (web1-770H2sSx.png rendered simply in red) ── */}
+        {/* ── 1. CLEAN & SPACIOUS WEB DESIGN (Gemini_Generated_Image_ao7f2eao7f2eao7f.png in red) ── */}
         <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-visible">
           <picture className="w-full h-full flex items-center justify-center">
-            <source srcSet={ASSETS.webCrimsonImg} type="image/webp" />
+            <source srcSet={ASSETS.geminiWebCrimson} type="image/webp" />
             <img
-              src={ASSETS.webCrimsonImgPng}
-              alt="Spider-Man Web Design in Red"
-              width="1200"
-              height="1200"
+              src={ASSETS.geminiWebCrimsonPng}
+              alt="Clean & Spacious Spider-Man Web Design in Red"
+              width="2048"
+              height="2048"
               loading="lazy"
               decoding="async"
               className={`w-full h-full object-contain pointer-events-none web-ambient-breathe ${
