@@ -238,9 +238,9 @@ export const TechWeb: React.FC<TechWebProps> = ({ selectedCategory = "all" }) =>
 
             {/* Center Hub Ambient Glow */}
             <radialGradient id="hubCenterGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor={isDark ? "#06b6d4" : "#a31515"} stopOpacity={isDark ? "0.85" : "0.75"} />
-              <stop offset="55%" stopColor={isDark ? "#06b6d4" : "#a31515"} stopOpacity={isDark ? "0.3" : "0.25"} />
-              <stop offset="100%" stopColor={isDark ? "#06b6d4" : "#a31515"} stopOpacity="0" />
+              <stop offset="0%" stopColor={isDark ? "#f97316" : "#a31515"} stopOpacity={isDark ? "0.9" : "0.75"} />
+              <stop offset="55%" stopColor={isDark ? "#fb923c" : "#a31515"} stopOpacity={isDark ? "0.35" : "0.25"} />
+              <stop offset="100%" stopColor={isDark ? "#f97316" : "#a31515"} stopOpacity="0" />
             </radialGradient>
           </defs>
 
@@ -256,7 +256,7 @@ export const TechWeb: React.FC<TechWebProps> = ({ selectedCategory = "all" }) =>
             cx={WEB_CONFIG.cx}
             cy={WEB_CONFIG.cy}
             r="7"
-            fill={isDark ? "#06b6d4" : "#a31515"}
+            fill={isDark ? "#f97316" : "#a31515"}
             opacity="0.95"
           />
           <circle
@@ -275,7 +275,7 @@ export const TechWeb: React.FC<TechWebProps> = ({ selectedCategory = "all" }) =>
           {/* Soft ambient radial glow blending Spidey with the web center */}
           <div
             className={`absolute w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full pointer-events-none -z-10 blur-xl ${
-              isDark ? "bg-cyan-500/25" : "bg-red-600/15"
+              isDark ? "bg-orange-500/25" : "bg-red-600/15"
             }`}
             aria-hidden="true"
           />
@@ -291,7 +291,7 @@ export const TechWeb: React.FC<TechWebProps> = ({ selectedCategory = "all" }) =>
               decoding="async"
               className={`w-20 sm:w-28 md:w-36 lg:w-44 h-auto object-contain select-none pointer-events-none transition-transform duration-300 ease-out ${
                 isDark
-                  ? "drop-shadow-[0_8px_22px_rgba(0,0,0,0.7)] drop-shadow-[0_0_18px_rgba(6,182,212,0.4)]"
+                  ? "drop-shadow-[0_8px_22px_rgba(0,0,0,0.7)] drop-shadow-[0_0_18px_rgba(249,115,22,0.4)]"
                   : "drop-shadow-[0_8px_22px_rgba(0,0,0,0.38)] drop-shadow-[0_0_14px_rgba(163,21,21,0.3)]"
               }`}
             />

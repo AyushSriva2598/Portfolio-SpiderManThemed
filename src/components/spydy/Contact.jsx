@@ -95,7 +95,7 @@ export const Contact = () => {
       >
         <div className={`w-[2px] h-20 sm:h-24 md:h-36 ${
           isDark
-            ? "bg-gradient-to-b from-transparent to-[#06b6d4] opacity-90 shadow-[0_0_8px_#06b6d4]"
+            ? "bg-gradient-to-b from-transparent to-[#f97316] opacity-90 shadow-[0_0_10px_#f97316]"
             : "bg-gradient-to-b from-transparent to-gray-400 opacity-60"
         }`} />
         <img
@@ -112,7 +112,7 @@ export const Contact = () => {
       {/* Section Header */}
       <div ref={headerRef} className="flex flex-col items-center text-center mb-10 z-10">
         <span className={`font-comic tracking-[0.2em] text-xs sm:text-sm uppercase mb-1 flex items-center gap-1.5 font-bold ${
-          isDark ? "text-[#06b6d4]" : "text-[#a31515]"
+          isDark ? "text-[#fb923c]" : "text-[#a31515]"
         }`}>
           <img
             src={isDark ? MILES_ASSETS.spiderIcon : ASSETS.spiderIcon}
@@ -132,7 +132,7 @@ export const Contact = () => {
           Have an ambitious mission, distributed system project, or engineering challenge? Send a signal.
         </p>
         <div className={`w-16 h-1.5 mt-3 rounded-full ${
-          isDark ? "bg-[#06b6d4] shadow-[0_0_10px_#06b6d4]" : "bg-[#a31515] shadow-[0_0_8px_rgba(163,21,21,0.6)]"
+          isDark ? "bg-[#f97316] shadow-[0_0_10px_#f97316]" : "bg-[#a31515] shadow-[0_0_8px_rgba(163,21,21,0.6)]"
         }`} />
       </div>
 
@@ -148,7 +148,7 @@ export const Contact = () => {
         {submitted ? (
           <div className="py-12 flex flex-col items-center text-center">
             <div className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl font-black mb-4 shadow-md animate-bounce ${
-              isDark ? "bg-[#06b6d4] text-black font-bold" : "bg-[#a31515] text-white"
+              isDark ? "bg-[#f97316] text-black font-bold" : "bg-[#a31515] text-white"
             }`}>
               ✓
             </div>
@@ -178,7 +178,7 @@ export const Contact = () => {
                   placeholder={isDark ? "Miles Morales" : "Peter Parker"}
                   className={`font-dialogue w-full px-4 py-3 rounded-xl text-sm font-medium focus:outline-none transition-all ${
                     isDark
-                      ? "bg-[#161616] border border-[#2c2c2c] text-white placeholder-gray-500 focus:border-[#06b6d4] focus:ring-1 focus:ring-[#06b6d4]"
+                      ? "bg-[#161616] border border-[#2c2c2c] text-white placeholder-gray-500 focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316]"
                       : "bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515]"
                   }`}
                 />
@@ -196,7 +196,7 @@ export const Contact = () => {
                   placeholder={isDark ? "miles@brooklynvisions.edu" : "peter@dailybugle.com"}
                   className={`font-dialogue w-full px-4 py-3 rounded-xl text-sm font-medium focus:outline-none transition-all ${
                     isDark
-                      ? "bg-[#161616] border border-[#2c2c2c] text-white placeholder-gray-500 focus:border-[#06b6d4] focus:ring-1 focus:ring-[#06b6d4]"
+                      ? "bg-[#161616] border border-[#2c2c2c] text-white placeholder-gray-500 focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316]"
                       : "bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515]"
                   }`}
                 />
@@ -215,7 +215,7 @@ export const Contact = () => {
                 placeholder="Let's collaborate on an extraordinary project..."
                 className={`font-dialogue w-full px-4 py-3 rounded-xl text-sm font-medium focus:outline-none transition-all resize-none ${
                   isDark
-                    ? "bg-[#161616] border border-[#2c2c2c] text-white placeholder-gray-500 focus:border-[#06b6d4] focus:ring-1 focus:ring-[#06b6d4]"
+                    ? "bg-[#161616] border border-[#2c2c2c] text-white placeholder-gray-500 focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316]"
                     : "bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515]"
                 }`}
               />
@@ -249,7 +249,7 @@ export const Contact = () => {
                 target="_blank"
                 rel="noreferrer"
                 className={`font-dialogue font-bold text-xs tracking-wider transition-colors ${
-                  isDark ? "text-[#06b6d4] hover:text-white" : "text-[#a31515] hover:text-black"
+                  isDark ? "text-[#fb923c] hover:text-white" : "text-[#a31515] hover:text-black"
                 }`}
               >
                 {s.name} ↗

@@ -112,7 +112,7 @@ export const Projects = () => {
       {/* Section Header */}
       <div ref={headerRef} className="flex flex-col items-center text-center mb-10 z-10">
         <span className={`font-comic tracking-[0.2em] text-xs sm:text-sm uppercase mb-1 flex items-center gap-1.5 font-bold ${
-          isDark ? "text-[#06b6d4]" : "text-[#a31515]"
+          isDark ? "text-[#fb923c]" : "text-[#a31515]"
         }`}>
           <img
             src={isDark ? MILES_ASSETS.spiderIcon : ASSETS.spiderIcon}
@@ -132,7 +132,7 @@ export const Projects = () => {
           Open-source repositories, distributed engines, and interactive web adventures.
         </p>
         <div className={`w-16 h-1.5 mt-3 rounded-full ${
-          isDark ? "bg-[#06b6d4] shadow-[0_0_10px_#06b6d4]" : "bg-[#a31515] shadow-[0_0_8px_rgba(163,21,21,0.6)]"
+          isDark ? "bg-[#f97316] shadow-[0_0_10px_#f97316]" : "bg-[#a31515] shadow-[0_0_8px_rgba(163,21,21,0.6)]"
         }`} />
       </div>
 
@@ -146,13 +146,13 @@ export const Projects = () => {
             rel="noreferrer"
             className={`project-item group relative p-6 rounded-2xl transition-all duration-300 flex flex-col justify-between cursor-pointer overflow-hidden transform hover:-translate-y-1 ${
               isDark
-                ? "bg-[#111111]/90 backdrop-blur-sm border border-[#222222] hover:border-[#06b6d4] shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:shadow-[0_10px_28px_rgba(6,182,212,0.25)]"
+                ? "bg-[#111111]/90 backdrop-blur-sm border border-[#222222] hover:border-[#f97316] shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:shadow-[0_10px_28px_rgba(249,115,22,0.25)]"
                 : "bg-gray-50/90 backdrop-blur-sm border border-gray-200 hover:border-[#a31515] shadow-sm hover:shadow-[0_10px_25px_rgba(163,21,21,0.15)]"
             }`}
           >
             {/* Top Beam Line */}
             <div className={`absolute top-0 left-0 w-full h-1 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out ${
-              isDark ? "bg-[#06b6d4]" : "bg-[#a31515]"
+              isDark ? "bg-[#f97316]" : "bg-[#a31515]"
             }`} />
 
             <div>
@@ -160,11 +160,11 @@ export const Projects = () => {
                 <div className="mb-2">
                   <span className={`inline-flex items-center gap-1.5 font-dialogue font-bold text-[11px] tracking-wider uppercase px-2.5 py-0.5 rounded-md transition-colors duration-300 ${
                     isDark
-                      ? "bg-[#1a1a1a] text-[#06b6d4] border border-[#06b6d4]/40 group-hover:bg-[#06b6d4] group-hover:text-black"
+                      ? "bg-[#1a1a1a] text-[#fb923c] border border-[#f97316]/40 group-hover:bg-[#f97316] group-hover:text-black"
                       : "bg-red-50 text-[#a31515] border border-[#a31515]/30 group-hover:bg-[#a31515] group-hover:text-white"
                   }`}>
                     <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${
-                      isDark ? "bg-[#06b6d4] group-hover:bg-black" : "bg-[#a31515] group-hover:bg-white"
+                      isDark ? "bg-[#f97316] group-hover:bg-black" : "bg-[#a31515] group-hover:bg-white"
                     }`} />
                     PINNED // GITHUB
                   </span>
@@ -172,13 +172,13 @@ export const Projects = () => {
               )}
               <div className="flex items-center justify-between mb-3">
                 <h3 className={`font-comic text-lg sm:text-xl uppercase tracking-wide transition-colors duration-300 ${
-                  isDark ? "text-white group-hover:text-[#06b6d4]" : "text-gray-900 group-hover:text-[#a31515]"
+                  isDark ? "text-white group-hover:text-[#fb923c]" : "text-gray-900 group-hover:text-[#a31515]"
                 }`}>
                   {proj.title}
                 </h3>
                 <svg
                   className={`w-5 h-5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 ${
-                    isDark ? "text-gray-500 group-hover:text-[#06b6d4]" : "text-gray-400 group-hover:text-[#a31515]"
+                    isDark ? "text-gray-500 group-hover:text-[#fb923c]" : "text-gray-400 group-hover:text-[#a31515]"
                   }`}
                   fill="none"
                   stroke="currentColor"
@@ -207,7 +207,7 @@ export const Projects = () => {
                   key={tagIdx}
                   className={`font-dialogue text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md transition-colors duration-300 ${
                     isDark
-                      ? "bg-[#181818] border border-[#2a2a2a] text-gray-300 group-hover:border-[#06b6d4]/50 group-hover:text-[#06b6d4]"
+                      ? "bg-[#181818] border border-[#2a2a2a] text-gray-300 group-hover:border-[#f97316]/50 group-hover:text-[#fb923c]"
                       : "bg-white border border-gray-200 text-gray-600 group-hover:border-[#a31515]/30 group-hover:text-[#a31515]"
                   }`}
                 >

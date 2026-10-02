@@ -37,8 +37,8 @@ const TechChipComponent: React.FC<TechChipProps> = ({
       className={`group relative inline-flex items-center gap-1 sm:gap-2 px-1.5 sm:px-3.5 py-0.5 sm:py-1.5 rounded-full border transition-[transform,background-color,border-color,color] duration-200 cursor-pointer select-none outline-none ${
         isDark
           ? isHovered
-            ? "bg-[#e11d48] text-white border-[#e11d48] scale-110 z-30 shadow-[0_4px_16px_rgba(225,29,72,0.65)] focus-visible:ring-2 focus-visible:ring-[#06b6d4]"
-            : "bg-[#121212]/95 text-[#06b6d4] border-[#06b6d4]/40 hover:bg-[#06b6d4] hover:text-black hover:border-[#06b6d4] hover:scale-105 z-10 shadow-xs focus-visible:ring-2 focus-visible:ring-[#06b6d4]"
+            ? "bg-[#e11d48] text-white border-[#e11d48] scale-110 z-30 shadow-[0_4px_16px_rgba(225,29,72,0.65)] focus-visible:ring-2 focus-visible:ring-[#f97316]"
+            : "bg-[#121212]/95 text-[#fb923c] border-[#f97316]/40 hover:bg-[#f97316] hover:text-black hover:border-[#f97316] hover:scale-105 z-10 shadow-xs focus-visible:ring-2 focus-visible:ring-[#f97316]"
           : isHovered
           ? "bg-[#a31515] text-white border-[#a31515] scale-110 z-30 shadow-[0_4px_16px_rgba(163,21,21,0.5)] focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2"
           : "bg-white/95 text-[#a31515] border-[#a31515]/40 hover:bg-[#a31515] hover:text-white hover:border-[#a31515] hover:scale-105 z-10 shadow-xs focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2"
@@ -51,7 +51,7 @@ const TechChipComponent: React.FC<TechChipProps> = ({
           isDark
             ? isHovered
               ? "opacity-100 bg-[#e11d48]/40"
-              : "opacity-0 group-hover:opacity-100 bg-[#06b6d4]/30"
+              : "opacity-0 group-hover:opacity-100 bg-[#f97316]/30"
             : isHovered
             ? "opacity-100 bg-red-600/25"
             : "opacity-0 group-hover:opacity-100 bg-red-600/25"
@@ -66,7 +66,7 @@ const TechChipComponent: React.FC<TechChipProps> = ({
           isDark
             ? isHovered
               ? "text-white"
-              : "text-[#06b6d4] group-hover:text-black"
+              : "text-[#fb923c] group-hover:text-black"
             : isHovered
             ? "text-white"
             : "text-[#a31515] group-hover:text-white"

@@ -83,7 +83,7 @@ export const Journey = () => {
       {/* Section Header */}
       <div ref={headerRef} className="flex flex-col items-center text-center mb-10 sm:mb-12 z-10 px-4 max-w-2xl">
         <span className={`font-comic tracking-[0.2em] text-xs sm:text-sm uppercase mb-1 flex items-center gap-1.5 font-bold ${
-          isDark ? "text-[#06b6d4]" : "text-[#a31515]"
+          isDark ? "text-[#fb923c]" : "text-[#a31515]"
         }`}>
           <img
             src={isDark ? MILES_ASSETS.spiderIcon : ASSETS.spiderIcon}
@@ -105,7 +105,7 @@ export const Journey = () => {
           {JOURNEY_DATA.subtitle}
         </p>
         <div className={`w-16 h-1 mt-3 rounded-full ${
-          isDark ? "bg-[#06b6d4] shadow-[0_0_10px_#06b6d4]" : "bg-[#a31515] shadow-[0_0_8px_rgba(163,21,21,0.6)]"
+          isDark ? "bg-[#f97316] shadow-[0_0_10px_#f97316]" : "bg-[#a31515] shadow-[0_0_8px_rgba(163,21,21,0.6)]"
         }`} />
       </div>
 
@@ -132,11 +132,11 @@ export const Journey = () => {
                 {JOURNEY_DATA.role}
               </h3>
               <span className={`font-bold text-lg hidden sm:inline ${
-                isDark ? "text-[#06b6d4]" : "text-[#a31515]"
+                isDark ? "text-[#fb923c]" : "text-[#a31515]"
               }`}>•</span>
               <span className={`text-xs sm:text-sm font-comic font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md ${
                 isDark
-                  ? "text-[#06b6d4] bg-[#161616] border border-[#06b6d4]/40"
+                  ? "text-[#fb923c] bg-[#161616] border border-[#f97316]/40"
                   : "text-[#a31515] bg-red-50 border border-red-200/80"
               }`}>
                 {JOURNEY_DATA.status}
@@ -165,7 +165,7 @@ export const Journey = () => {
           <div
             className={`absolute left-[33px] sm:left-[41px] md:left-[49px] top-12 bottom-12 w-[3px] rounded-full ${
               isDark
-                ? "bg-gradient-to-b from-[#e11d48] via-[#06b6d4] to-[#e11d48] shadow-[0_0_8px_rgba(6,182,212,0.5)]"
+                ? "bg-gradient-to-b from-[#e11d48] via-[#f97316] to-[#e11d48] shadow-[0_0_10px_rgba(249,115,22,0.5)]"
                 : "bg-gradient-to-b from-[#a31515] via-gray-300 to-[#a31515]"
             }`}
             aria-hidden="true"
@@ -185,11 +185,11 @@ export const Journey = () => {
                 <div className="relative z-10 shrink-0 mt-0.5">
                   <div className={`w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
                     isDark
-                      ? "bg-[#141414] border-2 border-[#06b6d4] shadow-[3px_3px_0px_#e11d48] group-hover:scale-110 group-hover:border-[#e11d48] group-hover:shadow-[3px_3px_0px_#06b6d4]"
+                      ? "bg-[#141414] border-2 border-[#f97316] shadow-[3px_3px_0px_#e11d48] group-hover:scale-110 group-hover:border-[#e11d48] group-hover:shadow-[3px_3px_0px_#f97316]"
                       : "bg-white border-2 border-black shadow-[3px_3px_0px_#000000] group-hover:scale-110 group-hover:border-[#a31515] group-hover:shadow-[3px_3px_0px_#a31515]"
                   }`}>
                     <span className={`font-comic font-bold text-xs sm:text-sm tracking-tight ${
-                      isDark ? "text-[#06b6d4] group-hover:text-[#e11d48]" : "text-[#a31515]"
+                      isDark ? "text-[#fb923c] group-hover:text-[#e11d48]" : "text-[#a31515]"
                     }`}>
                       {phase.id}
                     </span>
@@ -199,13 +199,13 @@ export const Journey = () => {
                 {/* Phase Content Box */}
                 <div className={`flex-1 rounded-xl p-4 sm:p-6 transition-all duration-300 hover:-translate-y-0.5 ${
                   isDark
-                    ? "bg-[#131313]/90 hover:bg-[#181818] border border-[#242424] hover:border-[#06b6d4] hover:shadow-[4px_4px_0px_#06b6d4]"
+                    ? "bg-[#131313]/90 hover:bg-[#181818] border border-[#242424] hover:border-[#f97316] hover:shadow-[4px_4px_0px_#f97316]"
                     : "bg-gray-50/70 hover:bg-white border border-gray-200 hover:border-[#a31515] hover:shadow-[4px_4px_0px_#a31515]"
                 }`}>
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                     <div className="flex items-center gap-2">
                       <span className={`text-[11px] sm:text-xs font-comic font-bold tracking-wider uppercase ${
-                        isDark ? "text-[#06b6d4]" : "text-[#a31515]"
+                        isDark ? "text-[#fb923c]" : "text-[#a31515]"
                       }`}>
                         {phase.phaseNumber}
                       </span>
@@ -243,7 +243,7 @@ export const Journey = () => {
                         key={skill}
                         className={`px-2.5 py-0.5 rounded-md text-[11px] sm:text-xs font-dialogue font-bold transition-colors duration-200 shadow-2xs ${
                           isDark
-                            ? "bg-[#1a1a1a] border border-[#2e2e2e] text-gray-200 hover:border-[#06b6d4] hover:text-[#06b6d4]"
+                            ? "bg-[#1a1a1a] border border-[#2e2e2e] text-gray-200 hover:border-[#f97316] hover:text-[#fb923c]"
                             : "bg-white border border-gray-200 text-gray-800 hover:border-[#a31515] hover:text-[#a31515]"
                         }`}
                       >
@@ -266,7 +266,7 @@ export const Journey = () => {
           {JOURNEY_DATA.stats.map((stat, idx) => (
             <div key={idx} className="p-4 sm:p-6 flex flex-col items-center justify-center text-center group">
               <span className={`font-comic text-2xl sm:text-3xl lg:text-4xl font-bold tracking-wider transition-transform duration-200 group-hover:scale-105 ${
-                isDark ? "text-[#06b6d4] group-hover:text-[#e11d48]" : "text-[#a31515]"
+                isDark ? "text-[#fb923c] group-hover:text-[#e11d48]" : "text-[#a31515]"
               }`}>
                 {stat.value}
               </span>

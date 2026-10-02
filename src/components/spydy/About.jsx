@@ -142,7 +142,7 @@ export const About = () => {
       >
         <div className={`w-[1px] h-[250px] md:h-[350px] ${
           isDark
-            ? "bg-gradient-to-b from-transparent to-[#06b6d4]/40"
+            ? "bg-gradient-to-b from-transparent to-[#f97316]/40"
             : "bg-gradient-to-b from-transparent to-gray-300"
         }`} />
 
@@ -168,7 +168,7 @@ export const About = () => {
       >
         <div className={`w-[1px] h-[200px] md:h-[300px] ${
           isDark
-            ? "bg-gradient-to-b from-transparent to-[#06b6d4]/40"
+            ? "bg-gradient-to-b from-transparent to-[#f97316]/40"
             : "bg-gradient-to-b from-transparent to-gray-300"
         }`} />
 
@@ -205,7 +205,7 @@ export const About = () => {
               <span
                 ref={badgeRef}
                 className={`inline-flex items-center gap-2 font-comic tracking-[0.2em] text-xs sm:text-sm uppercase font-bold ${
-                  isDark ? "text-[#06b6d4]" : "text-[#a31515]"
+                  isDark ? "text-[#fb923c]" : "text-[#a31515]"
                 }`}
               >
                 <img

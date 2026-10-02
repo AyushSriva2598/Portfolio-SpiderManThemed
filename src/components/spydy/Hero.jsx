@@ -195,7 +195,7 @@ export const Hero = () => {
             ref={taglineRef}
             className="flex items-center gap-2 opacity-0"
           >
-            <span className={`w-6 sm:w-8 h-[2px] ${isDark ? "bg-[#06b6d4] shadow-[0_0_8px_#06b6d4]" : "bg-red-600"}`} />
+            <span className={`w-6 sm:w-8 h-[2px] ${isDark ? "bg-[#f97316] shadow-[0_0_8px_#f97316]" : "bg-red-600"}`} />
             <span className={`font-comic tracking-[0.2em] text-xs sm:text-sm md:text-base uppercase font-bold ${
               isDark ? "text-[#e11d48] drop-shadow-[0_0_10px_rgba(225,29,72,0.5)]" : "text-[#a31515]"
             }`}>
@@ -226,7 +226,7 @@ export const Hero = () => {
 
           <div className="flex items-center gap-2 text-xs font-dialogue tracking-wider font-bold text-gray-700 dark:text-gray-300">
             <span className={`w-2 h-2 rounded-full animate-pulse ${
-              isDark ? "bg-[#06b6d4] shadow-[0_0_10px_#06b6d4]" : "bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.8)]"
+              isDark ? "bg-[#f97316] shadow-[0_0_10px_#f97316]" : "bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.8)]"
             }`} />
             <span> {HERO_DATA.role}</span>
           </div>
@@ -249,7 +249,7 @@ export const Hero = () => {
               href="#contact"
               className={`inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 min-h-[44px] min-w-[44px] rounded-lg font-comic tracking-wider text-sm sm:text-base transition-[transform,box-shadow,background-color] duration-300 cursor-pointer hover:-translate-y-1 uppercase group ${
                 isDark
-                  ? "bg-[#111111] hover:bg-[#1a1a1a] text-gray-100 border border-[#06b6d4]/50 hover:border-[#06b6d4] shadow-[0_0_15px_rgba(6,182,212,0.25)]"
+                  ? "bg-[#111111] hover:bg-[#1a1a1a] text-gray-100 border border-[#f97316]/50 hover:border-[#f97316] shadow-[0_0_15px_rgba(249,115,22,0.25)]"
                   : "text-white bg-gray-900 hover:bg-black hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)]"
               }`}
             >
@@ -270,7 +270,7 @@ export const Hero = () => {
           <h2
             ref={quoteRef}
             className={`text-comic-title text-[clamp(1.75rem,1.2rem+2.5vw,3.5rem)] leading-[0.95] tracking-tight opacity-0 select-none text-right ${
-              isDark ? "text-white drop-shadow-[2px_2px_0px_#06b6d4]" : "text-gray-950"
+              isDark ? "text-white drop-shadow-[2px_2px_0px_#f97316]" : "text-gray-950"
             }`}
           >
             {HERO_DATA.quoteHeadingLine1}
@@ -300,7 +300,7 @@ export const Hero = () => {
         {/* Tape 2: rotate(-3.5deg, mobile -2deg), slopes upward left-to-right */}
         <div className={`absolute w-[120vw] -left-[10vw] -top-5 sm:-top-6 md:-top-7 h-10 sm:h-12 md:h-14 lg:h-16 border-y-[2px] sm:border-y-[3px] rotate-[-2deg] md:rotate-[-3.5deg] z-10 flex items-center overflow-hidden pointer-events-none ${
           isDark
-            ? "bg-[#0c0c0c] text-[#06b6d4] border-[#06b6d4] shadow-[0_8px_20px_rgba(6,182,212,0.35)]"
+            ? "bg-[#0c0c0c] text-[#fb923c] border-[#f97316] shadow-[0_8px_20px_rgba(249,115,22,0.35)]"
             : "bg-[#111111] text-[#ef4444] border-[#a31515] shadow-[0_8px_20px_rgba(0,0,0,0.5)]"
         }`}>
           <div ref={marquee2Ref} className="flex items-center h-full w-max">

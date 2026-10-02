@@ -61,7 +61,7 @@ export const Skills = () => {
       >
         <div className={`w-[2px] h-10 sm:h-14 md:h-20 ${
           isDark
-            ? "bg-gradient-to-b from-transparent to-[#06b6d4] opacity-90 shadow-[0_0_8px_#06b6d4]"
+            ? "bg-gradient-to-b from-transparent to-[#f97316] opacity-90 shadow-[0_0_10px_#f97316]"
             : "bg-gradient-to-b from-transparent to-gray-400 opacity-60"
         }`} />
         <img
@@ -77,7 +77,7 @@ export const Skills = () => {
       {/* Section Header */}
       <div ref={headerRef} className="flex flex-col items-center text-center mb-1 sm:mb-2 z-10 px-4">
         <span className={`font-comic tracking-[0.2em] text-[10px] sm:text-xs uppercase mb-0.5 flex items-center gap-1.5 font-bold ${
-          isDark ? "text-[#06b6d4]" : "text-[#a31515]"
+          isDark ? "text-[#fb923c]" : "text-[#a31515]"
         }`}>
           <img
             src={isDark ? MILES_ASSETS.spiderIcon : ASSETS.spiderIcon}
@@ -100,7 +100,7 @@ export const Skills = () => {
         </p>
         <div className={`w-14 h-1 mt-2 rounded-full ${
           isDark
-            ? "bg-[#06b6d4] shadow-[0_0_10px_#06b6d4]"
+            ? "bg-[#f97316] shadow-[0_0_10px_#f97316]"
             : "bg-[#a31515] shadow-[0_0_8px_rgba(163,21,21,0.6)]"
         }`} />
       </div>
@@ -117,8 +117,8 @@ export const Skills = () => {
               className={`px-3 sm:px-4 py-1 sm:py-1.5 rounded-full font-comic text-[11px] sm:text-xs md:text-sm uppercase tracking-wider transition-all duration-200 cursor-pointer select-none outline-none focus-visible:ring-2 ${
                 isDark
                   ? isActive
-                    ? "bg-[#e11d48] text-white shadow-[0_4px_14px_rgba(225,29,72,0.6)] scale-105 font-bold border border-[#e11d48] focus-visible:ring-[#06b6d4]"
-                    : "bg-[#141414] hover:bg-[#1f1f1f] text-gray-300 hover:text-[#06b6d4] border border-[#2a2a2a] hover:border-[#06b6d4]/50 shadow-xs hover:scale-102 focus-visible:ring-[#06b6d4]"
+                    ? "bg-[#e11d48] text-white shadow-[0_4px_14px_rgba(225,29,72,0.6)] scale-105 font-bold border border-[#e11d48] focus-visible:ring-[#f97316]"
+                    : "bg-[#141414] hover:bg-[#1f1f1f] text-gray-300 hover:text-[#fb923c] border border-[#2a2a2a] hover:border-[#f97316]/50 shadow-xs hover:scale-102 focus-visible:ring-[#f97316]"
                   : isActive
                   ? "bg-[#a31515] text-white shadow-[0_4px_14px_rgba(163,21,21,0.45)] scale-105 font-bold border border-[#a31515] focus-visible:ring-[#a31515]"
                   : "bg-white/85 hover:bg-white text-gray-700 hover:text-[#a31515] border border-gray-200/90 hover:border-[#a31515]/50 shadow-xs hover:scale-102 focus-visible:ring-[#a31515]"
