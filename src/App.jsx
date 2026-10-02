@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Hero, About, Skills, Projects, Contact } from "./components/spydy";
+import { Navbar, Hero, About, Skills, Projects, Journey, Contact } from "./components/spydy";
 
 export function App() {
   return (
@@ -9,6 +9,7 @@ export function App() {
       <About />
       <Skills />
       <Projects />
+      <Journey />
       <Contact />
     </div>
   );

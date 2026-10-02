@@ -29,6 +29,7 @@ export const Navbar = () => {
     { label: "About", href: "#about" },
     { label: "Skills", href: "#skills" },
     { label: "Projects", href: "#projects" },
+    { label: "Journey", href: "#journey" },
     { label: "Contact", href: "#contact" },
     { label: "Cover Letter", href: "#CoverLetter" },
   ];
