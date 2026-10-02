@@ -44,8 +44,8 @@ export const ASSETS = {
 };
 
 export const MILES_ASSETS = {
-  topMaskImg: "/assets/miles-mask.webp",
-  topMaskImgPng: "/assets/miles-mask.png",
+  topMaskImg: "/assets/miles-morales-hero.webp",
+  topMaskImgPng: "/assets/miles-morales-hero.jpg",
   bottomIdentityImg: "/assets/image-2-aradhya.png",
   webImg: "/assets/web1-770H2sSx.png",
   spiderIcon: "/assets/miles-spider-logo.webp",

@@ -150,14 +150,14 @@ export const Hero = () => {
         {/* Single Background Image — Peter Mask / Miles Mask */}
         <img
           src={isDark ? MILES_ASSETS.topMaskImg : ASSETS.topMaskImg}
-          alt="Spider-Man Hero"
+          alt={isDark ? "Marvel's Spider-Man: Miles Morales 4K Hero" : "Spider-Man Hero"}
           fetchPriority="high"
-          width="1600"
-          height="893"
-          className={`absolute inset-0 w-full h-full object-cover pointer-events-none z-10 translate-x-4 md:translate-x-10 transition-all duration-500 ${
+          width="2560"
+          height="1440"
+          className={`absolute inset-0 w-full h-full object-cover pointer-events-none z-10 transition-all duration-500 ${
             isDark
-              ? "opacity-90 drop-shadow-[0_0_35px_rgba(225,29,72,0.3)]"
-              : "mix-blend-multiply"
+              ? "opacity-95 object-center translate-x-0 drop-shadow-[0_0_40px_rgba(225,29,72,0.25)]"
+              : "mix-blend-multiply translate-x-4 md:translate-x-10"
           }`}
         />
 
