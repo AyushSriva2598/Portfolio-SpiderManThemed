@@ -1,11 +1,13 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { JOURNEY_DATA, ASSETS } from "../../data/spidermanData";
+import { JOURNEY_DATA, ASSETS, MILES_ASSETS } from "../../data/spidermanData";
+import { useTheme } from "../../context/ThemeContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const Journey = () => {
+  const { isDark } = useTheme();
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
   const cardRef = useRef(null);
@@ -62,7 +64,9 @@ export const Journey = () => {
     <section
       id="journey"
       ref={sectionRef}
-      className="relative w-full bg-white text-gray-900 py-16 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-20 flex flex-col items-center justify-center overflow-hidden border-t border-gray-100"
+      className={`relative w-full py-16 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-20 flex flex-col items-center justify-center overflow-hidden border-t transition-colors duration-500 ${
+        isDark ? "bg-[#060606] text-white border-[#181818]" : "bg-white text-gray-900 border-gray-100"
+      }`}
     >
       {/* Background Web Watermark Accent */}
       <div className="absolute top-0 left-0 pointer-events-none overflow-hidden z-0">
@@ -70,49 +74,87 @@ export const Journey = () => {
           src={ASSETS.webImg}
           alt=""
           aria-hidden="true"
-          className="w-[400px] h-[400px] md:w-[600px] md:h-[600px] object-contain opacity-[0.03] mix-blend-multiply -translate-x-1/3 -translate-y-1/3"
+          className={`w-[400px] h-[400px] md:w-[600px] md:h-[600px] object-contain -translate-x-1/3 -translate-y-1/3 ${
+            isDark ? "opacity-[0.08] invert" : "opacity-[0.03] mix-blend-multiply"
+          }`}
         />
       </div>
 
       {/* Section Header */}
       <div ref={headerRef} className="flex flex-col items-center text-center mb-10 sm:mb-12 z-10 px-4 max-w-2xl">
-        <span className="text-[#a31515] font-comic tracking-[0.2em] text-xs sm:text-sm uppercase mb-1 flex items-center gap-1.5 font-bold">
-          <img src={ASSETS.spiderIcon} alt="Spider" width="16" height="16" className="w-4 h-4 object-contain" />
+        <span className={`font-comic tracking-[0.2em] text-xs sm:text-sm uppercase mb-1 flex items-center gap-1.5 font-bold ${
+          isDark ? "text-[#06b6d4]" : "text-[#a31515]"
+        }`}>
+          <img
+            src={isDark ? MILES_ASSETS.spiderIcon : ASSETS.spiderIcon}
+            alt="Spider"
+            width="16"
+            height="16"
+            className="w-4 h-4 object-contain"
+          />
           {JOURNEY_DATA.badge}
         </span>
-        <h2 className="text-comic-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight">
+        <h2 className={`text-comic-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight ${
+          isDark ? "text-white drop-shadow-[2px_2px_0px_#e11d48]" : "text-gray-950"
+        }`}>
           {JOURNEY_DATA.title}
         </h2>
-        <p className="font-dialogue text-gray-700 text-xs sm:text-sm md:text-base mt-2 max-w-lg leading-relaxed">
+        <p className={`font-dialogue text-xs sm:text-sm md:text-base mt-2 max-w-lg leading-relaxed ${
+          isDark ? "text-gray-400" : "text-gray-700"
+        }`}>
           {JOURNEY_DATA.subtitle}
         </p>
-        <div className="w-16 h-1 bg-[#a31515] mt-3 rounded-full shadow-[0_0_8px_rgba(163,21,21,0.6)]" />
+        <div className={`w-16 h-1 mt-3 rounded-full ${
+          isDark ? "bg-[#06b6d4] shadow-[0_0_10px_#06b6d4]" : "bg-[#a31515] shadow-[0_0_8px_rgba(163,21,21,0.6)]"
+        }`} />
       </div>
 
       {/* Main Comic Journey Card */}
       <div
         ref={cardRef}
-        className="relative w-full max-w-5xl bg-white border-2 border-black rounded-2xl shadow-[6px_6px_0px_#000000] sm:shadow-[8px_8px_0px_#000000] z-10 overflow-hidden"
+        className={`relative w-full max-w-5xl rounded-2xl z-10 overflow-hidden transition-all duration-300 ${
+          isDark
+            ? "bg-[#0d0d0d] border-2 border-[#262626] shadow-[6px_6px_0px_#e11d48] sm:shadow-[8px_8px_0px_#e11d48]"
+            : "bg-white border-2 border-black shadow-[6px_6px_0px_#000000] sm:shadow-[8px_8px_0px_#000000]"
+        }`}
       >
         {/* Card Header Banner */}
-        <div className="p-6 sm:p-8 md:p-10 border-b-2 border-black bg-gradient-to-r from-gray-50 via-white to-gray-50/50">
+        <div className={`p-6 sm:p-8 md:p-10 border-b-2 ${
+          isDark
+            ? "border-[#262626] bg-gradient-to-r from-[#141414] via-[#101010] to-[#141414]"
+            : "border-black bg-gradient-to-r from-gray-50 via-white to-gray-50/50"
+        }`}>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-              <h3 className="font-comic text-xl sm:text-2xl md:text-3xl text-gray-950 uppercase tracking-wide">
+              <h3 className={`font-comic text-xl sm:text-2xl md:text-3xl uppercase tracking-wide ${
+                isDark ? "text-white" : "text-gray-950"
+              }`}>
                 {JOURNEY_DATA.role}
               </h3>
-              <span className="text-[#a31515] font-bold text-lg hidden sm:inline">•</span>
-              <span className="text-xs sm:text-sm font-comic font-bold uppercase tracking-wider text-[#a31515] bg-red-50 border border-red-200/80 px-2.5 py-0.5 rounded-md">
+              <span className={`font-bold text-lg hidden sm:inline ${
+                isDark ? "text-[#06b6d4]" : "text-[#a31515]"
+              }`}>•</span>
+              <span className={`text-xs sm:text-sm font-comic font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md ${
+                isDark
+                  ? "text-[#06b6d4] bg-[#161616] border border-[#06b6d4]/40"
+                  : "text-[#a31515] bg-red-50 border border-red-200/80"
+              }`}>
                 {JOURNEY_DATA.status}
               </span>
             </div>
 
-            <span className="self-start sm:self-auto font-dialogue font-bold text-xs tracking-wider uppercase text-gray-600 bg-white border border-gray-300 px-3 py-1 rounded-full shadow-2xs">
+            <span className={`self-start sm:self-auto font-dialogue font-bold text-xs tracking-wider uppercase px-3 py-1 rounded-full shadow-2xs ${
+              isDark
+                ? "text-gray-300 bg-[#1a1a1a] border border-[#333333]"
+                : "text-gray-600 bg-white border border-gray-300"
+            }`}>
               {JOURNEY_DATA.timeline}
             </span>
           </div>
 
-          <p className="font-dialogue text-gray-700 text-sm sm:text-base leading-relaxed border-l-3 border-[#a31515] pl-3.5 py-0.5 mt-3">
+          <p className={`font-dialogue text-sm sm:text-base leading-relaxed border-l-3 pl-3.5 py-0.5 mt-3 ${
+            isDark ? "text-gray-300 border-[#e11d48]" : "text-gray-700 border-[#a31515]"
+          }`}>
             {JOURNEY_DATA.narrativeContext}
           </p>
         </div>
@@ -121,7 +163,11 @@ export const Journey = () => {
         <div className="relative p-6 sm:p-8 md:p-10">
           {/* Continuous Vertical Connecting Spine Line */}
           <div
-            className="absolute left-[33px] sm:left-[41px] md:left-[49px] top-12 bottom-12 w-[3px] bg-gradient-to-b from-[#a31515] via-gray-300 to-[#a31515] rounded-full"
+            className={`absolute left-[33px] sm:left-[41px] md:left-[49px] top-12 bottom-12 w-[3px] rounded-full ${
+              isDark
+                ? "bg-gradient-to-b from-[#e11d48] via-[#06b6d4] to-[#e11d48] shadow-[0_0_8px_rgba(6,182,212,0.5)]"
+                : "bg-gradient-to-b from-[#a31515] via-gray-300 to-[#a31515]"
+            }`}
             aria-hidden="true"
           />
 
@@ -137,36 +183,56 @@ export const Journey = () => {
               >
                 {/* Node Milestone Indicator on the Spine */}
                 <div className="relative z-10 shrink-0 mt-0.5">
-                  <div className="w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full bg-white border-2 border-black flex items-center justify-center shadow-[3px_3px_0px_#000000] transition-all duration-300 group-hover:scale-110 group-hover:border-[#a31515] group-hover:shadow-[3px_3px_0px_#a31515]">
-                    <span className="font-comic font-bold text-xs sm:text-sm text-[#a31515] tracking-tight">
+                  <div className={`w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+                    isDark
+                      ? "bg-[#141414] border-2 border-[#06b6d4] shadow-[3px_3px_0px_#e11d48] group-hover:scale-110 group-hover:border-[#e11d48] group-hover:shadow-[3px_3px_0px_#06b6d4]"
+                      : "bg-white border-2 border-black shadow-[3px_3px_0px_#000000] group-hover:scale-110 group-hover:border-[#a31515] group-hover:shadow-[3px_3px_0px_#a31515]"
+                  }`}>
+                    <span className={`font-comic font-bold text-xs sm:text-sm tracking-tight ${
+                      isDark ? "text-[#06b6d4] group-hover:text-[#e11d48]" : "text-[#a31515]"
+                    }`}>
                       {phase.id}
                     </span>
                   </div>
                 </div>
 
                 {/* Phase Content Box */}
-                <div className="flex-1 bg-gray-50/70 hover:bg-white border border-gray-200 hover:border-[#a31515] rounded-xl p-4 sm:p-6 transition-all duration-300 hover:shadow-[4px_4px_0px_#a31515] hover:-translate-y-0.5">
+                <div className={`flex-1 rounded-xl p-4 sm:p-6 transition-all duration-300 hover:-translate-y-0.5 ${
+                  isDark
+                    ? "bg-[#131313]/90 hover:bg-[#181818] border border-[#242424] hover:border-[#06b6d4] hover:shadow-[4px_4px_0px_#06b6d4]"
+                    : "bg-gray-50/70 hover:bg-white border border-gray-200 hover:border-[#a31515] hover:shadow-[4px_4px_0px_#a31515]"
+                }`}>
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] sm:text-xs font-comic font-bold text-[#a31515] tracking-wider uppercase">
+                      <span className={`text-[11px] sm:text-xs font-comic font-bold tracking-wider uppercase ${
+                        isDark ? "text-[#06b6d4]" : "text-[#a31515]"
+                      }`}>
                         {phase.phaseNumber}
                       </span>
-                      <span className="text-gray-300">•</span>
-                      <span className="text-[11px] sm:text-xs font-dialogue font-bold text-gray-500 uppercase tracking-wider">
+                      <span className="text-gray-400">•</span>
+                      <span className={`text-[11px] sm:text-xs font-dialogue font-bold uppercase tracking-wider ${
+                        isDark ? "text-gray-400" : "text-gray-500"
+                      }`}>
                         {phase.timeframe}
                       </span>
                     </div>
 
-                    <span className="text-[11px] font-dialogue font-bold text-gray-500 uppercase tracking-widest hidden md:inline">
+                    <span className={`text-[11px] font-dialogue font-bold uppercase tracking-widest hidden md:inline ${
+                      isDark ? "text-gray-400" : "text-gray-500"
+                    }`}>
                       {phase.tagline}
                     </span>
                   </div>
 
-                  <h4 className="font-dialogue font-bold text-base sm:text-lg text-gray-950 mb-2">
+                  <h4 className={`font-dialogue font-bold text-base sm:text-lg mb-2 ${
+                    isDark ? "text-white" : "text-gray-950"
+                  }`}>
                     {phase.title}
                   </h4>
 
-                  <p className="font-dialogue text-gray-700 text-xs sm:text-sm sm:leading-relaxed mb-4">
+                  <p className={`font-dialogue text-xs sm:text-sm sm:leading-relaxed mb-4 ${
+                    isDark ? "text-gray-300" : "text-gray-700"
+                  }`}>
                     {phase.description}
                   </p>
 
@@ -175,7 +241,11 @@ export const Journey = () => {
                     {phase.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-2.5 py-0.5 rounded-md bg-white border border-gray-200 text-[11px] sm:text-xs font-dialogue font-bold text-gray-800 transition-colors duration-200 hover:border-[#a31515] hover:text-[#a31515] shadow-2xs"
+                        className={`px-2.5 py-0.5 rounded-md text-[11px] sm:text-xs font-dialogue font-bold transition-colors duration-200 shadow-2xs ${
+                          isDark
+                            ? "bg-[#1a1a1a] border border-[#2e2e2e] text-gray-200 hover:border-[#06b6d4] hover:text-[#06b6d4]"
+                            : "bg-white border border-gray-200 text-gray-800 hover:border-[#a31515] hover:text-[#a31515]"
+                        }`}
                       >
                         {skill}
                       </span>
@@ -187,14 +257,22 @@ export const Journey = () => {
           </div>
         </div>
 
-        {/* Bottom Metrics Bar (Mirroring Screenshot Structure) */}
-        <div className="border-t-2 border-black bg-gray-50/90 grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x-2 divide-black">
+        {/* Bottom Metrics Bar */}
+        <div className={`border-t-2 grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x-2 ${
+          isDark
+            ? "border-[#262626] bg-[#111111] divide-[#262626]"
+            : "border-black bg-gray-50/90 divide-black"
+        }`}>
           {JOURNEY_DATA.stats.map((stat, idx) => (
             <div key={idx} className="p-4 sm:p-6 flex flex-col items-center justify-center text-center group">
-              <span className="font-comic text-2xl sm:text-3xl lg:text-4xl text-[#a31515] font-bold tracking-wider transition-transform duration-200 group-hover:scale-105">
+              <span className={`font-comic text-2xl sm:text-3xl lg:text-4xl font-bold tracking-wider transition-transform duration-200 group-hover:scale-105 ${
+                isDark ? "text-[#06b6d4] group-hover:text-[#e11d48]" : "text-[#a31515]"
+              }`}>
                 {stat.value}
               </span>
-              <span className="font-dialogue text-[10px] sm:text-xs font-bold tracking-widest text-gray-600 uppercase mt-1">
+              <span className={`font-dialogue text-[10px] sm:text-xs font-bold tracking-widest uppercase mt-1 ${
+                isDark ? "text-gray-400" : "text-gray-600"
+              }`}>
                 {stat.label}
               </span>
             </div>

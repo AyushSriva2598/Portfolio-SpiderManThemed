@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { HERO_DATA } from "../../data/spidermanData";
+import { HERO_DATA, ASSETS, MILES_ASSETS } from "../../data/spidermanData";
+import { useTheme } from "../../context/ThemeContext";
 
 export const Navbar = () => {
+  const { toggleTheme, isDark } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -52,10 +54,10 @@ export const Navbar = () => {
             href="#"
             className="text-white font-comic text-sm sm:text-3xl tracking-[0.2em] uppercase italic group flex items-center"
           >
-            <span className="text-red-500 drop-shadow-[0_0_10px_rgba(220,38,38,0.8)]">
+            <span className={isDark ? "text-[#e11d48] drop-shadow-[0_0_10px_rgba(225,29,72,0.8)]" : "text-red-500 drop-shadow-[0_0_10px_rgba(220,38,38,0.8)]"}>
               {HERO_DATA.firstName.charAt(0)}
             </span>
-            <span className="group-hover:text-black transition-colors duration-300">
+            <span className={`transition-colors duration-300 ${isDark ? "group-hover:text-[#06b6d4]" : "group-hover:text-black"}`}>
               {HERO_DATA.firstName.slice(1)}
             </span>
           </a>
@@ -69,15 +71,44 @@ export const Navbar = () => {
                   href={item.href}
                   className="relative font-comic text-sm sm:text-3xl text-white uppercase tracking-[0.2em] font-bold italic transition-all duration-300 hover:text-white group" style={{
                     WebkitTextStroke: "1px #111",
-                    textShadow: "2px 2px 0 #a31515, 3px 3px 0 #111",
+                    textShadow: isDark
+                      ? "2px 2px 0 #e11d48, 3px 3px 0 #06b6d4"
+                      : "2px 2px 0 #a31515, 3px 3px 0 #111",
                   }}
                 >
                   {item.label}
 
-                  <span className="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-red-600 transition-all duration-300 ease-out group-hover:w-full shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
+                  <span className={`absolute -bottom-1.5 left-0 w-0 h-[2px] transition-all duration-300 ease-out group-hover:w-full ${
+                    isDark
+                      ? "bg-[#06b6d4] shadow-[0_0_8px_rgba(6,182,212,0.8)]"
+                      : "bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.8)]"
+                  }`} />
                 </a>
               ))}
             </div>
+
+            {/* Comic Theme Switcher Button (Desktop) */}
+            <button
+              onClick={toggleTheme}
+              type="button"
+              className={`hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full font-comic text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 border-2 cursor-pointer select-none ${
+                isDark
+                  ? "bg-[#111111] border-[#06b6d4] text-[#06b6d4] shadow-[3px_3px_0px_#06b6d4] hover:shadow-[0_0_15px_rgba(6,182,212,0.6)] hover:bg-[#1a1a1a]"
+                  : "bg-white border-[#a31515] text-[#a31515] shadow-[3px_3px_0px_#000000] hover:shadow-[3px_3px_0px_#a31515] hover:bg-red-50"
+              }`}
+              title={isDark ? "Switch to Peter Parker (Light Mode)" : "Switch to Miles Morales (Dark Mode)"}
+            >
+              <img
+                src={isDark ? MILES_ASSETS.spiderIcon : ASSETS.spiderIcon}
+                alt="Theme Mascot Icon"
+                width="18"
+                height="18"
+                className="w-4 h-4 object-contain"
+              />
+              <span className="font-bold tracking-widest">
+                {isDark ? "MILES" : "PETER"}
+              </span>
+            </button>
 
             {/* Mobile Hamburger Toggle Button */}
             <button
@@ -117,6 +148,33 @@ export const Navbar = () => {
               <span className="text-xs uppercase font-dialogue font-bold tracking-widest text-gray-400">
                 Navigation Protocol
               </span>
+            </div>
+
+            {/* Mobile Comic Theme Switcher */}
+            <div className="pt-1 pb-1">
+              <button
+                onClick={() => {
+                  toggleTheme();
+                  setMobileMenuOpen(false);
+                }}
+                type="button"
+                className={`w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-xl font-comic text-sm uppercase tracking-wider transition-all duration-300 border-2 cursor-pointer select-none ${
+                  isDark
+                    ? "bg-[#111111] border-[#06b6d4] text-[#06b6d4] shadow-[4px_4px_0px_#06b6d4]"
+                    : "bg-white border-[#a31515] text-[#a31515] shadow-[4px_4px_0px_#000000]"
+                }`}
+              >
+                <img
+                  src={isDark ? MILES_ASSETS.spiderIcon : ASSETS.spiderIcon}
+                  alt="Theme Icon"
+                  width="20"
+                  height="20"
+                  className="w-5 h-5 object-contain"
+                />
+                <span className="font-bold tracking-widest">
+                  {isDark ? "SWITCH TO PETER (LIGHT)" : "SWITCH TO MILES (DARK)"}
+                </span>
+              </button>
             </div>
 
             <div className="flex flex-col gap-5">

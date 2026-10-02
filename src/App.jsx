@@ -1,17 +1,20 @@
 import React from "react";
+import { ThemeProvider } from "./context/ThemeContext";
 import { Navbar, Hero, About, Skills, Projects, Journey, Contact } from "./components/spydy";
 
 export function App() {
   return (
-    <div className="w-full min-h-screen bg-white text-gray-900 overflow-x-hidden font-dialogue selection:bg-[#a31515] selection:text-white">
-      <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Journey />
-      <Contact />
-    </div>
+    <ThemeProvider>
+      <div className="w-full min-h-screen bg-white dark:bg-[#050505] text-gray-900 dark:text-gray-100 overflow-x-hidden font-dialogue selection:bg-[#a31515] dark:selection:bg-[#e11d48] selection:text-white transition-colors duration-300">
+        <Navbar />
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Journey />
+        <Contact />
+      </div>
+    </ThemeProvider>
   );
 }
 

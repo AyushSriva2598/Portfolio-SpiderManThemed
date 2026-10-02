@@ -13,7 +13,8 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { ASSETS } from "../../data/spidermanData";
+import { ASSETS, MILES_ASSETS } from "../../data/spidermanData";
+import { useTheme } from "../../context/ThemeContext";
 import {
   WEB_CONFIG,
   TECH_NODES,
@@ -26,6 +27,7 @@ interface TechWebProps {
 }
 
 export const TechWeb: React.FC<TechWebProps> = ({ selectedCategory = "all" }) => {
+  const { isDark } = useTheme();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [hoveredNode, setHoveredNode] = useState<TechNode | null>(null);
@@ -186,13 +188,13 @@ export const TechWeb: React.FC<TechWebProps> = ({ selectedCategory = "all" }) =>
           transformStyle: "preserve-3d",
         }}
       >
-        {/* ── 1. WIDESCREEN SPIDER-MAN WEB BACKDROP (matching reference Gemini_Generated_Image_cit8ricit8ricit8.png) ── */}
+        {/* ── 1. WIDESCREEN SPIDER-MAN WEB BACKDROP ── */}
         <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden">
           <picture className="w-full h-full flex items-center justify-center">
-            <source srcSet={ASSETS.wideSpiderWeb} type="image/webp" />
+            <source srcSet={isDark ? MILES_ASSETS.wideSpiderWeb : ASSETS.wideSpiderWeb} type="image/webp" />
             <img
-              src={ASSETS.wideSpiderWebPng}
-              alt="Clean & Spacious Widescreen Spider-Man Web Design in Red"
+              src={isDark ? MILES_ASSETS.wideSpiderWebPng : ASSETS.wideSpiderWebPng}
+              alt={isDark ? "Miles Morales Electric Web Design" : "Widescreen Spider-Man Web Design in Red"}
               width="2752"
               height="1536"
               loading="lazy"
@@ -212,24 +214,33 @@ export const TechWeb: React.FC<TechWebProps> = ({ selectedCategory = "all" }) =>
           aria-hidden="true"
         >
           <defs>
-            {/* Dynamic CSS/SVG Color Matrix Tinting Filter for #a31515 */}
+            {/* Dynamic CSS/SVG Color Matrix Tinting Filter */}
             <filter id="webColorFilter" colorInterpolationFilters="sRGB">
               <feColorMatrix
                 type="matrix"
-                values="
-                  0 0 0 0.639 0
-                  0 0 0 0.082 0
-                  0 0 0 0.082 0
-                  0 0 0 1     0
-                "
+                values={
+                  isDark
+                    ? `
+                      0 0 0 0.882 0
+                      0 0 0 0.113 0
+                      0 0 0 0.282 0
+                      0 0 0 1     0
+                    `
+                    : `
+                      0 0 0 0.639 0
+                      0 0 0 0.082 0
+                      0 0 0 0.082 0
+                      0 0 0 1     0
+                    `
+                }
               />
             </filter>
 
-            {/* Center Hub Ambient Glow in #a31515 */}
+            {/* Center Hub Ambient Glow */}
             <radialGradient id="hubCenterGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#a31515" stopOpacity="0.75" />
-              <stop offset="55%" stopColor="#a31515" stopOpacity="0.25" />
-              <stop offset="100%" stopColor="#a31515" stopOpacity="0" />
+              <stop offset="0%" stopColor={isDark ? "#06b6d4" : "#a31515"} stopOpacity={isDark ? "0.85" : "0.75"} />
+              <stop offset="55%" stopColor={isDark ? "#06b6d4" : "#a31515"} stopOpacity={isDark ? "0.3" : "0.25"} />
+              <stop offset="100%" stopColor={isDark ? "#06b6d4" : "#a31515"} stopOpacity="0" />
             </radialGradient>
           </defs>
 
@@ -245,7 +256,7 @@ export const TechWeb: React.FC<TechWebProps> = ({ selectedCategory = "all" }) =>
             cx={WEB_CONFIG.cx}
             cy={WEB_CONFIG.cy}
             r="7"
-            fill="#a31515"
+            fill={isDark ? "#06b6d4" : "#a31515"}
             opacity="0.95"
           />
           <circle
@@ -261,9 +272,11 @@ export const TechWeb: React.FC<TechWebProps> = ({ selectedCategory = "all" }) =>
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none flex items-center justify-center"
           style={{ willChange: "transform" }}
         >
-          {/* Soft ambient red radial glow blending Spidey with the web center */}
+          {/* Soft ambient radial glow blending Spidey with the web center */}
           <div
-            className="absolute w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full bg-red-600/15 pointer-events-none -z-10 blur-xl"
+            className={`absolute w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full pointer-events-none -z-10 blur-xl ${
+              isDark ? "bg-cyan-500/25" : "bg-red-600/15"
+            }`}
             aria-hidden="true"
           />
 
@@ -276,7 +289,11 @@ export const TechWeb: React.FC<TechWebProps> = ({ selectedCategory = "all" }) =>
               height="447"
               loading="lazy"
               decoding="async"
-              className="w-20 sm:w-28 md:w-36 lg:w-44 h-auto object-contain select-none pointer-events-none drop-shadow-[0_8px_22px_rgba(0,0,0,0.38)] drop-shadow-[0_0_14px_rgba(163,21,21,0.3)] transition-transform duration-300 ease-out"
+              className={`w-20 sm:w-28 md:w-36 lg:w-44 h-auto object-contain select-none pointer-events-none transition-transform duration-300 ease-out ${
+                isDark
+                  ? "drop-shadow-[0_8px_22px_rgba(0,0,0,0.7)] drop-shadow-[0_0_18px_rgba(6,182,212,0.4)]"
+                  : "drop-shadow-[0_8px_22px_rgba(0,0,0,0.38)] drop-shadow-[0_0_14px_rgba(163,21,21,0.3)]"
+              }`}
             />
           </picture>
         </div>

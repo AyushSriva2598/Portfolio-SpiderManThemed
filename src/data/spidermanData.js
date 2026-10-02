@@ -43,6 +43,25 @@ export const ASSETS = {
   spidermanCrawlingPng: "/assets/spiderman-crawling.png",
 };
 
+export const MILES_ASSETS = {
+  topMaskImg: "/assets/miles-mask.webp",
+  topMaskImgPng: "/assets/miles-mask.png",
+  bottomIdentityImg: "/assets/image-2-aradhya.png",
+  webImg: "/assets/web1-770H2sSx.png",
+  spiderIcon: "/assets/miles-spider-logo.webp",
+  spiderIconPng: "/assets/miles-spider-logo.png",
+  standingSpiderImg: "/assets/miles-standing.webp",
+  standingSpiderImgPng: "/assets/miles-standing.png",
+  hangingSpiderImg: "/assets/miles-hanging.webp",
+  hangingSpiderImgPng: "/assets/miles-hanging.png",
+  profileImg: "/assets/mypic-aradhya.png",
+  mugshotPoster: "/assets/brooklynvisions.jpg",
+  wideSpiderWeb: "/assets/miles-wide-web.webp",
+  wideSpiderWebPng: "/assets/miles-wide-web.png",
+  spidermanCrawling: "/assets/spiderman-crawling.webp",
+  spidermanCrawlingPng: "/assets/spiderman-crawling.png",
+};
+
 export const ABOUT_DATA = {
   badge: "Behind the Mask",
   title: "Ayush Srivastava",

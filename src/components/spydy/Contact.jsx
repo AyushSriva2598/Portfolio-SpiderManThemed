@@ -1,11 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CONTACT_DATA, HERO_DATA, ASSETS } from "../../data/spidermanData";
+import { CONTACT_DATA, HERO_DATA, ASSETS, MILES_ASSETS } from "../../data/spidermanData";
+import { useTheme } from "../../context/ThemeContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const Contact = () => {
+  const { isDark } = useTheme();
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
   const webRef = useRef(null);
@@ -39,7 +41,7 @@ export const Contact = () => {
       // Background web subtle scale
       gsap.to(webRef.current, {
         scale: 1.15,
-        opacity: 0.06,
+        opacity: isDark ? 0.09 : 0.06,
         repeat: -1,
         yoyo: true,
         duration: 4.5,
@@ -58,7 +60,7 @@ export const Contact = () => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isDark]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,7 +72,9 @@ export const Contact = () => {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative w-full bg-white text-gray-900 py-16 px-6 md:px-16 lg:px-24 flex flex-col items-center justify-center overflow-hidden border-t border-gray-100"
+      className={`relative w-full py-16 px-6 md:px-16 lg:px-24 flex flex-col items-center justify-center overflow-hidden border-t transition-colors duration-500 ${
+        isDark ? "bg-[#060606] text-white border-[#181818]" : "bg-white text-gray-900 border-gray-100"
+      }`}
     >
       {/* Background Web Watermark */}
       <div className="absolute bottom-0 left-0 pointer-events-none overflow-hidden z-0">
@@ -78,7 +82,9 @@ export const Contact = () => {
           ref={webRef}
           src={ASSETS.webImg}
           alt="Background Web"
-          className="w-[500px] h-[500px] md:w-[700px] md:h-[700px] object-contain opacity-[0.04] mix-blend-multiply -translate-x-1/4 translate-y-1/4"
+          className={`w-[500px] h-[500px] md:w-[700px] md:h-[700px] object-contain -translate-x-1/4 translate-y-1/4 ${
+            isDark ? "opacity-[0.08] invert" : "opacity-[0.04] mix-blend-multiply"
+          }`}
         />
       </div>
 
@@ -87,43 +93,73 @@ export const Contact = () => {
         ref={spiderRef}
         className="absolute top-0 right-6 sm:right-10 md:right-20 z-30 pointer-events-none flex flex-col items-center origin-top"
       >
-        <div className="w-[2px] h-20 sm:h-24 md:h-36 bg-gradient-to-b from-transparent to-gray-400 opacity-60" />
+        <div className={`w-[2px] h-20 sm:h-24 md:h-36 ${
+          isDark
+            ? "bg-gradient-to-b from-transparent to-[#06b6d4] opacity-90 shadow-[0_0_8px_#06b6d4]"
+            : "bg-gradient-to-b from-transparent to-gray-400 opacity-60"
+        }`} />
         <img
-          src={ASSETS.hangingSpiderImg}
-          alt="Hanging Spider-Man"
-          className="w-32 sm:w-40 md:w-60 h-auto object-contain drop-shadow-2xl -mt-2"
+          src={isDark ? MILES_ASSETS.hangingSpiderImg : ASSETS.hangingSpiderImg}
+          alt={isDark ? "Hanging Miles Morales" : "Hanging Spider-Man"}
+          className={`w-32 sm:w-40 md:w-60 h-auto object-contain -mt-2 ${
+            isDark
+              ? "drop-shadow-[0_12px_30px_rgba(0,0,0,0.8)] drop-shadow-[0_0_20px_rgba(225,29,72,0.35)]"
+              : "drop-shadow-2xl"
+          }`}
         />
       </div>
 
       {/* Section Header */}
       <div ref={headerRef} className="flex flex-col items-center text-center mb-10 z-10">
-        <span className="text-[#a31515] font-comic tracking-[0.2em] text-xs sm:text-sm uppercase mb-1 flex items-center gap-1.5 font-bold">
-          <img src={ASSETS.spiderIcon} alt="Spider" className="w-4 h-4 object-contain" />
+        <span className={`font-comic tracking-[0.2em] text-xs sm:text-sm uppercase mb-1 flex items-center gap-1.5 font-bold ${
+          isDark ? "text-[#06b6d4]" : "text-[#a31515]"
+        }`}>
+          <img
+            src={isDark ? MILES_ASSETS.spiderIcon : ASSETS.spiderIcon}
+            alt="Spider"
+            className="w-4 h-4 object-contain"
+          />
           Dispatch A Transmission
         </span>
-        <h2 className="text-comic-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight">
+        <h2 className={`text-comic-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight ${
+          isDark ? "text-white drop-shadow-[2px_2px_0px_#e11d48]" : "text-gray-950"
+        }`}>
           CONTACT AYUSH.
         </h2>
-        <p className="font-dialogue text-gray-700 text-sm sm:text-base mt-2 max-w-md">
+        <p className={`font-dialogue text-sm sm:text-base mt-2 max-w-md ${
+          isDark ? "text-gray-400" : "text-gray-700"
+        }`}>
           Have an ambitious mission, distributed system project, or engineering challenge? Send a signal.
         </p>
-        <div className="w-16 h-1.5 bg-[#a31515] mt-3 rounded-full shadow-[0_0_8px_rgba(163,21,21,0.6)]" />
+        <div className={`w-16 h-1.5 mt-3 rounded-full ${
+          isDark ? "bg-[#06b6d4] shadow-[0_0_10px_#06b6d4]" : "bg-[#a31515] shadow-[0_0_8px_rgba(163,21,21,0.6)]"
+        }`} />
       </div>
 
       {/* Contact Card */}
       <div
         ref={cardRef}
-        className="w-full max-w-2xl bg-gray-50/90 backdrop-blur-sm border border-gray-200 p-6 md:p-8 rounded-2xl shadow-sm relative z-10 flex flex-col gap-6"
+        className={`w-full max-w-2xl p-6 md:p-8 rounded-2xl relative z-10 flex flex-col gap-6 transition-all duration-300 ${
+          isDark
+            ? "bg-[#0d0d0d]/95 backdrop-blur-sm border-2 border-[#262626] shadow-[6px_6px_0px_#e11d48]"
+            : "bg-gray-50/90 backdrop-blur-sm border border-gray-200 shadow-sm"
+        }`}
       >
         {submitted ? (
           <div className="py-12 flex flex-col items-center text-center">
-            <div className="w-14 h-14 bg-[#a31515] text-white rounded-full flex items-center justify-center text-2xl font-black mb-4 shadow-md animate-bounce">
+            <div className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl font-black mb-4 shadow-md animate-bounce ${
+              isDark ? "bg-[#06b6d4] text-black font-bold" : "bg-[#a31515] text-white"
+            }`}>
               ✓
             </div>
-            <h3 className="font-comic text-2xl font-black uppercase tracking-wide text-gray-900 mb-2">
+            <h3 className={`font-comic text-2xl font-black uppercase tracking-wide mb-2 ${
+              isDark ? "text-white" : "text-gray-900"
+            }`}>
               Message Dispatched!
             </h3>
-            <p className="font-dialogue text-base text-gray-700 max-w-md">
+            <p className={`font-dialogue text-base max-w-md ${
+              isDark ? "text-gray-300" : "text-gray-700"
+            }`}>
               Thanks for reaching out! {HERO_DATA.firstName} will review your dispatch and swing back shortly.
             </p>
           </div>
@@ -131,45 +167,67 @@ export const Contact = () => {
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
-                <label className="font-dialogue text-xs uppercase tracking-wider text-gray-700 font-bold">
+                <label className={`font-dialogue text-xs uppercase tracking-wider font-bold ${
+                  isDark ? "text-gray-300" : "text-gray-700"
+                }`}>
                   Your Name
                 </label>
                 <input
                   required
                   type="text"
-                  placeholder="Peter Parker"
-                  className="font-dialogue w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515] transition-all"
+                  placeholder={isDark ? "Miles Morales" : "Peter Parker"}
+                  className={`font-dialogue w-full px-4 py-3 rounded-xl text-sm font-medium focus:outline-none transition-all ${
+                    isDark
+                      ? "bg-[#161616] border border-[#2c2c2c] text-white placeholder-gray-500 focus:border-[#06b6d4] focus:ring-1 focus:ring-[#06b6d4]"
+                      : "bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515]"
+                  }`}
                 />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="font-dialogue text-xs uppercase tracking-wider text-gray-700 font-bold">
+                <label className={`font-dialogue text-xs uppercase tracking-wider font-bold ${
+                  isDark ? "text-gray-300" : "text-gray-700"
+                }`}>
                   Your Email
                 </label>
                 <input
                   required
                   type="email"
-                  placeholder="peter@dailybugle.com"
-                  className="font-dialogue w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515] transition-all"
+                  placeholder={isDark ? "miles@brooklynvisions.edu" : "peter@dailybugle.com"}
+                  className={`font-dialogue w-full px-4 py-3 rounded-xl text-sm font-medium focus:outline-none transition-all ${
+                    isDark
+                      ? "bg-[#161616] border border-[#2c2c2c] text-white placeholder-gray-500 focus:border-[#06b6d4] focus:ring-1 focus:ring-[#06b6d4]"
+                      : "bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515]"
+                  }`}
                 />
               </div>
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="font-dialogue text-xs uppercase tracking-wider text-gray-700 font-bold">
+              <label className={`font-dialogue text-xs uppercase tracking-wider font-bold ${
+                isDark ? "text-gray-300" : "text-gray-700"
+              }`}>
                 Message
               </label>
               <textarea
                 required
                 rows={4}
                 placeholder="Let's collaborate on an extraordinary project..."
-                className="font-dialogue w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515] transition-all resize-none"
+                className={`font-dialogue w-full px-4 py-3 rounded-xl text-sm font-medium focus:outline-none transition-all resize-none ${
+                  isDark
+                    ? "bg-[#161616] border border-[#2c2c2c] text-white placeholder-gray-500 focus:border-[#06b6d4] focus:ring-1 focus:ring-[#06b6d4]"
+                    : "bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#a31515] focus:ring-1 focus:ring-[#a31515]"
+                }`}
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-[#a31515] hover:bg-[#7a0f0f] text-white py-3.5 rounded-xl font-comic text-base tracking-widest uppercase transition-all duration-300 shadow-[0_4px_15px_rgba(163,21,21,0.3)] hover:shadow-[0_6px_20px_rgba(163,21,21,0.5)] cursor-pointer mt-2"
+              className={`w-full py-3.5 rounded-xl font-comic text-base tracking-widest uppercase transition-all duration-300 cursor-pointer mt-2 font-bold ${
+                isDark
+                  ? "bg-[#e11d48] hover:bg-[#be123c] text-white shadow-[0_4px_20px_rgba(225,29,72,0.4)] hover:shadow-[0_6px_25px_rgba(225,29,72,0.6)]"
+                  : "bg-[#a31515] hover:bg-[#7a0f0f] text-white shadow-[0_4px_15px_rgba(163,21,21,0.3)] hover:shadow-[0_6px_20px_rgba(163,21,21,0.5)]"
+              }`}
             >
               Send Message
             </button>
@@ -177,8 +235,12 @@ export const Contact = () => {
         )}
 
         {/* Social Links Ribbon */}
-        <div className="pt-4 border-t border-gray-200/80 flex flex-wrap items-center justify-between gap-3 text-xs font-bold uppercase tracking-wider">
-          <span className="font-dialogue text-gray-500 font-bold tracking-wider">Connect:</span>
+        <div className={`pt-4 border-t flex flex-wrap items-center justify-between gap-3 text-xs font-bold uppercase tracking-wider ${
+          isDark ? "border-[#262626]" : "border-gray-200/80"
+        }`}>
+          <span className={`font-dialogue font-bold tracking-wider ${
+            isDark ? "text-gray-400" : "text-gray-500"
+          }`}>Connect:</span>
           <div className="flex flex-wrap gap-4">
             {CONTACT_DATA.socials.map((s, idx) => (
               <a
@@ -186,7 +248,9 @@ export const Contact = () => {
                 href={s.url}
                 target="_blank"
                 rel="noreferrer"
-                className="font-dialogue font-bold text-xs tracking-wider text-[#a31515] hover:text-black transition-colors"
+                className={`font-dialogue font-bold text-xs tracking-wider transition-colors ${
+                  isDark ? "text-[#06b6d4] hover:text-white" : "text-[#a31515] hover:text-black"
+                }`}
               >
                 {s.name} ↗
               </a>
