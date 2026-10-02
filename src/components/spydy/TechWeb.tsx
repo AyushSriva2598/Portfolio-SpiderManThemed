@@ -1,31 +1,10 @@
 /**
  * TechWeb.tsx
  *
- * Interactive Spider-Man Web — Dual-Orb Interconnected Architecture
- * Replicating reference image identically with rich ruby silk threads,
- * physical knot intersections, and a slow 3D articulated lined-leg crawling spider.
- *
- * Features:
- * 1. Identical Web Structure:
- *    - Replicates the dual-orb architecture from reference image:
- *      Primary Left Orb (hub at 22.3%, 55.4%) + Secondary Right Orb (hub at 93.2%, 62.5%)
- *      connected by massive horizontal and diagonal tension bridge cables.
- *    - Glistening ruby-red silk with specular glints on a clean bright background.
- * 2. Visual Traceability & Physical Knot Intersections:
- *    - All 30 tech stack chips are anchored at exact, verified physical knot intersections.
- *    - Spoke paths can be visually traced with the eye from the hub to every chip.
- *    - Zero overlaps or collisions between chips (spatially distributed across Left Orb, Bridge, Right Orb).
- * 3. 3D Articulated Lined-Leg Red Spider:
- *    - Tactile 3D SVG element with volumetric shading, specular highlights, chelicerae,
- *      and 8 jointed lined legs with distinct knee bends.
- *    - Alternating tetrapod gait (Group A vs Group B legs) and body sway while walking.
- * 4. Slow & Steady Arachnid Locomotion:
- *    - Crawls steadily over 1.35s–2.4s ("slowly not reaching immediately").
- *    - Stops walking and perches on the silk strand beside the hovered chip.
- *    - Crawls back to the primary hub when cursor leaves.
- * 5. Active Laser Route:
- *    - Silk path beneath the spider illuminates with electric crimson laser light.
- * 6. 60fps GPU performance, parallax 3D tilt, and IntersectionObserver offscreen pause.
+ * Interactive Spider-Man Skills Web Architecture
+ * - Background: web1-770H2sSx.png rendered simply in red with razor-sharp comic ink lines.
+ * - Shortest Path Algorithm: Graph Dijkstra algorithm strictly routed through the center.
+ * - Spider: 2D Crimson Spider inspired by crimson-spider.webp with organic legs walking movement.
  */
 
 import React, {
@@ -37,51 +16,69 @@ import React, {
 } from "react";
 import { ASSETS } from "../../data/spidermanData";
 import {
-  DUAL_WEB_CONFIG,
+  WEB_CONFIG,
   TECH_NODES,
   TechNode,
-  DEWDROPS,
+  Point,
+  findShortestPathThroughCenter,
   generateThreadHighlightPath,
   calculateSpiderTarget,
   calculateCrawlDuration,
 } from "./techData";
 import { TechChip } from "./TechChip";
-import { Spider3D } from "./Spider3D";
+import { Spider2D } from "./Spider2D";
 
 export const TechWeb: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [hoveredNode, setHoveredNode] = useState<TechNode | null>(null);
+  const [activePath, setActivePath] = useState<Point[]>([]);
   const [isCrawling, setIsCrawling] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [hasDrawnIn, setHasDrawnIn] = useState(false);
   const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
   const crawlTimerRef = useRef<number | null>(null);
+  const previousNodeRef = useRef<TechNode | null>(null);
 
-  // Active laser highlight path when a chip is hovered
+  // Calculate algorithm shortest path to hovered chip strictly through the center
+  useEffect(() => {
+    if (!hoveredNode) {
+      setActivePath([]);
+      return;
+    }
+
+    // Determine start point (previous chip or center hub)
+    const startId = previousNodeRef.current ? previousNodeRef.current.id : "center";
+    const path = findShortestPathThroughCenter(hoveredNode, startId);
+    setActivePath(path);
+    previousNodeRef.current = hoveredNode;
+  }, [hoveredNode]);
+
+  // Active laser highlight path string
   const highlightPathData = useMemo(() => {
-    if (!hoveredNode) return "";
-    return generateThreadHighlightPath(hoveredNode);
-  }, [hoveredNode]);
+    return generateThreadHighlightPath(activePath);
+  }, [activePath]);
 
-  // Spider target coordinates and rotation along the active silk route
+  // Spider target coordinates and rotation along the active silk path
   const spiderTarget = useMemo(() => {
-    return calculateSpiderTarget(hoveredNode, DUAL_WEB_CONFIG);
-  }, [hoveredNode]);
+    return calculateSpiderTarget(hoveredNode, activePath);
+  }, [hoveredNode, activePath]);
 
-  // Crawl duration (1.35s to 2.4s based on path distance)
+  // Crawl duration (1.35s to 2.4s based on path length)
   const crawlDuration = useMemo(() => {
-    return calculateCrawlDuration(hoveredNode, DUAL_WEB_CONFIG);
-  }, [hoveredNode]);
+    return calculateCrawlDuration(activePath);
+  }, [activePath]);
 
-  // Chip hover with slow arachnid crawling gait
+  // Chip hover handler with slow arachnid crawling gait
   const handleChipHover = useCallback((node: TechNode) => {
     setHoveredNode(node);
     setIsCrawling(true);
     if (crawlTimerRef.current) clearTimeout(crawlTimerRef.current);
 
-    // Stop walking gait when spider arrives beside target chip
-    const durMs = Math.round(calculateCrawlDuration(node, DUAL_WEB_CONFIG) * 1000);
+    const durMs = Math.round(calculateCrawlDuration(
+      findShortestPathThroughCenter(node, previousNodeRef.current?.id || "center")
+    ) * 1000);
+
     crawlTimerRef.current = window.setTimeout(() => {
       setIsCrawling(false);
     }, durMs);
@@ -90,12 +87,13 @@ export const TechWeb: React.FC = () => {
   const handleChipLeave = useCallback(() => {
     setHoveredNode(null);
     setIsCrawling(true);
+    previousNodeRef.current = null;
     if (crawlTimerRef.current) clearTimeout(crawlTimerRef.current);
 
-    // Stop walking gait when spider returns to primary hub
+    // Stop walking gait when spider returns to center hub
     crawlTimerRef.current = window.setTimeout(() => {
       setIsCrawling(false);
-    }, 1600);
+    }, 1500);
   }, []);
 
   // IntersectionObserver: Pause animations when off-screen (preserves 60fps)
@@ -172,7 +170,7 @@ export const TechWeb: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className={`relative w-full max-w-[1050px] aspect-square mx-auto flex items-center justify-center select-none overflow-visible ${
+      className={`relative w-full max-w-[1000px] aspect-square mx-auto flex items-center justify-center select-none overflow-visible ${
         !isVisible ? "web-paused" : ""
       }`}
       style={{ perspective: "1200px" }}
@@ -196,7 +194,7 @@ export const TechWeb: React.FC = () => {
           100% { opacity: 1; transform: scale(1); }
         }
         .web-image-fade {
-          animation: webReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: webReveal 1.0s cubic-bezier(0.22, 1, 0.36, 1) forwards;
           will-change: transform, opacity;
         }
 
@@ -219,25 +217,25 @@ export const TechWeb: React.FC = () => {
           animation: threadLaserPulse 0.9s ease-in-out infinite;
         }
 
-        /* ── Spider 3D Walking Gait Keyframes ── */
+        /* ── 2D Spider Legs Movement Keyframes ── */
         /* Leg Group A Step (L1, L3, R2, R4) */
-        @keyframes spiderStepA {
-          0%   { transform: rotate(-7deg) scale(1.04); }
-          50%  { transform: rotate(7deg) scale(0.96); }
-          100% { transform: rotate(-7deg) scale(1.04); }
+        @keyframes spiderLegWalkA {
+          0%   { transform: rotate(-8deg) scale(1.03); }
+          50%  { transform: rotate(8deg) scale(0.97); }
+          100% { transform: rotate(-8deg) scale(1.03); }
         }
 
         /* Leg Group B Step (L2, L4, R1, R3 - opposing phase) */
-        @keyframes spiderStepB {
-          0%   { transform: rotate(7deg) scale(0.96); }
-          50%  { transform: rotate(-7deg) scale(1.04); }
-          100% { transform: rotate(7deg) scale(0.96); }
+        @keyframes spiderLegWalkB {
+          0%   { transform: rotate(8deg) scale(0.97); }
+          50%  { transform: rotate(-8deg) scale(1.03); }
+          100% { transform: rotate(8deg) scale(0.97); }
         }
 
         /* Spider Body Walking Sway */
-        @keyframes spiderBodyWalkingSway {
-          0%, 100% { transform: rotate(-2.5deg); }
-          50%      { transform: rotate(2.5deg); }
+        @keyframes spiderBodyWalkSway {
+          0%, 100% { transform: rotate(-3deg); }
+          50%      { transform: rotate(3deg); }
         }
 
         /* Spider Resting Abdomen Breathing */
@@ -247,31 +245,21 @@ export const TechWeb: React.FC = () => {
         }
 
         .spider-walking .spider-leg-group-a {
-          animation: spiderStepA 0.32s ease-in-out infinite;
-          transform-origin: 60px 55px;
+          animation: spiderLegWalkA 0.32s ease-in-out infinite;
+          transform-origin: 80px 75px;
         }
         .spider-walking .spider-leg-group-b {
-          animation: spiderStepB 0.32s ease-in-out infinite;
-          transform-origin: 60px 55px;
+          animation: spiderLegWalkB 0.32s ease-in-out infinite;
+          transform-origin: 80px 75px;
         }
         .spider-walking .spider-body-group {
-          animation: spiderBodyWalkingSway 0.32s ease-in-out infinite;
-          transform-origin: 60px 60px;
+          animation: spiderBodyWalkSway 0.32s ease-in-out infinite;
+          transform-origin: 80px 75px;
         }
 
         .spider-idle .spider-abdomen-pulse {
           animation: spiderRestBreathe 3.2s ease-in-out infinite;
-          transform-origin: 60px 70px;
-        }
-
-        /* Dewdrop sparkle twinkle */
-        @keyframes dewdropGlint {
-          0%, 100% { opacity: 0.55; transform: scale(0.9); }
-          50%      { opacity: 1.0;  transform: scale(1.2); }
-        }
-        .dewdrop-glint {
-          animation: dewdropGlint 2.8s ease-in-out infinite;
-          transform-origin: center;
+          transform-origin: 80px 95px;
         }
 
         /* Center hub pulse */
@@ -281,6 +269,7 @@ export const TechWeb: React.FC = () => {
         }
         .hub-halo {
           animation: hubGlowPulse 3s ease-in-out infinite;
+          transform-origin: 500px 500px;
         }
 
         /* Offscreen pause */
@@ -291,7 +280,6 @@ export const TechWeb: React.FC = () => {
         .web-paused .spider-leg-group-b,
         .web-paused .spider-body-group,
         .web-paused .spider-abdomen-pulse,
-        .web-paused .dewdrop-glint,
         .web-paused .hub-halo {
           animation-play-state: paused !important;
         }
@@ -305,7 +293,6 @@ export const TechWeb: React.FC = () => {
           .spider-leg-group-b,
           .spider-body-group,
           .spider-abdomen-pulse,
-          .dewdrop-glint,
           .hub-halo {
             animation: none !important;
             opacity: 1 !important;
@@ -322,25 +309,15 @@ export const TechWeb: React.FC = () => {
           transformStyle: "preserve-3d",
         }}
       >
-        {/* ── Ambient Radial Silk Glow ── */}
-        <div
-          className="absolute inset-[4%] rounded-full pointer-events-none -z-10"
-          style={{
-            background:
-              "radial-gradient(ellipse at 25% 55%, rgba(197,29,29,0.08) 0%, rgba(163,21,21,0.03) 40%, transparent 70%), radial-gradient(ellipse at 88% 62%, rgba(197,29,29,0.06) 0%, transparent 50%)",
-          }}
-          aria-hidden="true"
-        />
-
-        {/* ── 1. EXACT DUAL-ORB WEB IMAGE BACKDROP (Pixel-faithful to reference) ── */}
+        {/* ── 1. EXACT WEB DESIGN (web1-770H2sSx.png rendered simply in red) ── */}
         <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-visible">
           <picture className="w-full h-full flex items-center justify-center">
-            <source srcSet={ASSETS.dualWebImg} type="image/webp" />
+            <source srcSet={ASSETS.webCrimsonImg} type="image/webp" />
             <img
-              src={ASSETS.dualWebImgPng}
-              alt="Organic Dual-Orb Spider Web"
-              width="1472"
-              height="1472"
+              src={ASSETS.webCrimsonImgPng}
+              alt="Spider-Man Web Design in Red"
+              width="1200"
+              height="1200"
               loading="lazy"
               decoding="async"
               className={`w-full h-full object-contain pointer-events-none web-ambient-breathe ${
@@ -350,7 +327,7 @@ export const TechWeb: React.FC = () => {
           </picture>
         </div>
 
-        {/* ── 2. SVG INTERACTIVE ROUTING & LIGHTING LAYER ── */}
+        {/* ── 2. SVG INTERACTIVE ROUTING LAYER ── */}
         <svg
           viewBox="0 0 1000 1000"
           className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
@@ -358,17 +335,10 @@ export const TechWeb: React.FC = () => {
           aria-hidden="true"
         >
           <defs>
-            {/* Left Primary Hub Ambient Glow */}
-            <radialGradient id="webHubGlow1" cx="50%" cy="50%" r="50%">
+            {/* Center Hub Ambient Glow */}
+            <radialGradient id="hubCenterGlow" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stopColor="#ef4444" stopOpacity="0.5" />
               <stop offset="60%" stopColor="#a31515" stopOpacity="0.15" />
-              <stop offset="100%" stopColor="#a31515" stopOpacity="0" />
-            </radialGradient>
-
-            {/* Right Secondary Hub Ambient Glow */}
-            <radialGradient id="webHubGlow2" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.4" />
-              <stop offset="60%" stopColor="#a31515" stopOpacity="0.12" />
               <stop offset="100%" stopColor="#a31515" stopOpacity="0" />
             </radialGradient>
 
@@ -382,73 +352,31 @@ export const TechWeb: React.FC = () => {
             </filter>
           </defs>
 
-          {/* Left Primary Hub Luminous Knot */}
+          {/* Center Hub Luminous Node */}
           <circle
-            cx={DUAL_WEB_CONFIG.hub1.x}
-            cy={DUAL_WEB_CONFIG.hub1.y}
-            r="48"
-            fill="url(#webHubGlow1)"
+            cx={WEB_CONFIG.cx}
+            cy={WEB_CONFIG.cy}
+            r="44"
+            fill="url(#hubCenterGlow)"
             className="hub-halo"
-            style={{ transformOrigin: `${DUAL_WEB_CONFIG.hub1.x}px ${DUAL_WEB_CONFIG.hub1.y}px` }}
           />
           <circle
-            cx={DUAL_WEB_CONFIG.hub1.x}
-            cy={DUAL_WEB_CONFIG.hub1.y}
-            r="7.5"
+            cx={WEB_CONFIG.cx}
+            cy={WEB_CONFIG.cy}
+            r="7"
             fill="#a31515"
             opacity="0.9"
           />
           <circle
-            cx={DUAL_WEB_CONFIG.hub1.x}
-            cy={DUAL_WEB_CONFIG.hub1.y}
-            r="3"
-            fill="#ffffff"
-          />
-
-          {/* Right Secondary Hub Luminous Knot */}
-          <circle
-            cx={DUAL_WEB_CONFIG.hub2.x}
-            cy={DUAL_WEB_CONFIG.hub2.y}
-            r="38"
-            fill="url(#webHubGlow2)"
-            className="hub-halo"
-            style={{ transformOrigin: `${DUAL_WEB_CONFIG.hub2.x}px ${DUAL_WEB_CONFIG.hub2.y}px` }}
-          />
-          <circle
-            cx={DUAL_WEB_CONFIG.hub2.x}
-            cy={DUAL_WEB_CONFIG.hub2.y}
-            r="6"
-            fill="#a31515"
-            opacity="0.85"
-          />
-          <circle
-            cx={DUAL_WEB_CONFIG.hub2.x}
-            cy={DUAL_WEB_CONFIG.hub2.y}
+            cx={WEB_CONFIG.cx}
+            cy={WEB_CONFIG.cy}
             r="2.5"
             fill="#ffffff"
           />
 
-          {/* Glistening Dewdrop Beads along threads */}
-          <g className={hasDrawnIn ? "" : "opacity-0"}>
-            {DEWDROPS.map((drop, idx) => (
-              <circle
-                key={`dewdrop-${idx}`}
-                cx={drop.cx}
-                cy={drop.cy}
-                r={drop.r}
-                fill="#ffffff"
-                stroke="#c51d1d"
-                strokeWidth="0.6"
-                className="dewdrop-glint"
-                style={{ animationDelay: drop.delay }}
-              />
-            ))}
-          </g>
-
-          {/* Active Spoke Electric Laser Route following the exact silk route */}
+          {/* Active Shortest Path Electric Laser Highlight (Algorithm Route through Center) */}
           {highlightPathData && (
             <g>
-              {/* Outer pulsing laser glow */}
               <path
                 d={highlightPathData}
                 fill="none"
@@ -459,7 +387,6 @@ export const TechWeb: React.FC = () => {
                 filter="url(#laserGlowFilter)"
                 className="thread-laser-active"
               />
-              {/* Brilliant white-hot core */}
               <path
                 d={highlightPathData}
                 fill="none"
@@ -473,7 +400,7 @@ export const TechWeb: React.FC = () => {
           )}
         </svg>
 
-        {/* ── 3. 3D RED SPIDER WITH ARTICULATED WALKING LEGS ── */}
+        {/* ── 3. 2D CRIMSON SPIDER WITH LEG MOVEMENT (inspired by crimson-spider.webp) ── */}
         <div
           className="absolute pointer-events-none z-20"
           style={{
@@ -485,10 +412,10 @@ export const TechWeb: React.FC = () => {
           }}
           aria-hidden="true"
         >
-          <Spider3D isCrawling={isCrawling} size={50} />
+          <Spider2D isCrawling={isCrawling} size={48} />
         </div>
 
-        {/* ── 4. HTML CHIP LAYER: 30 Tech Chips Anchored at Physical Knots ── */}
+        {/* ── 4. HTML NODES LAYER: 30 Tech Chips Anchored to Spokes with Zero Overlaps ── */}
         <div className="absolute inset-0 w-full h-full pointer-events-none">
           {TECH_NODES.map((node) => (
             <div

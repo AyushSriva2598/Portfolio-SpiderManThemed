@@ -31,6 +31,8 @@ export const ASSETS = {
   exactWebImg: "/assets/web-inspiration-bright.webp",
   dualWebImg: "/assets/dual-web-inspiration.webp",
   dualWebImgPng: "/assets/dual-web-inspiration.png",
+  webCrimsonImg: "/assets/web1-crimson.webp",
+  webCrimsonImgPng: "/assets/web1-crimson.png",
   crimsonSpider: "/assets/crimson-spider.webp",
 };
 
