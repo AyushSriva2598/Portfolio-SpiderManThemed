@@ -1,80 +1,34 @@
-import React, { useState, useMemo } from "react";
-import { ExternalLink } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { GitHubCalendar } from "react-github-calendar";
+import { ExternalLink, Loader2 } from "lucide-react";
 import { SectionHeader } from "../layout/SectionHeader";
 import { BorderContainer } from "../layout/BorderContainer";
 import { PORTFOLIO_DATA } from "../../data/portfolioData";
 
-const YEARS = ["2026", "2025", "2024"];
+const CURRENT_YEAR = new Date().getFullYear();
+const YEARS = [CURRENT_YEAR, CURRENT_YEAR - 1, CURRENT_YEAR - 2];
 
-// Generates deterministic calendar squares matching real developer activity patterns
-function generateYearData(year, username) {
-  const seed = (year.charCodeAt(3) * 31 + username.length * 17) % 100;
-  const weeks = [];
-  const daysPerWeek = 7;
-  const totalWeeks = 53;
-  let totalContributions = 0;
-
-  for (let w = 0; w < totalWeeks; w++) {
-    const week = [];
-    for (let d = 0; d < daysPerWeek; d++) {
-      // Deterministic pseudo-random pattern with clusters of activity
-      const pseudoVal = Math.sin(w * 0.45 + d * 0.7 + seed) * 10000;
-      const rand = Math.abs(pseudoVal - Math.floor(pseudoVal));
-      
-      let level = 0;
-      let count = 0;
-
-      // Higher activity on weekdays and specific coding sprints
-      const isWeekend = d === 0 || d === 6;
-      const boost = !isWeekend ? 0.35 : 0.15;
-
-      if (rand + boost > 0.85) {
-        level = 4;
-        count = Math.floor(rand * 6) + 7;
-      } else if (rand + boost > 0.65) {
-        level = 3;
-        count = Math.floor(rand * 4) + 4;
-      } else if (rand + boost > 0.45) {
-        level = 2;
-        count = Math.floor(rand * 3) + 2;
-      } else if (rand + boost > 0.28) {
-        level = 1;
-        count = 1;
-      }
-
-      totalContributions += count;
-      week.push({ level, count });
-    }
-    weeks.push(week);
-  }
-
-  return { weeks, totalContributions };
-}
+const CALENDAR_THEME = {
+  dark: ["#161616", "#262626", "#404040", "#737373", "#e5e5e5"],
+  light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+};
 
 export function GitHubActivity() {
-  const [selectedYear, setSelectedYear] = useState("2026");
+  const [selectedYear, setSelectedYear] = useState(CURRENT_YEAR);
+  const [totalCount, setTotalCount] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const yearData = useMemo(() => {
-    return generateYearData(selectedYear, PORTFOLIO_DATA.github.username);
-  }, [selectedYear]);
-
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-  // Colors for dark theme heatmap
-  const getLevelColor = (level) => {
-    switch (level) {
-      case 1:
-        return "bg-neutral-800 border-neutral-700/50";
-      case 2:
-        return "bg-neutral-600 border-neutral-500/50";
-      case 3:
-        return "bg-neutral-400 border-neutral-300/50";
-      case 4:
-        return "bg-neutral-100 border-white";
-      default:
-        return "bg-neutral-900/80 border-neutral-800/40";
-    }
+  // Transform data to tally total contributions
+  const transformData = (data) => {
+    const total = data.reduce((sum, day) => sum + (day.count ?? 0), 0);
+    setTotalCount(total);
+    setIsLoading(false);
+    return data;
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+  }, [selectedYear]);
 
   return (
     <div id="github" className="scroll-mt-20">
@@ -95,60 +49,72 @@ export function GitHubActivity() {
 
       <BorderContainer className="px-6 py-6 sm:px-8">
         <div className="onyx-scroll overflow-x-auto pb-2">
-          {/* Year Buttons */}
+          {/* Year Switcher Buttons */}
           <div className="mb-4 flex justify-end gap-1.5">
-            {YEARS.map((year) => (
-              <button
-                key={year}
-                type="button"
-                onClick={() => setSelectedYear(year)}
-                className={`cursor-pointer rounded-md px-2.5 py-1 font-mono text-[11px] font-medium transition-all ${
-                  selectedYear === year
-                    ? "bg-[var(--fg)] text-[var(--bg)] font-semibold shadow-sm"
-                    : "border border-[var(--line)] bg-[var(--chip)] text-[var(--muted)] hover:text-[var(--fg)]"
-                }`}
-              >
-                {year}
-              </button>
-            ))}
+            {YEARS.map((year) => {
+              const isSelected = selectedYear === year;
+              return (
+                <button
+                  key={year}
+                  type="button"
+                  onClick={() => {
+                    if (selectedYear !== year) {
+                      setTotalCount(null);
+                      setSelectedYear(year);
+                    }
+                  }}
+                  className={`cursor-pointer rounded-md px-3 py-1 font-mono text-[11px] font-medium transition-colors ${
+                    isSelected
+                      ? "border border-[var(--fg)] bg-[var(--fg)] text-[var(--bg)] font-semibold shadow-sm"
+                      : "border border-[var(--line)] bg-[var(--chip)] text-[var(--muted)] hover:border-[var(--soft)] hover:text-[var(--fg)]"
+                  }`}
+                >
+                  {year}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Month Labels Header */}
-          <div className="mb-1.5 flex justify-between font-mono text-[10px] text-[var(--soft)] min-w-[620px] px-1">
-            {months.map((m) => (
-              <span key={m}>{m}</span>
-            ))}
+          {/* Live GitHub Calendar Render */}
+          <div className="min-w-[660px] flex justify-center py-2 relative">
+            <GitHubCalendar
+              username={PORTFOLIO_DATA.github.username}
+              year={selectedYear}
+              colorScheme="dark"
+              theme={CALENDAR_THEME}
+              transformData={transformData}
+              showTotalCount={false}
+              blockSize={11}
+              blockMargin={3}
+              blockRadius={2}
+              fontSize={11}
+              style={{
+                fontFamily: "var(--font-mono, monospace)",
+                color: "var(--soft)",
+              }}
+              errorMessage="Failed to fetch live GitHub contributions."
+            />
           </div>
 
-          {/* Contribution Heatmap Columns */}
-          <div className="flex gap-[3px] min-w-[620px]">
-            {yearData.weeks.map((week, wIdx) => (
-              <div key={wIdx} className="flex flex-col gap-[3px]">
-                {week.map((day, dIdx) => (
-                  <div
-                    key={dIdx}
-                    className={`size-[10px] rounded-[2px] border ${getLevelColor(day.level)} transition-colors duration-150`}
-                    title={`${day.count} contributions`}
-                  />
-                ))}
-              </div>
-            ))}
-          </div>
-
-          {/* Footer Metrics & Legend */}
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-[var(--soft)] min-w-[620px]">
-            <span>
-              {yearData.totalContributions} contributions in {selectedYear}
+          {/* Real-time Summary Count and Legend */}
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-[var(--soft)] min-w-[660px]">
+            <span className="flex items-center gap-2">
+              {isLoading && <Loader2 className="size-3 animate-spin text-[var(--soft)]" />}
+              <span>
+                {totalCount !== null
+                  ? `${totalCount} contributions in ${selectedYear}`
+                  : `Loading contributions for ${selectedYear}...`}
+              </span>
             </span>
 
             <div className="flex items-center gap-1.5">
               <span>Less</span>
               <div className="flex gap-1">
-                <div className="size-[9px] rounded-[2px] border border-neutral-800/40 bg-neutral-900/80" />
-                <div className="size-[9px] rounded-[2px] border border-neutral-700/50 bg-neutral-800" />
-                <div className="size-[9px] rounded-[2px] border border-neutral-500/50 bg-neutral-600" />
-                <div className="size-[9px] rounded-[2px] border border-neutral-300/50 bg-neutral-400" />
-                <div className="size-[9px] rounded-[2px] border border-white bg-neutral-100" />
+                <div className="size-[9px] rounded-[2px] border border-neutral-800/40 bg-[#161616]" />
+                <div className="size-[9px] rounded-[2px] border border-neutral-700/50 bg-[#262626]" />
+                <div className="size-[9px] rounded-[2px] border border-neutral-500/50 bg-[#404040]" />
+                <div className="size-[9px] rounded-[2px] border border-neutral-300/50 bg-[#737373]" />
+                <div className="size-[9px] rounded-[2px] border border-white bg-[#e5e5e5]" />
               </div>
               <span>More</span>
             </div>

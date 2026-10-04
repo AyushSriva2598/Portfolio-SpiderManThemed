@@ -1,31 +1,29 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Icon } from "@iconify/react";
 import { SectionHeader } from "../layout/SectionHeader";
 import { BorderContainer } from "../layout/BorderContainer";
 import { PORTFOLIO_DATA } from "../../data/portfolioData";
-import { 
-  Code2, 
-  Server, 
-  Cloud, 
-  Database, 
-  Wrench, 
-  Layers 
-} from "lucide-react";
+import { Layers, Code2, Server, Database, Cloud, Wrench } from "lucide-react";
 
-const CATEGORY_ICONS = {
-  All: Layers,
-  Languages: Code2,
-  Backend: Server,
-  "Cloud & DevOps": Cloud,
-  Databases: Database,
-  Tools: Wrench,
-};
+const CATEGORY_TABS = [
+  { id: "All", label: "All", Icon: Layers },
+  { id: "Languages", label: "</> Languages", Icon: Code2 },
+  { id: "Frameworks", label: "Frameworks", Icon: Server },
+  { id: "Databases", label: "Databases", Icon: Database },
+  { id: "Cloud & DevOps", label: "Cloud & DevOps", Icon: Cloud },
+  { id: "Tools", label: "Tools", Icon: Wrench },
+];
 
 export function TechStack() {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const categories = Object.keys(PORTFOLIO_DATA.skillCategories);
-  const currentSkills = PORTFOLIO_DATA.skillCategories[selectedCategory] || [];
+  const filteredSkills =
+    selectedCategory === "All"
+      ? PORTFOLIO_DATA.skillsList
+      : PORTFOLIO_DATA.skillsList.filter(
+          (skill) => skill.category === selectedCategory
+        );
 
   return (
     <div id="skills" className="scroll-mt-20">
@@ -38,26 +36,25 @@ export function TechStack() {
         }
       />
 
-      {/* Filter Tabs Row */}
+      {/* Filter Tabs Header */}
       <div className="border-b border-[var(--line)]">
         <BorderContainer className="px-3 py-1.5 sm:px-4">
           <div className="flex w-full flex-wrap gap-1 rounded-lg border border-[var(--line)] bg-[var(--chip)] p-1 sm:flex-nowrap">
-            {categories.map((cat) => {
-              const Icon = CATEGORY_ICONS[cat] || Layers;
-              const isSelected = selectedCategory === cat;
+            {CATEGORY_TABS.map(({ id, label, Icon: TabIcon }) => {
+              const isSelected = selectedCategory === id;
               return (
                 <button
-                  key={cat}
+                  key={id}
                   type="button"
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`flex flex-1 shrink-0 items-center justify-center gap-1.5 rounded-md px-2.5 py-1.5 font-mono text-[11px] font-medium transition-all duration-200 cursor-pointer ${
+                  onClick={() => setSelectedCategory(id)}
+                  className={`flex flex-1 shrink-0 items-center justify-center gap-1.5 rounded-md px-3 py-1.5 font-mono text-[11px] font-medium transition-all duration-200 cursor-pointer ${
                     isSelected
                       ? "bg-[var(--fg)] text-[var(--bg)] shadow-sm font-semibold"
-                      : "text-[var(--muted)] hover:text-[var(--fg)]"
+                      : "text-[var(--muted)] hover:text-[var(--fg)] hover:bg-[var(--hover)]"
                   }`}
                 >
-                  <Icon className="size-3.5" />
-                  <span>{cat}</span>
+                  <TabIcon className="size-3.5 shrink-0" />
+                  <span>{label}</span>
                 </button>
               );
             })}
@@ -65,22 +62,26 @@ export function TechStack() {
         </BorderContainer>
       </div>
 
-      {/* Skill Pills Grid */}
+      {/* Skill Pills Matrix */}
       <BorderContainer className="px-6 py-6 sm:px-8">
-        <motion.div layout className="flex flex-wrap gap-2">
+        <motion.div layout className="flex flex-wrap gap-2.5">
           <AnimatePresence mode="popLayout">
-            {currentSkills.map((skill) => (
+            {filteredSkills.map((skill) => (
               <motion.div
-                key={skill}
+                key={skill.name}
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.18 }}
-                className="group flex items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--chip)] px-3 py-1.5 text-[12.5px] font-medium text-[var(--muted)] transition-all duration-200 hover:border-[var(--soft)] hover:text-[var(--fg)] hover:scale-[1.02] cursor-default"
+                transition={{ duration: 0.18, ease: "easeOut" }}
+                className="group flex items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--chip)] px-3 py-2 text-[12.5px] font-medium text-[var(--fg)] transition-all duration-200 hover:border-[var(--soft)] hover:scale-[1.02] shadow-sm cursor-default"
               >
-                <span className="size-1.5 rounded-full bg-[var(--soft)] group-hover:bg-[var(--fg)] transition-colors" />
-                <span>{skill}</span>
+                {/* Official Tech Icon */}
+                <Icon
+                  icon={skill.icon}
+                  className="size-4 shrink-0 transition-transform duration-200 group-hover:scale-110"
+                />
+                <span className="tracking-wide text-[var(--fg)]">{skill.name}</span>
               </motion.div>
             ))}
           </AnimatePresence>
