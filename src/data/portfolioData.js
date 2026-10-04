@@ -49,39 +49,6 @@ export const PORTFOLIO_DATA = {
     },
   ],
 
-  certifications: [
-    {
-      title: "AWS Certified CloudOps Engineer — Associate",
-      issuer: "Amazon Web Services",
-      url: "https://www.credly.com/badges/975d8173-73c5-40ce-9d4d-7f3a2c9f008b/public_url",
-      icon: "logos:aws",
-    },
-    {
-      title: "AWS Certified AI Practitioner",
-      issuer: "Amazon Web Services",
-      url: "https://www.credly.com/badges/287f3ddf-253a-4fb1-bc81-0dfc19a44550/public_url",
-      icon: "logos:aws",
-    },
-    {
-      title: "AWS Certified Cloud Practitioner",
-      issuer: "Amazon Web Services",
-      url: "https://www.credly.com/badges/8d4f6995-8346-4291-895e-6357ed3f5ec2/public_url",
-      icon: "logos:aws",
-    },
-    {
-      title: "200+ Problems Solved on LeetCode",
-      issuer: "LeetCode",
-      url: "https://leetcode.com/u/Ayush____Srivastava/",
-      icon: "simple-icons:leetcode",
-    },
-    {
-      title: "Second Position — AI Prompt-A-Thon 2026",
-      issuer: "TRYNOCODE Technology Pvt. Ltd.",
-      url: "https://github.com/AyushSriva2598",
-      icon: "lucide:award",
-    },
-  ],
-
   experience: [
     {
       company: "KIET Group of Institutions & Open Source",

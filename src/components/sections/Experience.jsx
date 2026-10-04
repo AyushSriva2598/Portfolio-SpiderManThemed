@@ -1,7 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Icon } from "@iconify/react";
-import { ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "../layout/SectionHeader";
 import { BorderContainer } from "../layout/BorderContainer";
 import { PORTFOLIO_DATA } from "../../data/portfolioData";
@@ -11,7 +9,7 @@ export function Experience() {
 
   return (
     <div id="experience" className="scroll-mt-20">
-      <SectionHeader title="Experience & Journey" />
+      <SectionHeader title="Experience" />
       <BorderContainer>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -81,37 +79,6 @@ export function Experience() {
                 </p>
               </div>
             ))}
-          </div>
-
-          {/* Verified Certifications Sub-section */}
-          <div className="mt-8 border-t border-[var(--line)] pt-6">
-            <h4 className="font-mono text-[10.5px] uppercase tracking-wider text-[var(--soft)] mb-3">
-              Verified Certifications & Accreditations
-            </h4>
-            <div className="grid gap-2.5 sm:grid-cols-2">
-              {PORTFOLIO_DATA.certifications.map((cert) => (
-                <a
-                  key={cert.title}
-                  href={cert.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between gap-3 rounded-lg border border-[var(--line)] bg-[var(--chip)] p-3 text-left transition-all duration-200 hover:border-[var(--soft)] hover:bg-[var(--hover)]"
-                >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <Icon icon={cert.icon} className="size-4 shrink-0" />
-                    <div className="truncate">
-                      <p className="text-[12.5px] font-medium text-[var(--fg)] group-hover:text-white truncate">
-                        {cert.title}
-                      </p>
-                      <p className="font-mono text-[10px] text-[var(--soft)]">
-                        {cert.issuer}
-                      </p>
-                    </div>
-                  </div>
-                  <ArrowUpRight className="size-3.5 text-[var(--soft)] transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--fg)] shrink-0" />
-                </a>
-              ))}
-            </div>
           </div>
         </motion.div>
       </BorderContainer>

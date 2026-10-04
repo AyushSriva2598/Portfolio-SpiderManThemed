@@ -62,7 +62,7 @@ export function TechStack() {
         </BorderContainer>
       </div>
 
-      {/* Skill Pills Matrix */}
+      {/* Skill Pills Matrix matching animeshh.me monochrome editorial style */}
       <BorderContainer className="px-6 py-6 sm:px-8">
         <motion.div layout className="flex flex-wrap gap-2.5">
           <AnimatePresence mode="popLayout">
@@ -74,14 +74,16 @@ export function TechStack() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.18, ease: "easeOut" }}
-                className="group flex items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--chip)] px-3 py-2 text-[12.5px] font-medium text-[var(--fg)] transition-all duration-200 hover:border-[var(--soft)] hover:scale-[1.02] shadow-sm cursor-default"
+                className="group flex cursor-default items-center gap-2 rounded-md border border-[var(--line)] bg-[var(--card)] px-3 py-1.5 font-mono text-[12px] text-[var(--muted)] shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--fg)] hover:bg-[var(--fg)] hover:text-[var(--bg)]"
               >
-                {/* Official Tech Icon */}
-                <Icon
-                  icon={skill.icon}
-                  className="size-4 shrink-0 transition-transform duration-200 group-hover:scale-110"
-                />
-                <span className="tracking-wide text-[var(--fg)]">{skill.name}</span>
+                {/* Monochrome icon in resting state; subtle brand reveal on hover */}
+                <div className="relative size-4 shrink-0 flex items-center justify-center">
+                  <Icon
+                    icon={skill.icon}
+                    className="size-4 shrink-0 transition-all duration-300 grayscale brightness-150 opacity-90 group-hover:grayscale-0 group-hover:brightness-100 group-hover:opacity-100"
+                  />
+                </div>
+                <span className="tracking-wide">{skill.name}</span>
               </motion.div>
             ))}
           </AnimatePresence>
