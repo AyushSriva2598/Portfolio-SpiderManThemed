@@ -76,11 +76,11 @@ export function TechStack() {
                 transition={{ duration: 0.18, ease: "easeOut" }}
                 className="group flex cursor-default items-center gap-2 rounded-md border border-[var(--line)] bg-[var(--card)] px-3 py-1.5 font-mono text-[12px] text-[var(--muted)] shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--fg)] hover:bg-[var(--fg)] hover:text-[var(--bg)]"
               >
-                {/* Monochrome icon in resting state; subtle brand reveal on hover */}
+                {/* Pure monochrome icon in resting state; inverts to solid black on hover */}
                 <div className="relative size-4 shrink-0 flex items-center justify-center">
                   <Icon
                     icon={skill.icon}
-                    className="size-4 shrink-0 transition-all duration-300 grayscale brightness-150 opacity-90 group-hover:grayscale-0 group-hover:brightness-100 group-hover:opacity-100"
+                    className="size-4 shrink-0 transition-all duration-200 grayscale brightness-125 opacity-80 group-hover:brightness-0 group-hover:opacity-100"
                   />
                 </div>
                 <span className="tracking-wide">{skill.name}</span>

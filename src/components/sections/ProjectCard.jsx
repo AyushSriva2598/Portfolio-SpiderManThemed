@@ -34,7 +34,7 @@ export function ProjectCard({ project, index }) {
 
             {/* REC indicator */}
             <div className="absolute top-2.5 left-7 flex items-center gap-1 text-[8px] font-semibold text-white/80">
-              <span className="size-1.5 rounded-full bg-rose-500 animate-pulse" />
+              <span className="size-1.5 rounded-full bg-white animate-pulse" />
               <span>REC</span>
             </div>
 

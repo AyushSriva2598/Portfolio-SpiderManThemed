@@ -10,7 +10,7 @@ const YEARS = [CURRENT_YEAR, CURRENT_YEAR - 1, CURRENT_YEAR - 2];
 
 const CALENDAR_THEME = {
   dark: ["#161616", "#262626", "#404040", "#737373", "#e5e5e5"],
-  light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+  light: ["#ebedf0", "#cbd5e1", "#94a3b8", "#475569", "#0f172a"],
 };
 
 export function GitHubActivity() {

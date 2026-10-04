@@ -40,8 +40,8 @@ export function Footer() {
           </p>
           <p className="mt-2.5 flex items-center justify-center gap-2 font-mono text-[12px] text-[var(--soft)]">
             <span className="relative flex size-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-              <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--fg)] opacity-40" />
+              <span className="relative inline-flex size-2 rounded-full bg-[var(--fg)] opacity-90" />
             </span>
             {PORTFOLIO_DATA.location} · {timeString || "IST"}
           </p>
