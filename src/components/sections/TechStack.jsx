@@ -8,7 +8,7 @@ import { Layers, Code2, Server, Database, Cloud, Wrench } from "lucide-react";
 
 const CATEGORY_TABS = [
   { id: "All", label: "All", Icon: Layers },
-  { id: "Languages", label: "</> Languages", Icon: Code2 },
+  { id: "Languages", label: "Languages", Icon: Code2 },
   { id: "Frameworks", label: "Frameworks", Icon: Server },
   { id: "Databases", label: "Databases", Icon: Database },
   { id: "Cloud & DevOps", label: "Cloud & DevOps", Icon: Cloud },
