@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PROJECTS_DATA, ASSETS } from "../../data/spidermanData";
@@ -10,6 +10,7 @@ export const Projects = () => {
   const headerRef = useRef(null);
   const webRef = useRef(null);
   const spiderRef = useRef(null);
+  const [showAllMobile, setShowAllMobile] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -58,14 +59,8 @@ export const Projects = () => {
         ease: "sine.inOut",
       });
 
-      // Crouched Spider-Man breathing idle
-      gsap.to(spiderRef.current, {
-        y: -10,
-        repeat: -1,
-        yoyo: true,
-        duration: 2.5,
-        ease: "sine.inOut",
-      });
+      // Fixed standing Spider-Man at base
+      gsap.set(spiderRef.current, { y: 0 });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -75,7 +70,7 @@ export const Projects = () => {
     <section
       id="projects"
       ref={sectionRef}
-      className="relative w-full bg-white text-gray-900 pt-6 sm:pt-8 pb-16 px-6 md:px-16 lg:px-24 flex flex-col items-center justify-center overflow-hidden"
+      className="relative w-full bg-white text-gray-900 pt-6 sm:pt-8 pb-16 px-4 sm:px-6 md:px-12 lg:px-20 flex flex-col items-center justify-center overflow-hidden"
     >
       {/* Background Web Corner Accent */}
       <div className="absolute top-0 right-0 pointer-events-none overflow-hidden z-0">
@@ -90,7 +85,7 @@ export const Projects = () => {
       {/* Crouched Spider-Man Corner Observer */}
       <div
         ref={spiderRef}
-        className="absolute bottom-0 left-2 sm:left-4 md:left-12 z-30 pointer-events-none"
+        className="absolute -bottom-8 md:-bottom-12 -left-4 sm:left-2 md:left-6 lg:left-12 z-30 pointer-events-none"
       >
         <img
           src={ASSETS.standingSpiderImg}
@@ -114,15 +109,17 @@ export const Projects = () => {
         <div className="w-16 h-1.5 bg-[#a31515] mt-3 rounded-full shadow-[0_0_8px_rgba(163,21,21,0.6)]" />
       </div>
 
-      {/* Projects Grid */}
-      <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 z-10">
+      {/* Projects Grid: 3 per row on desktop, 2 on tablet, 1 on mobile */}
+      <div className="w-full max-w-7xl px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 z-10">
         {PROJECTS_DATA.map((proj, idx) => (
           <a
             key={idx}
             href={proj.link}
             target="_blank"
             rel="noreferrer"
-            className="project-item group relative bg-gray-50/90 backdrop-blur-sm border border-gray-200 hover:border-[#a31515] p-6 rounded-2xl transition-all duration-300 flex flex-col justify-between cursor-pointer overflow-hidden shadow-sm hover:shadow-[0_10px_25px_rgba(163,21,21,0.15)] transform hover:-translate-y-1"
+            className={`project-item group relative bg-gray-50/90 backdrop-blur-sm border border-gray-200 hover:border-[#a31515] p-5 sm:p-6 rounded-2xl transition-all duration-300 flex-col justify-between cursor-pointer overflow-hidden shadow-sm hover:shadow-[0_10px_25px_rgba(163,21,21,0.15)] transform hover:-translate-y-1 ${
+              idx >= 3 && !showAllMobile ? "hidden md:flex" : "flex"
+            }`}
           >
             {/* Top Red Beam Line */}
             <div className="absolute top-0 left-0 w-full h-1 bg-[#a31515] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
@@ -171,6 +168,45 @@ export const Projects = () => {
             </div>
           </a>
         ))}
+      </div>
+
+      {/* Mobile View More Missions Toggle */}
+      {PROJECTS_DATA.length > 3 && (
+        <div className="w-full flex justify-center mt-6 md:hidden z-10">
+          <button
+            type="button"
+            onClick={() => setShowAllMobile(!showAllMobile)}
+            className="min-h-[44px] px-6 py-2.5 rounded-full font-comic text-xs uppercase tracking-widest font-bold transition-all duration-200 shadow-sm flex items-center gap-2 bg-white text-[#a31515] border-2 border-[#a31515] hover:bg-red-50 active:scale-95 cursor-pointer"
+          >
+            <span>{showAllMobile ? "Show Fewer Missions" : `View More Missions (${PROJECTS_DATA.length - 3})`}</span>
+            <svg
+              className={`w-3.5 h-3.5 transform transition-transform duration-300 ${
+                showAllMobile ? "rotate-180" : ""
+              }`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+        </div>
+      )}
+
+      {/* View All Projects on GitHub Action */}
+      <div className="w-full flex justify-center mt-8 sm:mt-10 z-10">
+        <a
+          href="https://github.com/AyushSriva2598?tab=repositories"
+          target="_blank"
+          rel="noreferrer"
+          className="group/cta inline-flex items-center gap-2.5 px-6 sm:px-8 py-3.5 rounded-xl font-comic text-xs sm:text-sm uppercase tracking-widest font-bold transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 cursor-pointer bg-[#a31515] hover:bg-[#7a0f0f] text-white border-2 border-[#a31515] shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000]"
+        >
+          <svg className="w-4 h-4 fill-current transition-transform duration-300 group-hover/cta:scale-110" viewBox="0 0 24 24">
+            <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+          </svg>
+          <span>View All Projects on GitHub</span>
+          <span className="text-base transition-transform duration-300 group-hover/cta:translate-x-1">→</span>
+        </a>
       </div>
     </section>
   );
