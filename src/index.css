@@ -1,137 +1,98 @@
-@import "https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Outfit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,700;1,900&family=JetBrains+Mono:wght@400;500;600&display=swap";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  color: #111111;
-  background-color: #fafafa;
-  --font-comic: "Bangers", Impact, cursive;
-  --font-narrative: "EB Garamond", Georgia, serif;
-  --font-dialogue: "Comic Neue", "Comic Sans MS", cursive;
-  --font-sans: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --bg: #0a0a0a;
+  --fg: #f5f5f4;
+  --muted: #a1a1aa;
+  --soft: #63636b;
+  --line: rgba(255, 255, 255, 0.1);
+  --stripe: rgba(255, 255, 255, 0.055);
+  --hover: rgba(255, 255, 255, 0.05);
+  --card: #101010;
+  --chip: #161616;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
+html:not(.dark) {
+  --bg: #fafafa;
+  --fg: #18181b;
+  --muted: #52525b;
+  --soft: #a1a1aa;
+  --line: rgba(0, 0, 0, 0.1);
+  --stripe: rgba(0, 0, 0, 0.04);
+  --hover: rgba(0, 0, 0, 0.04);
+  --card: #ffffff;
+  --chip: #f4f4f5;
 }
 
 body {
+  background-color: var(--bg);
+  color: var(--fg);
   font-family: var(--font-sans);
-  background-color: #fafafa;
-  color: #111111;
-  margin: 0;
-  padding: 0;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Custom Web Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+/* Diagonal Stripe Background */
+.bg-stripes {
+  background-image: repeating-linear-gradient(
+    315deg,
+    var(--stripe) 0,
+    var(--stripe) 1px,
+    transparent 1px,
+    transparent 7px
+  );
+}
+
+/* Subtle Glitch Text Effect */
+.text-glitch {
+  text-shadow: -1.5px 0 0 rgba(0, 200, 255, 0.6), 1.5px 0 0 rgba(255, 80, 0, 0.6);
+}
+
+/* Vinyl Spin */
+@keyframes vinyl-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hide Scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Scanline Animation */
+@keyframes scanline {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(400%);
+  }
+}
+.animate-scanline {
+  animation: scanline 4s linear infinite;
+}
+
+/* Horizontal scroll styling */
+.onyx-scroll::-webkit-scrollbar {
   height: 6px;
 }
-::-webkit-scrollbar-track {
-  background: #fafafa;
+.onyx-scroll::-webkit-scrollbar-track {
+  background: var(--chip);
 }
-::-webkit-scrollbar-thumb {
-  background: #e4e4e7;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #a31515;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   AUTHENTIC COMIC BOOK TYPOGRAPHY UTILITIES
-   ═══════════════════════════════════════════════════════════ */
-
-/* Iconic Comic Action Heading (Screenshot style) */
-.font-comic-heading {
-  font-family: var(--font-comic);
-  font-style: italic;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-
-/* Comic Book Bold Outline & 3D Extrusion */
-.text-comic-title {
-  font-family: var(--font-comic);
-  font-style: italic;
-  letter-spacing: 0.035em;
-  text-transform: uppercase;
-  color: #ffffff;
-  -webkit-text-stroke: 1.5px #111111;
-  text-shadow: 
-    2px 2px 0px #111111,
-    -1px -1px 0px #111111,
-    1px -1px 0px #111111,
-    -1px 1px 0px #111111,
-    4px 4px 0px #dc2626,
-    7px 7px 0px #881337;
-}
-
-/* Section Header Comic Extrusion (Dark Background variant) */
-.text-comic-section {
-  font-family: var(--font-comic);
-  font-style: italic;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #111111;
-  text-shadow: 
-    2px 2px 0px #ffffff,
-    4px 4px 0px #f87171,
-    6px 6px 0px #a31515;
-}
-
-/* Narrative Inner-Monologue Caption Font (Screenshot subtext) */
-.font-comic-narrative {
-  font-family: var(--font-narrative);
-  font-style: italic;
-  letter-spacing: 0.015em;
-  line-height: 1.7;
-}
-
-/* Dialogue Speech Bubble Style */
-.font-comic-dialogue {
-  font-family: var(--font-dialogue);
-  letter-spacing: 0.02em;
-}
-
-/* Spider-Man Legacy Shadows */
-.text-shadow-hero {
-  text-shadow: 4px 4px 0px #ef4444, 7px 7px 0px #a31515;
-}
-
-.text-shadow-section {
-  text-shadow: 2px 2px 0px #fca5a5;
-}
-
-/* Keyframe animations */
-@keyframes pulse-slow {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.7; }
-}
-
-@keyframes spin-slow {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes breathe {
-  0%, 100% {
-    opacity: 0.5;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    opacity: 0.85;
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-}
-
-.breathing-glow {
-  animation: breathe 8s ease-in-out infinite;
+.onyx-scroll::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 9999px;
 }
