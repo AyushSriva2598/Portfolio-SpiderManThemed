@@ -92,7 +92,7 @@ export const Projects = () => {
       {/* Standing Spider-Man Grounded at Base */}
       <div
         ref={spiderRef}
-        className="absolute bottom-0 left-2 sm:left-4 md:left-8 z-30 pointer-events-none opacity-40 md:opacity-100"
+        className="absolute bottom-0 left-0 sm:left-1 md:left-2 z-30 pointer-events-none opacity-40 md:opacity-100"
       >
         <img
           src={isDark ? MILES_ASSETS.standingSpiderImg : ASSETS.standingSpiderImg}
