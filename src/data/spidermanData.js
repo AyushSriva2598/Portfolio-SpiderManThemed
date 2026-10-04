@@ -175,22 +175,22 @@ export const JOURNEY_DATA = {
   badge: "Origin Story & Discipline",
   title: "ENGINEERING JOURNEY.",
   subtitle:
-    "A continuous trajectory of mastering backend systems, building uncompromising engineering habits, and taking verified steps into cloud engineering and AI.",
+    "Mastering backend concurrency, cloud infrastructure, and intelligent systems.",
   role: "Full Stack Developer & Systems Builder",
   status: "3x AWS Certified • Exploring AI",
   timeline: "2024 — Present",
   narrativeContext:
-    "Grounded in daily habit loops and first-principles computer science — scaling from 200+ algorithmic problems to distributed API gateways, PostgreSQL concurrency engines, and cloud Infrastructure as Code.",
+    "Scaling from 200+ algorithmic problems to distributed API gateways, PostgreSQL concurrency engines, and cloud GitOps.",
   phases: [
     {
       id: "01",
       phaseNumber: "PHASE 01",
-      title: "The CS Foundation & Habit Lock-In",
+      title: "CS Foundation & Problem Solving",
       tagline: "200+ LeetCode Solved & Core Fundamentals",
       timeframe: "2024",
       description:
-        "Dedicated daily focus blocks to build algorithmic grit and foundational computer science habits: solved 200+ problems on LeetCode across trees, graphs, dynamic programming, and greedy algorithms. Mastered Operating Systems, Computer Networks, and Database Management Systems alongside core Python and Java.",
-      skills: ["200+ LeetCode", "Data Structures", "Algorithms", "Operating Systems", "Computer Networks", "DBMS"],
+        "Solved 200+ LeetCode problems across trees, DP, and graphs, paired with deep foundations in Operating Systems, Networks, and DBMS.",
+      skills: ["Data Structures", "Algorithms", "OS & DBMS", "Python & Java"],
     },
     {
       id: "02",
@@ -199,28 +199,28 @@ export const JOURNEY_DATA = {
       tagline: "Distributed API Gateways & Broker-less DAGs",
       timeframe: "Late 2024 — Early 2026",
       description:
-        "Moved past simple CRUD apps into concurrency and distributed architecture. Built a distributed API Gateway with atomic Redis 7 Lua rate limiting (sub-1.2ms decisions), load-tested to 5,000 VUs via k6. Engineered a broker-less DAG job queue on PostgreSQL utilizing 'SELECT FOR UPDATE SKIP LOCKED' with race-safe idempotency and automated dead-letter recovery.",
-      skills: ["Distributed Systems", "Redis 7 Lua", "API Gateway", "k6 Load Testing (5k VUs)", "PostgreSQL SKIP LOCKED", "Nginx"],
+        "Engineered a Redis 7 Lua API Gateway benchmarking 5,000 VUs (sub-1.2ms decisions) and a PostgreSQL broker-less DAG queue with SKIP LOCKED.",
+      skills: ["Distributed Systems", "Redis 7 Lua", "PostgreSQL", "k6 (5k VUs)"],
     },
     {
       id: "03",
       phaseNumber: "PHASE 03",
-      title: "Cloud Infrastructure & GitOps Engines",
+      title: "Cloud Infrastructure & GitOps",
       tagline: "TFViz Architecture & 3x AWS Certifications",
       timeframe: "2025 — 2026",
       description:
-        "Earned three AWS certifications (Cloud Practitioner, AI Practitioner, CloudOps Engineer Associate). Built TFViz—an Infrastructure as Code & GitOps visual engine with a Next.js graph renderer and React Flow pipelines, decomposing Go AST parsing into independent microservices to reduce plan review times by 70%.",
-      skills: ["AWS CloudOps", "Terraform", "Docker", "TFViz", "React Flow", "Microservices", "Next.js"],
+        "Achieved 3x AWS certifications. Built TFViz—a GitOps visual engine with React Flow pipelines, slashing plan review times by 70%.",
+      skills: ["AWS CloudOps", "Terraform", "React Flow", "Microservices"],
     },
     {
       id: "04",
       phaseNumber: "PHASE 04",
-      title: "The AI Frontier (Active Building & Exploration)",
-      tagline: "AWS Certified AI Practitioner & Prompt-A-Thon 2nd",
+      title: "Generative AI & Agent Workflows",
+      tagline: "AWS Certified AI Practitioner & Hackathon Top 2",
       timeframe: "2026 — Present",
       description:
-        "Actively taking my first dedicated steps into the generative AI and intelligent agent ecosystem. Certified as an AWS AI Practitioner and secured 2nd place in the AI Prompt-A-Thon 2026. Currently exploring prompt orchestration, AI workflows (n8n), and integrating AI microservices with full-stack platforms from first principles.",
-      skills: ["AWS AI Practitioner", "AI Prompt-A-Thon 2nd", "Agent Workflows", "Prompting", "Python", "Full Stack AI Integration"],
+        "Certified AWS AI Practitioner and Prompt-A-Thon runner-up, actively orchestrating intelligent agent workflows, n8n automation, and AI microservices.",
+      skills: ["AWS AI Practitioner", "Agent Workflows", "n8n", "AI Integration"],
     },
   ],
   stats: [
