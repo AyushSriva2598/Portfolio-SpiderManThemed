@@ -5,7 +5,7 @@ import { Navbar, Hero, About, Skills, Projects, Journey, Contact } from "./compo
 export function App() {
   return (
     <ThemeProvider>
-      <div className="w-full min-h-screen bg-white dark:bg-[#050505] text-gray-900 dark:text-gray-100 overflow-x-hidden font-dialogue selection:bg-[#a31515] dark:selection:bg-[#e11d48] selection:text-white transition-colors duration-300">
+      <div className="w-full min-h-screen bg-white dark:bg-[#050505] text-gray-900 dark:text-gray-100 overflow-x-hidden font-dialogue selection:bg-[#a31515] dark:selection:bg-[#a71d24] selection:text-white transition-colors duration-300">
         <Navbar />
         <Hero />
         <About />

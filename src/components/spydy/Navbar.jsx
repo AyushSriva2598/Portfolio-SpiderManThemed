@@ -33,7 +33,6 @@ export const Navbar = () => {
     { label: "Projects", href: "#projects" },
     { label: "Journey", href: "#journey" },
     { label: "Contact", href: "#contact" },
-    { label: "Cover Letter", href: "#CoverLetter" },
   ];
 
   const handleNavClick = () => {
@@ -54,7 +53,7 @@ export const Navbar = () => {
             href="#"
             className="text-white font-comic text-sm sm:text-3xl tracking-[0.2em] uppercase italic group flex items-center"
           >
-            <span className={isDark ? "text-[#e11d48] drop-shadow-[0_0_10px_rgba(225,29,72,0.8)]" : "text-red-500 drop-shadow-[0_0_10px_rgba(220,38,38,0.8)]"}>
+            <span className={isDark ? "text-[#a71d24] drop-shadow-[0_0_10px_rgba(167,29,36,0.8)]" : "text-red-500 drop-shadow-[0_0_10px_rgba(220,38,38,0.8)]"}>
               {HERO_DATA.firstName.charAt(0)}
             </span>
             <span className={`transition-colors duration-300 ${isDark ? "group-hover:text-[#fb923c]" : "group-hover:text-black"}`}>
@@ -72,7 +71,7 @@ export const Navbar = () => {
                   className="relative font-comic text-sm sm:text-3xl text-white uppercase tracking-[0.2em] font-bold italic transition-all duration-300 hover:text-white group" style={{
                     WebkitTextStroke: "1px #111",
                     textShadow: isDark
-                      ? "2px 2px 0 #e11d48, 3px 3px 0 #f97316"
+                      ? "2px 2px 0 #a71d24, 3px 3px 0 #f97316"
                       : "2px 2px 0 #a31515, 3px 3px 0 #111",
                   }}
                 >
@@ -113,11 +112,17 @@ export const Navbar = () => {
             {/* Mobile Hamburger Toggle Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-gray-300 hover:text-red-500 focus:outline-none transition-colors"
+              className="md:hidden p-2 min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-300 hover:text-[#a71d24] focus:outline-none transition-colors"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileMenuOpen}
             >
-              {/* ... */}
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {mobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+                )}
+              </svg>
             </button>
           </div>
         </div>
@@ -144,7 +149,7 @@ export const Navbar = () => {
           {/* Decorative Web Accent */}
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-2 pb-4 border-b border-red-900/40">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.8)] animate-pulse" />
+              <span className={`w-2.5 h-2.5 rounded-full ${isDark ? "bg-[#a71d24] shadow-[0_0_8px_rgba(167,29,36,0.8)]" : "bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.8)]"} animate-pulse`} />
               <span className="text-xs uppercase font-dialogue font-bold tracking-widest text-gray-400">
                 Navigation Protocol
               </span>
@@ -158,7 +163,7 @@ export const Navbar = () => {
                   setMobileMenuOpen(false);
                 }}
                 type="button"
-                className={`w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-xl font-comic text-sm uppercase tracking-wider transition-all duration-300 border-2 cursor-pointer select-none ${
+                className={`w-full min-h-[44px] flex items-center justify-center gap-3 px-4 py-2.5 rounded-xl font-comic text-sm uppercase tracking-wider transition-all duration-300 border-2 cursor-pointer select-none ${
                   isDark
                     ? "bg-[#111111] border-[#f97316] text-[#fb923c] shadow-[4px_4px_0px_#f97316]"
                     : "bg-white border-[#a31515] text-[#a31515] shadow-[4px_4px_0px_#000000]"
@@ -177,21 +182,21 @@ export const Navbar = () => {
               </button>
             </div>
 
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-4">
               {navItems.map((item, idx) => (
                 <a
                   key={item.label}
                   href={item.href}
                   onClick={handleNavClick}
-                  className="group flex items-center justify-between py-2 font-comic text-2xl sm:text-3xl italic uppercase tracking-widest text-gray-200 hover:text-red-500 transition-colors"
+                  className="group flex items-center justify-between py-2.5 min-h-[44px] font-comic text-2xl sm:text-3xl italic uppercase tracking-widest text-gray-200 hover:text-[#fb923c] transition-colors"
                 >
                   <span className="flex items-center gap-3">
-                    <span className="text-xs font-dialogue font-bold text-red-600">
+                    <span className="text-xs font-dialogue font-bold text-[#a71d24]">
                       0{idx + 1}.
                     </span>
                     {item.label}
                   </span>
-                  <span className="text-red-600 text-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
+                  <span className="text-[#a71d24] group-hover:text-[#fb923c] text-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
                     →
                   </span>
                 </a>

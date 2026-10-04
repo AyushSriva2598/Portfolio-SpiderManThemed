@@ -18,7 +18,20 @@ export const Hero = () => {
   const tween2 = useRef(null);
 
   useEffect(() => {
+    const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set([websRef.current?.children || [], taglineRef.current, headlineRef.current, quoteRef.current, ctaRef.current?.children || []], {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          scale: 1,
+          skewX: 0,
+        });
+        return;
+      }
+
       // Intro timeline
       gsap
         .timeline({ defaults: { ease: "back.out(1.7)" } })
@@ -145,7 +158,7 @@ export const Hero = () => {
       {/* Hero Section — Spider-Man / Miles Morales Background */}
       <section
         ref={containerRef}
-        className="relative w-full min-h-[100dvh] h-[100dvh] overflow-hidden flex items-center justify-center select-none z-[1]"
+        className="relative w-full min-h-[100svh] overflow-hidden flex items-center justify-center select-none z-[1] py-20 lg:py-0"
       >
         {/* Single Background Image — Peter Mask / Miles Mask */}
         <img
@@ -156,10 +169,17 @@ export const Hero = () => {
           height="1440"
           className={`absolute inset-0 w-full h-full object-cover pointer-events-none z-10 transition-all duration-500 ${
             isDark
-              ? "opacity-95 object-center translate-x-0 drop-shadow-[0_0_40px_rgba(225,29,72,0.25)]"
-              : "mix-blend-multiply translate-x-4 md:translate-x-10"
+              ? "opacity-95 object-[center_20%] lg:object-center translate-x-0 drop-shadow-[0_0_40px_rgba(167,29,36,0.3)]"
+              : "mix-blend-multiply object-[center_20%] lg:object-center translate-x-4 md:translate-x-10"
           }`}
         />
+
+        {/* Soft Mobile Readable Gradient Overlay */}
+        <div className={`absolute inset-0 z-20 pointer-events-none lg:hidden ${
+          isDark
+            ? "bg-gradient-to-t from-black/90 via-black/40 to-transparent"
+            : "bg-gradient-to-t from-white/90 via-white/40 to-transparent"
+        }`} />
 
         {/* Corner Web Overlays */}
         <div
@@ -172,8 +192,8 @@ export const Hero = () => {
             alt="Spider Web Top"
             width="320"
             height="320"
-            className={`absolute top-0 right-0 w-36 h-36 sm:w-52 sm:h-52 md:w-[320px] md:h-[320px] object-contain ${
-              isDark ? "opacity-25" : "opacity-40 sm:opacity-50 mix-blend-multiply"
+            className={`absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 md:w-[320px] md:h-[320px] object-contain ${
+              isDark ? "opacity-20 sm:opacity-25" : "opacity-35 sm:opacity-50 mix-blend-multiply"
             }`}
           />
 
@@ -183,21 +203,21 @@ export const Hero = () => {
             alt="Spider Web Bottom"
             width="400"
             height="400"
-            className={`absolute bottom-0 left-0 w-42 h-42 sm:w-[230px] sm:h-[230px] md:w-[400px] md:h-[400px] object-contain ${
-              isDark ? "opacity-25" : "opacity-40 sm:opacity-50 mix-blend-multiply"
+            className={`absolute bottom-0 left-0 w-36 h-36 sm:w-[220px] sm:h-[220px] md:w-[400px] md:h-[400px] object-contain ${
+              isDark ? "opacity-20 sm:opacity-25" : "opacity-35 sm:opacity-50 mix-blend-multiply"
             }`}
           />
         </div>
 
         {/* Hero Title & Information */}
-        <div className="absolute top-1/3 -translate-y-[20%] left-4 sm:left-6 md:left-12 lg:left-20 z-30 flex flex-col gap-3 sm:gap-4 pointer-events-none drop-shadow-md max-w-xl w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)] md:w-auto">
+        <div className="relative lg:absolute lg:top-1/3 lg:-translate-y-[20%] left-0 lg:left-12 xl:left-20 z-30 flex flex-col gap-3 sm:gap-4 pointer-events-none drop-shadow-md max-w-xl w-full px-4 sm:px-6 md:px-8 lg:px-0">
           <div
             ref={taglineRef}
             className="flex items-center gap-2 opacity-0"
           >
             <span className={`w-6 sm:w-8 h-[2px] ${isDark ? "bg-[#f97316] shadow-[0_0_8px_#f97316]" : "bg-red-600"}`} />
             <span className={`font-comic tracking-[0.2em] text-xs sm:text-sm md:text-base uppercase font-bold ${
-              isDark ? "text-[#e11d48] drop-shadow-[0_0_10px_rgba(225,29,72,0.5)]" : "text-[#a31515]"
+              isDark ? "text-[#a71d24] drop-shadow-[0_0_10px_rgba(167,29,36,0.5)]" : "text-[#a31515]"
             }`}>
               {HERO_DATA.tagline}
             </span>
@@ -207,19 +227,25 @@ export const Hero = () => {
             ref={headlineRef}
             className={`text-comic-title text-[clamp(2.25rem,1.8rem+3vw,4.5rem)] leading-[0.95] tracking-tight opacity-0 select-none ${
               isDark
-                ? "text-white drop-shadow-[3px_3px_0px_#e11d48]"
+                ? "text-white drop-shadow-[3px_3px_0px_#a71d24]"
                 : "text-gray-950"
             }`}
           >
             {HERO_DATA.firstName}
-            {/* <br /> */}
-            {HERO_DATA.lastName}
+            <span className="block sm:inline">{HERO_DATA.lastName}</span>
           </h1>
+
+          {/* Mobile Motto Banner */}
+          <div className="lg:hidden flex items-center gap-2 py-1 px-3 rounded-lg border-l-2 border-[#f97316] bg-black/60 backdrop-blur-xs w-fit">
+            <span className="font-comic text-xs uppercase tracking-wider text-[#fb923c]">
+              "{HERO_DATA.quoteHeadingLine1} {HERO_DATA.quoteHeadingLine2}"
+            </span>
+          </div>
 
           <p className={`font-dialogue text-sm sm:text-base md:text-lg leading-relaxed max-w-lg select-text backdrop-blur-sm rounded-lg p-2.5 border-l-2 ${
             isDark
-              ? "text-gray-200 bg-black/60 border-[#e11d48]/60 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
-              : "text-gray-900 bg-white/20 border-[#a31515]/30"
+              ? "text-gray-200 bg-black/60 border-[#a71d24]/60 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+              : "text-gray-900 bg-white/30 border-[#a31515]/30"
           }`}>
             {HERO_DATA.narrativeContext}
           </p>
@@ -239,7 +265,7 @@ export const Hero = () => {
               href="#projects"
               className={`relative overflow-hidden text-white px-6 sm:px-8 py-3.5 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg font-comic tracking-wider text-sm sm:text-base transition-[transform,box-shadow,background-color] duration-300 hover:-translate-y-1 cursor-pointer uppercase border ${
                 isDark
-                  ? "bg-[#e11d48] hover:bg-[#be123c] border-[#e11d48] shadow-[0_0_20px_rgba(225,29,72,0.4)] hover:shadow-[0_0_30px_rgba(225,29,72,0.7)]"
+                  ? "bg-[#a71d24] hover:bg-[#850621] border-[#a71d24] shadow-[0_0_20px_rgba(167,29,36,0.4)] hover:shadow-[0_0_30px_rgba(167,29,36,0.7)]"
                   : "bg-[#a31515] hover:bg-[#7a0f0f] border-[#a31515] hover:shadow-[0_10px_20px_rgba(163,21,21,0.4)]"
               }`}
             >
@@ -289,7 +315,7 @@ export const Hero = () => {
         {/* Tape 1: rotate(+3.5deg, mobile +2deg), slopes downward left-to-right */}
         <div className={`absolute w-[120vw] -left-[10vw] -top-5 sm:-top-6 md:-top-7 h-10 sm:h-12 md:h-14 lg:h-16 text-white border-y-[2px] sm:border-y-[3px] rotate-[2deg] md:rotate-[3.5deg] z-20 flex items-center overflow-hidden pointer-events-none ${
           isDark
-            ? "bg-[#e11d48] border-[#262626] shadow-[0_10px_25px_rgba(225,29,72,0.4)]"
+            ? "bg-[#a71d24] border-[#262626] shadow-[0_10px_25px_rgba(167,29,36,0.4)]"
             : "bg-[#a31515] border-black shadow-[0_10px_25px_rgba(0,0,0,0.4)]"
         }`}>
           <div ref={marquee1Ref} className="flex items-center h-full w-max">

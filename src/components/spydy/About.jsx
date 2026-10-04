@@ -225,7 +225,7 @@ export const About = () => {
               <h2
                 ref={titleRef}
                 className={`text-comic-title text-[clamp(2.25rem,1.8rem+3vw,4.5rem)] leading-none ${
-                  isDark ? "text-white drop-shadow-[2px_2px_0px_#e11d48]" : "text-gray-950"
+                  isDark ? "text-white drop-shadow-[2px_2px_0px_#a71d24]" : "text-gray-950"
                 }`}
               >
                 {ABOUT_DATA.title}
@@ -237,7 +237,7 @@ export const About = () => {
               ref={textRef}
               className={`flex flex-col gap-4 sm:gap-5 font-dialogue text-sm sm:text-base md:text-lg leading-relaxed max-w-xl mt-2 border-l-4 pl-4 sm:pl-5 py-4 pr-4 rounded-r-2xl transition-all duration-300 ${
                 isDark
-                  ? "border-[#e11d48] text-gray-200 bg-[#121212]/60 shadow-[0_4px_25px_rgba(0,0,0,0.6)]"
+                  ? "border-[#a71d24] text-gray-200 bg-[#121212]/60 shadow-[0_4px_25px_rgba(0,0,0,0.6)]"
                   : "border-[#a31515] text-gray-900 bg-white/0 shadow-sm"
               }`}
               style={{ perspective: "1000px" }}
@@ -292,7 +292,7 @@ export const About = () => {
               {/* Poster */}
               <div className={`poster-frame relative w-[min(100%,300px)] sm:w-[320px] md:w-[360px] aspect-[3/4] border-[3px] rounded-sm overflow-hidden transition-all duration-300 hover:scale-[1.02] ${
                 isDark
-                  ? "bg-[#141414] border-[#e11d48] shadow-[0_0_30px_rgba(225,29,72,0.3)]"
+                  ? "bg-[#141414] border-[#a71d24] shadow-[0_0_30px_rgba(167,29,36,0.35)]"
                   : "bg-[#f5f0e8] border-[#d4c9a8] shadow-lg"
               }`}>
                 <img

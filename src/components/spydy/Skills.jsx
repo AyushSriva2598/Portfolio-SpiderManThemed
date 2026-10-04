@@ -91,7 +91,7 @@ export const Skills = () => {
           Technical Arsenal & Weapons of Choice
         </span>
         <h2 className={`text-comic-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight ${
-          isDark ? "text-white drop-shadow-[2px_2px_0px_#e11d48]" : "text-gray-950"
+          isDark ? "text-white drop-shadow-[2px_2px_0px_#a71d24]" : "text-gray-950"
         }`}>
           TECHNICAL SKILLS.
         </h2>

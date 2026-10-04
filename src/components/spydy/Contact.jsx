@@ -103,7 +103,7 @@ export const Contact = () => {
           alt={isDark ? "Hanging Miles Morales" : "Hanging Spider-Man"}
           className={`w-32 sm:w-40 md:w-60 h-auto object-contain -mt-1 ${
             isDark
-              ? "translate-x-[3.6%] drop-shadow-[0_12px_30px_rgba(0,0,0,0.8)] drop-shadow-[0_0_20px_rgba(225,29,72,0.35)]"
+              ? "translate-x-[3.6%] drop-shadow-[0_12px_30px_rgba(0,0,0,0.8)] drop-shadow-[0_0_20px_rgba(167,29,36,0.4)]"
               : "drop-shadow-2xl"
           }`}
         />
@@ -122,7 +122,7 @@ export const Contact = () => {
           Dispatch A Transmission
         </span>
         <h2 className={`text-comic-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight ${
-          isDark ? "text-white drop-shadow-[2px_2px_0px_#e11d48]" : "text-gray-950"
+          isDark ? "text-white drop-shadow-[2px_2px_0px_#a71d24]" : "text-gray-950"
         }`}>
           CONTACT AYUSH.
         </h2>
@@ -141,7 +141,7 @@ export const Contact = () => {
         ref={cardRef}
         className={`w-full max-w-2xl p-6 md:p-8 rounded-2xl relative z-10 flex flex-col gap-6 transition-all duration-300 ${
           isDark
-            ? "bg-[#0d0d0d]/95 backdrop-blur-sm border-2 border-[#262626] shadow-[6px_6px_0px_#e11d48]"
+            ? "bg-[#0d0d0d]/95 backdrop-blur-sm border-2 border-[#262626] shadow-[6px_6px_0px_#7d181e]"
             : "bg-gray-50/90 backdrop-blur-sm border border-gray-200 shadow-sm"
         }`}
       >
@@ -225,7 +225,7 @@ export const Contact = () => {
               type="submit"
               className={`w-full py-3.5 rounded-xl font-comic text-base tracking-widest uppercase transition-all duration-300 cursor-pointer mt-2 font-bold ${
                 isDark
-                  ? "bg-[#e11d48] hover:bg-[#be123c] text-white shadow-[0_4px_20px_rgba(225,29,72,0.4)] hover:shadow-[0_6px_25px_rgba(225,29,72,0.6)]"
+                  ? "bg-[#a71d24] hover:bg-[#850621] text-white shadow-[0_4px_20px_rgba(167,29,36,0.4)] hover:shadow-[0_6px_25px_rgba(167,29,36,0.6)]"
                   : "bg-[#a31515] hover:bg-[#7a0f0f] text-white shadow-[0_4px_15px_rgba(163,21,21,0.3)] hover:shadow-[0_6px_20px_rgba(163,21,21,0.5)]"
               }`}
             >

@@ -43,31 +43,26 @@ export const Projects = () => {
         );
 
       // Background web subtle rotation and breathing
-      gsap.set(webRef.current, { transformOrigin: "top right" });
-      gsap.to(webRef.current, {
-        rotation: 8,
-        repeat: -1,
-        yoyo: true,
-        duration: 6,
-        ease: "sine.inOut",
-      });
-      gsap.to(webRef.current, {
-        scale: 1.1,
-        opacity: isDark ? 0.12 : 0.07,
-        repeat: -1,
-        yoyo: true,
-        duration: 4,
-        ease: "sine.inOut",
-      });
-
-      // Crouched Spider-Man breathing idle
-      gsap.to(spiderRef.current, {
-        y: -10,
-        repeat: -1,
-        yoyo: true,
-        duration: 2.5,
-        ease: "sine.inOut",
-      });
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!prefersReducedMotion) {
+        gsap.set(webRef.current, { transformOrigin: "top right" });
+        gsap.to(webRef.current, {
+          rotation: 8,
+          repeat: -1,
+          yoyo: true,
+          duration: 6,
+          ease: "sine.inOut",
+        });
+        gsap.to(webRef.current, {
+          scale: 1.1,
+          opacity: isDark ? 0.12 : 0.07,
+          repeat: -1,
+          yoyo: true,
+          duration: 4,
+          ease: "sine.inOut",
+        });
+      }
+      // Fixed at base without hovering idle animation
     }, sectionRef);
 
     return () => ctx.revert();
@@ -93,7 +88,7 @@ export const Projects = () => {
         />
       </div>
 
-      {/* Crouched Spider-Man Corner Observer */}
+      {/* Standing Spider-Man Grounded at Base */}
       <div
         ref={spiderRef}
         className="absolute bottom-0 left-2 sm:left-4 md:left-12 z-30 pointer-events-none"
@@ -101,9 +96,9 @@ export const Projects = () => {
         <img
           src={isDark ? MILES_ASSETS.standingSpiderImg : ASSETS.standingSpiderImg}
           alt={isDark ? "Standing Miles Morales" : "Standing Spider-Man"}
-          className={`w-28 sm:w-36 md:w-48 h-auto object-contain select-none ${
+          className={`w-24 sm:w-32 md:w-44 lg:w-48 h-auto object-contain select-none block align-bottom ${
             isDark
-              ? "drop-shadow-[0_12px_30px_rgba(0,0,0,0.8)] drop-shadow-[0_0_20px_rgba(225,29,72,0.3)]"
+              ? "drop-shadow-[0_12px_30px_rgba(0,0,0,0.8)] drop-shadow-[0_0_20px_rgba(167,29,36,0.35)]"
               : "drop-shadow-2xl"
           }`}
         />
@@ -122,7 +117,7 @@ export const Projects = () => {
           Featured Missions & Code In Action
         </span>
         <h2 className={`text-comic-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight ${
-          isDark ? "text-white drop-shadow-[2px_2px_0px_#e11d48]" : "text-gray-950"
+          isDark ? "text-white drop-shadow-[2px_2px_0px_#a71d24]" : "text-gray-950"
         }`}>
           FEATURED MISSIONS.
         </h2>
